@@ -1,0 +1,50 @@
+.region-locator {
+  padding: 9px 12px 0;
+  min-width: 0;
+  border-top: 1px solid var(--line);
+}
+.region-locator h2 {
+  margin: 0 0 6px;
+  color: #56605e;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font: 500 9px/1.2 var(--mono, monospace);
+}
+.locator-plate {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 93px;
+  border: 1px solid #bfc8c3;
+  background: #eff3f2;
+}
+.locator-grid {
+  stroke: #838e89;
+  stroke-width: 0.45px;
+  stroke-dasharray: 1.1 1.8;
+}
+.locator-nodes {
+  fill: #596560;
+  stroke: #f7f9f6;
+  stroke-width: 0.55px;
+}
+.locator-places,
+.locator-coords {
+  fill: #404c48;
+  paint-order: stroke;
+  stroke: #edf1ed;
+  stroke-width: 1.8px;
+  stroke-linejoin: round;
+}
+.locator-places {
+  font: 500 8px/1 var(--mono, monospace);
+}
+.locator-coords {
+  font: 6px/1 var(--mono, monospace);
+}
+@media (max-width: 800px), (max-height: 800px) {
+  .region-locator {
+    display: none;
+  }
+}

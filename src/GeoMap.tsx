@@ -2,16 +2,21 @@ import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from '
 import type { KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { Check, Crosshair, Layers2, Minus, Plus } from 'lucide-react'
 import GeoBase from './cartography/GeoBase'
+import Graticule from './cartography/Graticule'
 import {
   cityCamera,
   regionCamera,
   labels,
   landPath,
+  waterPath,
+  shorePath,
   tractsPath,
   latitudeOf,
   localPoint,
   mercatorLat,
   palette,
+  plateUrl,
+  plateBounds,
 } from './cartography/base'
 import type { Camera, Point } from './cartography/base'
 import './map.css'
@@ -78,6 +83,8 @@ function position(a: Point, c: Point, b: Point, t: number) {
 }
 
 const BasemapPaths = memo(function BasemapPaths({ id }: { id: string }) {
+  const upperLeft = localPoint(plateBounds.west, plateBounds.north)
+  const lowerRight = localPoint(plateBounds.east, plateBounds.south)
   return (
     <g>
       <defs>
@@ -90,11 +97,34 @@ const BasemapPaths = memo(function BasemapPaths({ id }: { id: string }) {
         />
         <path id={id + '-tract'} d={tractsPath} fill="none" vectorEffect="non-scaling-stroke" />
       </defs>
-      <use href={'#' + id + '-land'} fill={palette.land} stroke="#c4d5d6" strokeWidth="7" />
-      <use href={'#' + id + '-land'} fill={palette.land} stroke="#e8eeee" strokeWidth="3.5" />
-      <use href={'#' + id + '-tract'} stroke={palette.tractLight} strokeWidth="2.4" />
-      <use href={'#' + id + '-tract'} stroke={palette.tracts} strokeWidth=".6" />
+      <use href={'#' + id + '-land'} fill={palette.land} stroke="#d2d7d5" strokeWidth="5" />
+      <use href={'#' + id + '-land'} fill={palette.land} stroke="#fbfcfa" strokeWidth="3" />
+      <image
+        href={plateUrl}
+        x={upperLeft[0]}
+        y={upperLeft[1]}
+        width={lowerRight[0] - upperLeft[0]}
+        height={lowerRight[1] - upperLeft[1]}
+        preserveAspectRatio="none"
+      />
+      <use href={'#' + id + '-tract'} stroke={palette.tractLight} strokeWidth="1.3" opacity=".55" />
+      <use href={'#' + id + '-tract'} stroke={palette.tracts} strokeWidth=".48" opacity=".75" />
       <use href={'#' + id + '-land'} fill="none" stroke={palette.shoreline} strokeWidth="1" />
+      <path d={waterPath} fill={palette.water} fillRule="evenodd" />
+      <path
+        d={shorePath}
+        fill="none"
+        stroke="#f8faf7"
+        strokeWidth="2.8"
+        vectorEffect="non-scaling-stroke"
+      />
+      <path
+        d={shorePath}
+        fill="none"
+        stroke="#899997"
+        strokeWidth=".75"
+        vectorEffect="non-scaling-stroke"
+      />
     </g>
   )
 })
@@ -330,13 +360,90 @@ export function GeoMap({
           />
         )
       })
-  const callout =
-    hovered && hovered !== selectedId
-      ? visible.find((f) => f.id === hovered)
-      : selectedPoint && selectedFacility
-  const callPoint = callout ? points.get(callout.id) : undefined
-  const name = callout?.id === 'nyc_bellevue' ? 'Bellevue Hospital' : callout?.name
+  const hoveredFacility = hovered !== selectedId ? visible.find((f) => f.id === hovered) : undefined
+  const hoverPoint = hoveredFacility ? points.get(hoveredFacility.id) : undefined
   const inView = (p: Point) => p[0] >= 0 && p[1] >= 0 && p[0] <= size.width && p[1] <= size.height
+  const compact = size.width < 540
+  const tagW = compact ? 145 : 178,
+    tagH = compact ? 56 : 63
+  const showTag = selectedFacility && selectedPoint && layer.facilities && inView(selectedPoint)
+  const leftTag = !!selectedPoint && selectedPoint[0] > tagW + 50
+  const tagX = selectedPoint
+    ? clamp(selectedPoint[0] + (leftTag ? -tagW - 49 : 47), 14, size.width - tagW - 14)
+    : 0
+  const tagY = selectedPoint ? clamp(selectedPoint[1] + 32, 49, size.height - tagH - 28) : 0
+  const tagPort: Point = [leftTag ? tagX + tagW : tagX, tagY + 13]
+  type Box = { x: number; y: number; w: number; h: number }
+  const occupied: Box[] = [
+    { x: size.width - 128, y: 0, w: 128, h: 108 },
+    { x: 0, y: size.height - 25, w: size.width, h: 25 },
+  ]
+  if (showTag)
+    occupied.push(
+      { x: tagX - 4, y: tagY - 4, w: tagW + 8, h: tagH + 8 },
+      { x: selectedPoint[0] - 22, y: selectedPoint[1] - 22, w: 44, h: 44 },
+    )
+  const collides = (b: Box) =>
+    occupied.some((o) => b.x < o.x + o.w && b.x + b.w > o.x && b.y < o.y + o.h && b.y + b.h > o.y)
+  const mapLabels =
+    layer.labels &&
+    labels.flatMap((l) => {
+      const p = project(l.lon, l.lat)
+      if (!inView(p) || (l.kind === 'place' && (camera.zoom < 0.85 || scale < 860))) return []
+      const face = l.kind === 'borough' ? (compact ? 10 : 13) : l.kind === 'water' ? 12 : 10
+      const length = l.text.length * (face * 0.56 + (l.kind === 'borough' ? 2 : 0.4))
+      const angle = ((l.angle || 0) * Math.PI) / 180
+      const w = Math.abs(Math.cos(angle)) * length + Math.abs(Math.sin(angle)) * face
+      const h = Math.abs(Math.sin(angle)) * length + Math.abs(Math.cos(angle)) * face
+      const box = { x: p[0] - w / 2 - 2, y: p[1] - h / 2 - 3, w: w + 4, h: h + 6 }
+      if (
+        box.x < 14 ||
+        box.x + box.w > size.width - 14 ||
+        box.y < 10 ||
+        box.y + box.h > size.height - 10 ||
+        collides(box)
+      )
+        return []
+      occupied.push(box)
+      return [
+        <text
+          key={l.text}
+          className={'geo-label-' + l.kind}
+          textAnchor="middle"
+          dominantBaseline="central"
+          transform={`translate(${p.join(' ')}) rotate(${l.angle ?? 0})`}
+        >
+          {l.text}
+        </text>,
+      ]
+    })
+  const campusCodes =
+    layer.facilities &&
+    layer.labels &&
+    scale > 980 &&
+    visible.flatMap((f) => {
+      if (!f.code || f.id === selectedId) return []
+      const p = points.get(f.id)!
+      if (!inView(p) || p[0] > size.width - 70 || p[1] < 15 || p[1] > size.height - 35) return []
+      const box = { x: p[0] + 8, y: p[1] - 18, w: 31, h: 15 }
+      if (
+        collides(box) ||
+        visible.some((n) => {
+          const q = points.get(n.id)!
+          return n.id !== f.id && Math.hypot(p[0] - q[0], p[1] - q[1]) < 49
+        })
+      )
+        return []
+      occupied.push(box)
+      return [
+        <g key={f.id} transform={`translate(${p.join(' ')})`}>
+          <path d="M5 -3l5 -6h4" />
+          <text x="16" y="-7">
+            {f.code}
+          </text>
+        </g>,
+      ]
+    })
 
   return (
     <div ref={host} className="geo-map" data-renderer={gl ? 'maplibre' : 'svg'}>
@@ -417,48 +524,19 @@ export function GeoMap({
             </g>
           </g>
         )}
-        <g aria-hidden="true" className="geo-coordinates">
-          {Array.from({ length: 10 }, (_, i) => {
-            const lon = Math.floor((camera.lon - cx / scale) * 10) / 10 + (i + 1) * 0.1
-            const x = project(lon, camera.lat)[0]
-            return (
-              <g key={lon}>
-                <path d={'M' + x + ',0v5 M' + x + ',' + size.height + 'v-5'} />
-                {x > 155 &&
-                  x < size.width - 110 &&
-                  (scale >= 900 || Math.round(lon * 10) % 2 === 0) && (
-                    <text x={x + 3} y="11">
-                      {Math.abs(lon).toFixed(1)}°W
-                    </text>
-                  )}
-              </g>
-            )
-          })}
+        <Graticule
+          width={size.width}
+          height={size.height}
+          longitude={camera.lon}
+          latitude={camera.lat}
+          scale={scale}
+        />
+        <g aria-hidden="true" className="geo-labels">
+          {mapLabels}
         </g>
-        {layer.labels && (
-          <g aria-hidden="true" className="geo-labels">
-            {labels.map((l) => {
-              const p = project(l.lon, l.lat)
-              if (!inView(p) || ((camera.zoom < 0.65 || scale < 780) && l.kind === 'place'))
-                return null
-              const selectedDistance =
-                selectedPoint &&
-                Math.abs(p[0] - selectedPoint[0]) < 100 &&
-                Math.abs(p[1] - selectedPoint[1]) < 18
-              if (selectedDistance && l.kind === 'place') return null
-              return (
-                <text
-                  key={l.text}
-                  className={'geo-label-' + l.kind}
-                  textAnchor="middle"
-                  transform={'translate(' + p.join(' ') + ') rotate(' + (l.angle ?? 0) + ')'}
-                >
-                  {l.text}
-                </text>
-              )
-            })}
-          </g>
-        )}
+        <g aria-hidden="true" className="geo-site-codes">
+          {campusCodes}
+        </g>
         {refLines}
         {transferNodes.map((node) => node.track)}
         {layer.facilities &&
@@ -490,21 +568,22 @@ export function GeoMap({
                 <circle r="10" fill="transparent" />
                 {selected ? (
                   <>
-                    <circle r="17" className="geo-halo" />
+                    <circle r="24" className="geo-halo" />
+                    <path d="M-32 0h6 M26 0h6 M0 -32v6 M0 26v6" className="geo-sights" />
                     {selectedPool && selectedPool.capacity > 0 && (
                       <g transform="rotate(-90)" aria-hidden="true">
                         {(
                           [
-                            [selectedPool.occupied, '#43594e', 0],
-                            [selectedPool.reserved, '#d67542', selectedPool.occupied],
+                            [selectedPool.occupied, '#3d4343', 0],
+                            [selectedPool.reserved, '#e1672d', selectedPool.occupied],
                             [
                               selectedPool.turnaround,
-                              '#a49b8b',
+                              '#999b98',
                               selectedPool.occupied + selectedPool.reserved,
                             ],
                             [
                               selectedPool.free,
-                              '#d3d9cd',
+                              '#d7dcd9',
                               selectedPool.occupied +
                                 selectedPool.reserved +
                                 selectedPool.turnaround,
@@ -515,10 +594,10 @@ export function GeoMap({
                             count > 0 && (
                               <circle
                                 key={color}
-                                r="11"
+                                r="13"
                                 fill="none"
                                 stroke={color}
-                                strokeWidth="2"
+                                strokeWidth="2.5"
                                 pathLength={selectedPool.capacity}
                                 strokeDasharray={count + ' ' + (selectedPool.capacity - count)}
                                 strokeDashoffset={-offset}
@@ -528,33 +607,67 @@ export function GeoMap({
                       </g>
                     )}
                     <path
-                      d="M-17 -9v-8h8 M9 -17h8v8 M17 9v8h-8 M-9 17h-8v-8"
+                      d="M-23 -12v-11h11 M12 -23h11v11 M23 12v11h-11 M-12 23h-11v-11"
                       className="geo-bracket"
                     />
-                    <circle r="7.3" fill="#da5b28" stroke="white" strokeWidth="1.9" />
-                    <circle r="2.2" fill="white" />
+                    <rect
+                      x="-6"
+                      y="-6"
+                      width="12"
+                      height="12"
+                      fill="#d95725"
+                      stroke="white"
+                      strokeWidth="1.5"
+                    />
+                    <path d="M-3 0h6 M0 -3v6" stroke="white" strokeWidth="1.4" />
                   </>
                 ) : (
                   <>
-                    <circle className="geo-node-shell" r="4.55" />
-                    <circle r="1.55" fill="#fbfcf6" />
+                    <circle className="geo-node-shell" r="5" />
+                    <path d="M-2.2 0h4.4 M0 -2.2v4.4" stroke="white" strokeWidth="1.15" />
                   </>
                 )}
               </g>
             )
           })}
+        {showTag && (
+          <path
+            className="geo-leader"
+            d={`M${selectedPoint[0] + (leftTag ? -23 : 23)} ${selectedPoint[1] + 16} L${tagPort[0] + (leftTag ? 12 : -12)} ${tagPort[1]} H${tagPort[0]}`}
+          />
+        )}
         {transferNodes.map((node) => node.traveler)}
       </svg>
-      {layer.facilities && callPoint && name && inView(callPoint) && (
+      {showTag && (
         <div
           aria-hidden="true"
-          className={'geo-tag' + (callout?.id === selectedId ? ' is-active' : '')}
+          className="geo-nameplate"
+          style={{ left: tagX, top: tagY, width: tagW }}
+        >
+          <div className="geo-tag-head">
+            <i />
+            {selectedFacility.code ?? 'SITE'}
+            <span>/</span>SELECTED CAMPUS
+          </div>
+          <strong>
+            {selectedFacility.id === 'nyc_bellevue' ? 'Bellevue Hospital' : selectedFacility.name}
+          </strong>
+          <div className="geo-tag-coords">
+            {selectedFacility.latitude.toFixed(4)}° N<span> / </span>
+            {Math.abs(selectedFacility.longitude).toFixed(4)}° W
+          </div>
+        </div>
+      )}
+      {layer.facilities && hoverPoint && hoveredFacility && inView(hoverPoint) && (
+        <div
+          className="geo-hover-tag"
+          aria-hidden="true"
           style={{
-            left: clamp(callPoint[0] + 17, 5, size.width - Math.min(172, size.width * 0.4) - 8),
-            top: clamp(callPoint[1] - 30, 6, size.height - 44),
+            left: clamp(hoverPoint[0] + 9, 5, size.width - 150),
+            top: clamp(hoverPoint[1] - 28, 8, size.height - 34),
           }}
         >
-          <span>{name}</span>
+          {hoveredFacility.name}
         </div>
       )}
       <div className="geo-extent" aria-label="Map extent">
@@ -564,38 +677,39 @@ export function GeoMap({
           </button>
         ))}
       </div>
-      <div className="geo-layers" ref={layerHost}>
-        <button
-          className="geo-tool geo-layer-trigger"
-          ref={layerButton}
-          title="Map layers"
-          aria-expanded={settings}
-          aria-controls={id + '-layers'}
-          onClick={() => setSettings(!settings)}
-        >
-          <Layers2 size={14} strokeWidth={1.7} />
-          <span>Layers</span>
-        </button>
-        {settings && (
-          <div className="geo-layer-menu" id={id + '-layers'} aria-label="Map layers">
-            {Object.entries(layerLabels).map(([k, labelName]) => {
-              const key = k as keyof MapLayers
-              return (
-                <button
-                  key={k}
-                  role="switch"
-                  aria-checked={!!layer[key]}
-                  disabled={layers?.[key] !== undefined}
-                  onClick={() => setLocalLayers((old) => ({ ...old, [k]: !old[key] }))}
-                >
-                  <span className="geo-check">{layer[key] && <Check size={12} />}</span>
-                  {labelName}
-                </button>
-              )
-            })}
-          </div>
-        )}
-      </div>
+      {!layers && (
+        <div className="geo-layers" ref={layerHost}>
+          <button
+            className="geo-tool geo-layer-trigger"
+            ref={layerButton}
+            title="Map layers"
+            aria-expanded={settings}
+            aria-controls={id + '-layers'}
+            onClick={() => setSettings(!settings)}
+          >
+            <Layers2 size={14} strokeWidth={1.7} />
+            <span>Layers</span>
+          </button>
+          {settings && (
+            <div className="geo-layer-menu" id={id + '-layers'} aria-label="Map layers">
+              {Object.entries(layerLabels).map(([k, labelName]) => {
+                const key = k as keyof MapLayers
+                return (
+                  <button
+                    key={k}
+                    role="switch"
+                    aria-checked={!!layer[key]}
+                    onClick={() => setLocalLayers((old) => ({ ...old, [k]: !old[key] }))}
+                  >
+                    <span className="geo-check">{layer[key] && <Check size={12} />}</span>
+                    {labelName}
+                  </button>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
       <div className="geo-north" aria-label="North is up">
         <b>N</b>
         <svg width="12" height="22" viewBox="0 0 12 22" aria-hidden="true">
@@ -632,7 +746,7 @@ export function GeoMap({
         <span style={{ width: scaleKm / kmPerPixel }} />
         {scaleKm} km
       </div>
-      <small className="geo-credit">U.S. Census Bureau · {gl ? 'MapLibre' : 'SVG'}</small>
+      <small className="geo-credit">Census · NYC DCP · GSHHG · {gl ? 'MapLibre' : 'SVG'}</small>
     </div>
   )
 }

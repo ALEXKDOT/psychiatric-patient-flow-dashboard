@@ -1,6 +1,5 @@
 import { Pause, Play, RotateCcw, LocateFixed } from 'lucide-react'
 import { clockLabel } from './ui'
-
 type Props = {
   minute: number
   duration: number
@@ -26,30 +25,40 @@ export function Playback({
       <button
         onClick={onPlay}
         className="play-toggle"
+        title={playing ? 'Pause replay' : 'Play replay'}
         aria-label={playing ? 'Pause replay' : 'Play replay'}
       >
-        {playing ? <Pause size={14} fill="currentColor" /> : <Play size={14} fill="currentColor" />}
+        {playing ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}
       </button>
       <div className="replay-clock">
-        <span>REPLAY</span>
+        <span>{playing ? 'PLAYING' : 'REPLAY PAUSED'}</span>
         <output>{clockLabel(minute)}</output>
       </div>
-      <label className="scrubber">
-        <span className="sr-only">Replay minute</span>
-        <input
-          type="range"
-          min="0"
-          max={duration}
-          step="1"
-          value={minute}
-          onChange={(e) => onSeek(Number(e.target.value))}
-          aria-valuetext={clockLabel(minute)}
-          style={{
-            background:
-              'linear-gradient(to right,#af5a31 ' + (100 * minute) / duration + '%,#cdd4c9 0)',
-          }}
-        />
-      </label>
+      <div className="replay-track">
+        <div className="day-labels" aria-hidden="true">
+          {Array.from({ length: 7 }, (_, i) => (
+            <span key={i}>D{1 + i}</span>
+          ))}
+        </div>
+        <label className="scrubber">
+          <span className="sr-only">Replay minute</span>
+          <input
+            type="range"
+            min={0}
+            max={duration}
+            step={1}
+            value={minute}
+            onChange={(e) => onSeek(Number(e.target.value))}
+            aria-valuetext={clockLabel(minute)}
+            style={{
+              background:
+                'linear-gradient(to right,var(--orange) ' +
+                (100 * minute) / duration +
+                '%,#d2d6d5 0)',
+            }}
+          />
+        </label>
+      </div>
       <select
         className="speed"
         aria-label="Playback speed"
@@ -76,7 +85,7 @@ export function Playback({
         aria-label="Seek to sample transfer"
         onClick={() => onSeek(sample)}
       >
-        <LocateFixed size={14} />
+        <LocateFixed size={15} />
       </button>
     </section>
   )

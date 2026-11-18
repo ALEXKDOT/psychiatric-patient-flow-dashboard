@@ -1,6 +1,8 @@
-import { Crosshair, MapPin, ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, Crosshair } from 'lucide-react'
 import type { Campus } from './data'
 import type { Pool } from './sim'
+import './inspector.css'
+
 type Props = {
   campus: Campus
   focus: { name: string; code: string }
@@ -11,7 +13,58 @@ type Props = {
   onRecord?: () => void
   onMovements: () => void
 }
-const two = (n: number) => String(n).padStart(2, '0')
+
+const slotStates = [
+  ['occupied', 'Occupied'],
+  ['reserved', 'Reserved'],
+  ['turnaround', 'Turnaround'],
+  ['free', 'Free'],
+] as const
+
+const two = (count: number) => String(count).padStart(2, '0')
+
+function SlotAllocation({ pool }: { pool: Pool }) {
+  return (
+    <section className="dossier-allocation" aria-label="Simulated pathway capacity">
+      <div className="dossier-section-title">
+        <h3>Pathway capacity</h3>
+        <span>Simulated</span>
+      </div>
+      <div className="dossier-denominator">
+        <strong>
+          {pool.occupied}
+          <span> / {pool.capacity}</span>
+        </strong>
+        <span>slots occupied</span>
+      </div>
+      <div className="dossier-raster" aria-hidden="true">
+        {slotStates.flatMap(([state]) =>
+          Array.from({ length: pool[state] }, (_, index) => (
+            <i key={state + index} className={'dossier-slot is-' + state} />
+          )),
+        )}
+      </div>
+      <dl className="dossier-legend">
+        {slotStates.map(([state, label]) => (
+          <div key={state}>
+            <dt>
+              <i className={'dossier-slot is-' + state} aria-hidden="true" />
+              {label}
+            </dt>
+            <dd>{two(pool[state])}</dd>
+          </div>
+        ))}
+      </dl>
+      {pool.pendingClosure > 0 && (
+        <p className="dossier-closure">
+          {pool.pendingClosure} {pool.pendingClosure === 1 ? 'closure' : 'closures'} pending ·
+          target {pool.target} slots
+        </p>
+      )}
+    </section>
+  )
+}
+
 export function CampusInspector({
   campus,
   focus,
@@ -22,104 +75,55 @@ export function CampusInspector({
   onRecord,
   onMovements,
 }: Props) {
-  const ringParts = pool
-    ? ([
-        ['Occupied', pool.occupied, '#334941'],
-        ['Reserved', pool.reserved, '#d67542'],
-        ['Turnaround', pool.turnaround, '#aea697'],
-        ['Free', pool.free, '#dfe4d9'],
-      ] as const)
-    : []
-  let start = 0
-  const stops = ringParts
-    .map(([, n, color]) => {
-      const end = start + (n / Math.max(1, pool.capacity)) * 100
-      const s = color + ' ' + start + '% ' + end + '%'
-      start = end
-      return s
-    })
-    .join(', ')
   return (
-    <aside className="inspector panel" aria-label="Selected campus inspector">
-      <div className="inspector-heading">
+    <aside className="inspector campus-dossier" aria-label="Selected campus inspector">
+      <div className="dossier-heading">
         <span>
-          <Crosshair size={16} />
-          Campus inspector
+          <Crosshair size={13} strokeWidth={1.6} aria-hidden="true" />
+          Selected campus
         </span>
-        <span className="site-code">{focus.code}</span>
+        {selectionVisible && <b>{focus.code}</b>}
       </div>
       {selectionVisible ? (
         <>
-          <div className="campus-summary">
-            <div className="eyebrow orange">
-              <span className="square" />
-              Selected campus
-            </div>
-            <h2>{focus.name}</h2>
-            <div className="location">
-              <MapPin size={13} />
-              {campus.borough} · {campus.raw.address_line1}
-            </div>
-            <div className="chips">
-              <span>Inpatient</span>
-              {campus.programs.some((p) => /cpep/i.test(p.program_type)) && <span>CPEP</span>}
-            </div>
-          </div>
-          <section className="pool-section">
-            <div className="sect-line">
-              <h3>Pathway capacity</h3>
-              <span className="tag">Simulated</span>
-            </div>
-            <div className="pool-grid">
-              <div
-                className="capacity-ring"
-                style={{ background: stops ? 'conic-gradient(' + stops + ')' : undefined }}
-              >
-                <div>
-                  <strong>{pool?.capacity ?? 0}</strong>
-                  <small>SLOTS</small>
-                </div>
-              </div>
-              <dl>
-                {ringParts.map(([label, n, color]) => (
-                  <div key={label}>
-                    <dt>
-                      <i style={{ background: color }} />
-                      {label}
-                    </dt>
-                    <dd>{two(n)}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-            {pool?.pendingClosure > 0 && (
-              <p className="closure">
-                {pool.pendingClosure} closures pending · target {pool.target}
+          <div className="dossier-body">
+            <section className="dossier-identity">
+              <h2>{focus.name}</h2>
+              <p className="dossier-location">
+                {campus.borough} · {campus.raw.address_line1}
               </p>
-            )}
-          </section>
-          <div className="campus-stats">
-            <div>
-              <span>Waiting in ED</span>
-              <b>{two(pool?.queue ?? 0)}</b>
+              <p className="dossier-services">
+                Inpatient{campus.programs.some((p) => /cpep/i.test(p.program_type)) && ' / CPEP'}
+              </p>
+            </section>
+            <SlotAllocation pool={pool} />
+            <div className="dossier-activity">
+              <dl>
+                <div>
+                  <dt>Waiting in ED</dt>
+                  <dd>{two(pool.queue)}</dd>
+                </div>
+                <div>
+                  <dt>Outgoing open referrals</dt>
+                  <dd>{two(openReferrals)}</dd>
+                </div>
+              </dl>
+              <button className="dossier-transfers" type="button" onClick={onMovements}>
+                <span>
+                  Active transfers <ArrowUpRight size={11} aria-hidden="true" />
+                </span>
+                <b>{two(relatedCount)}</b>
+              </button>
             </div>
-            <div>
-              <span>Outgoing open referrals</span>
-              <b>{two(openReferrals)}</b>
-            </div>
-            <button onClick={onMovements}>
-              <span>Active transfers</span>
-              <b>{two(relatedCount)}</b>
-            </button>
           </div>
           {onRecord && (
-            <button className="record-link" onClick={onRecord}>
-              View campus record <ArrowUpRight size={16} />
+            <button className="dossier-record" type="button" onClick={onRecord}>
+              View campus record <ArrowUpRight size={14} aria-hidden="true" />
             </button>
           )}
         </>
       ) : (
-        <div className="campus-summary">No campuses match these filters.</div>
+        <p className="dossier-empty">No campuses match these filters.</p>
       )}
     </aside>
   )

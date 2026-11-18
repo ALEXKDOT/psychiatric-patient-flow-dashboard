@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import type { Frame } from './sim'
 import { campusById } from './data'
 import './instruments.css'
@@ -47,9 +47,9 @@ const titles: Record<Panel, string> = {
 }
 const resourceEvents = new Set(['capacity', 'retire', 'unavailable'])
 const symbol = {
-  queue: 'M3 4h12M3 8h9M3 12h6',
-  trend: 'M2 12h3V8h4v2h3V4h4',
-  events: 'M2 4h3m2 0h9M2 8h3m2 0h9M2 12h3m2 0h9',
+  queue: 'M2 2.5h3v3H2zM2 7h3v3H2zM2 11.5h3v3H2zM7.5 4h8M7.5 8.5h6M7.5 13h4',
+  trend: 'M1.5 2v12h15M3.5 10h3v-4H10V8h3V3h3',
+  events: 'M2 8h3l2.5-5.5 3 11L13 8h3',
   expand: 'M5 11l7-7M6 4h6v6',
   close: 'M4 4l9 9M13 4l-9 9',
 }
@@ -210,7 +210,11 @@ function EventList({
           <time title={fullTime(row.minute)}>
             {expanded ? fullTime(row.minute) : clock(row.minute)}
           </time>
-          <i className="ins-event-point" aria-hidden="true" />
+          <i
+            className="ins-event-point"
+            data-resource={resourceEvents.has(row.type) || undefined}
+            aria-hidden="true"
+          />
           <div className="ins-event-copy">
             <strong>{row.title}</strong>
             {row.campusId ? (
@@ -224,6 +228,7 @@ function EventList({
             ) : (
               <span>{row.campus}</span>
             )}
+            {!expanded && row.episodeId && <span className="ins-log-id">{row.episodeId}</span>}
             {expanded && row.relatedCampus && <span>Other campus · {row.relatedCampus}</span>}
             {expanded && row.episodeId && onEpisode && (
               <button
@@ -243,13 +248,16 @@ function EventList({
 }
 
 function Trend({ points, total }: { points: TrendPoint[]; total: number }) {
+  const fillId = useId()
   const first = points[0]
   const last = points.at(-1)
   if (!first || !last)
     return <p className="ins-empty">Queue history starts with the first sample.</p>
   const maxValue = Math.max(2, Math.ceil(Math.max(...points.map((p) => p.waiting)) / 2) * 2)
-  const x = (m: number) => 2 + 292 * ((m - first.minute) / Math.max(1, last.minute - first.minute))
-  const y = (n: number) => 57 - (n / maxValue) * 52
+  const span = last.minute - first.minute
+  const x = (m: number) => 3 + 294 * ((m - first.minute) / Math.max(1, span))
+  const y = (n: number) => 64 - (n / maxValue) * 58
+  const timeTicks = span > 0 ? [first.minute, first.minute + span / 2, last.minute] : [first.minute]
   const line = points
     .map((p, i) =>
       i === 0 ? 'M' + x(p.minute) + ',' + y(p.waiting) : 'H' + x(p.minute) + 'V' + y(p.waiting),
@@ -260,7 +268,9 @@ function Trend({ points, total }: { points: TrendPoint[]; total: number }) {
       <div className="ins-current">
         <strong>{total}</strong>
         <span>in sending EDs</span>
-        <span className="ins-window">{duration(last.minute - first.minute)} window</span>
+        <span className="ins-window">
+          {span < 60 ? duration(span) : (span / 60).toFixed(1).replace(/\.0$/, '') + 'h'} window
+        </span>
       </div>
       <div className="ins-plot">
         <div aria-hidden="true" className="ins-y-axis">
@@ -269,7 +279,7 @@ function Trend({ points, total }: { points: TrendPoint[]; total: number }) {
           <span>0</span>
         </div>
         <svg
-          viewBox="0 0 300 62"
+          viewBox="0 0 300 70"
           preserveAspectRatio="none"
           role="img"
           aria-label={
@@ -282,18 +292,30 @@ function Trend({ points, total }: { points: TrendPoint[]; total: number }) {
             ' episodes.'
           }
         >
-          {[5, 31, 57].map((yValue) => (
-            <line key={yValue} x1="0" x2="300" y1={yValue} y2={yValue} className="ins-grid-line" />
+          <defs>
+            <pattern id={fillId} width="4" height="4" patternUnits="userSpaceOnUse">
+              <path d="M-1 1L1 -1M0 4L4 0M3 5L5 3" className="ins-chart-hatch" />
+            </pattern>
+          </defs>
+          {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((i) => (
+            <g key={i} className={i % 3 === 0 ? 'ins-grid-major' : 'ins-grid-minor'}>
+              <line x1={3 + i * 24.5} x2={3 + i * 24.5} y1="6" y2="64" />
+              <line x1={3 + i * 24.5} x2={3 + i * 24.5} y1="64" y2={i % 3 === 0 ? 69 : 67} />
+            </g>
           ))}
-          <path d={line + 'V57H2Z'} className="ins-chart-fill" />
+          {[6, 20.5, 35, 49.5, 64].map((yValue) => (
+            <line key={yValue} x1="3" x2="297" y1={yValue} y2={yValue} className="ins-grid-line" />
+          ))}
+          <path d={line + 'V64H3Z'} fill={`url(#${fillId})`} />
+          <line x1="3" x2="297" y1="64" y2="64" className="ins-plot-base" />
           <path d={line} className="ins-chart-line" />
           <circle cx={x(last.minute)} cy={y(last.waiting)} r="2.8" className="ins-chart-dot" />
         </svg>
       </div>
       <div className="ins-x-axis" aria-hidden="true">
-        <span>{clock(first.minute)}</span>
-        <span>{clock((first.minute + last.minute) / 2)}</span>
-        <span>{clock(last.minute)}</span>
+        {timeTicks.map((t, i) => (
+          <span key={i}>{clock(t)}</span>
+        ))}
       </div>
     </div>
   )
@@ -439,6 +461,14 @@ export function InstrumentPanels({
           <EventList rows={visibleEvents.slice(0, 3)} select={select} />
         ) : (
           <p className="ins-empty">No matching events through {fullTime(minute)}.</p>
+        )}
+        {visibleEvents.length > 0 && (
+          <div className="ins-foot ins-event-foot">
+            <span>
+              {Math.min(3, visibleEvents.length)} of {visibleEvents.length} recent events
+            </span>
+            <span>{fullTime(minute)}</span>
+          </div>
         )}
       </article>
       {panel && (

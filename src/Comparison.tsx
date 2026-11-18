@@ -146,91 +146,115 @@ export function Comparison({ seed, currentScenario }: { seed: number; currentSce
           Export JSON
         </button>
       </header>
-      <div className="cmp-options">
-        <label>
-          Compare baseline with
-          <select
-            value={intervention}
-            onChange={(event) => setIntervention(event.target.value as Intervention)}
-          >
-            {Object.entries(scenarios).map(([id, info]) => (
-              <option key={id} value={id}>
-                {info.label}
-              </option>
-            ))}
-          </select>
-        </label>
-        <div>
-          <span className="cmp-label">Arrival cohort</span>
-          <div className="cmp-switch" role="group" aria-label="Arrival cohort">
-            <button
-              type="button"
-              aria-pressed={cohort === 'base'}
-              onClick={() => setCohort('base')}
-            >
-              Matched base
-            </button>
-            <button type="button" aria-pressed={cohort === 'all'} onClick={() => setCohort('all')}>
-              All arrivals
-            </button>
+      <div className="cmp-workspace">
+        <div className="cmp-config">
+          <div className="cmp-options">
+            <label>
+              Compare baseline with
+              <select
+                value={intervention}
+                onChange={(event) => setIntervention(event.target.value as Intervention)}
+              >
+                {Object.entries(scenarios).map(([id, info]) => (
+                  <option key={id} value={id}>
+                    {info.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div>
+              <span className="cmp-label">Arrival cohort</span>
+              <div className="cmp-switch" role="group" aria-label="Arrival cohort">
+                <button
+                  type="button"
+                  aria-pressed={cohort === 'base'}
+                  onClick={() => setCohort('base')}
+                >
+                  Matched base
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={cohort === 'all'}
+                  onClick={() => setCohort('all')}
+                >
+                  All arrivals
+                </button>
+              </div>
+            </div>
           </div>
+          <p className="cmp-intervention">{scenarios[intervention].description}</p>
+        </div>
+        <div className="cmp-results">
+          <div
+            className="cmp-table-scroll"
+            role="region"
+            aria-label="Comparison outcomes"
+            tabIndex={0}
+          >
+            <table>
+              <caption aria-live="polite">
+                {cohort === 'base' ? 'Matched base arrivals' : 'All evaluation arrivals'} · End of
+                day 7
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Measure</th>
+                  <th scope="col">Baseline</th>
+                  <th scope="col">{scenarios[intervention].label}</th>
+                  <th scope="col">
+                    <span aria-hidden="true">Δ </span>Change
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {measures.map((metric) => {
+                  const left = metric.value(baselineResult)
+                  const right = metric.value(branchResult)
+                  return (
+                    <tr key={metric.name}>
+                      <th scope="row">
+                        {metric.name}
+                        <small>{metric.unit}</small>
+                      </th>
+                      <td>{format(left, metric.digits)}</td>
+                      <td>{format(right, metric.digits)}</td>
+                      <td
+                        className={
+                          left != null && right != null && left !== right
+                            ? 'cmp-changed'
+                            : undefined
+                        }
+                      >
+                        {difference(left, right, metric.digits)}
+                        {metric.unit === '%' && left != null && right != null && ' pp'}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+          <details className="cmp-method">
+            <summary>How to read these results</summary>
+            <p>
+              Each matched arrival has the same time to the end of day 7 across both runs. The
+              all-arrival cohort includes the extra demand stream when enabled. Both cohorts exclude
+              arrivals during the 120-day warm-up.
+            </p>
+            <p>
+              ED wait runs from disposition to physical departure. Its median and P90 use departed
+              episodes. Placement wait runs from readiness to commitment and uses committed
+              placements. P90 is the 90th percentile. A dash indicates an empty denominator.
+            </p>
+            <p>
+              Waiting burden adds every cohort member’s time in the ED through departure or the end
+              of day 7. Unresolved cases contribute their elapsed time. Completed-only waits can
+              understate the longest waits. Changes use the unrounded values. A single seed
+              illustrates one synthetic network history.
+            </p>
+          </details>
         </div>
       </div>
-      <p className="cmp-intervention">{scenarios[intervention].description}</p>
-      <div className="cmp-table-scroll" role="region" aria-label="Comparison outcomes" tabIndex={0}>
-        <table>
-          <caption>
-            {cohort === 'base' ? 'Matched base arrivals' : 'All evaluation arrivals'} · End of day 7
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Measure</th>
-              <th scope="col">Baseline</th>
-              <th scope="col">{scenarios[intervention].label}</th>
-              <th scope="col">Change</th>
-            </tr>
-          </thead>
-          <tbody>
-            {measures.map((metric) => {
-              const left = metric.value(baselineResult)
-              const right = metric.value(branchResult)
-              return (
-                <tr key={metric.name}>
-                  <th scope="row">
-                    {metric.name}
-                    <small>{metric.unit}</small>
-                  </th>
-                  <td>{format(left, metric.digits)}</td>
-                  <td>{format(right, metric.digits)}</td>
-                  <td>
-                    {difference(left, right, metric.digits)}
-                    {metric.unit === '%' && left != null && right != null && ' pp'}
-                  </td>
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-      </div>
-      <details className="cmp-method">
-        <summary>How to read these results</summary>
-        <p>
-          Each matched arrival has the same time to the end of day 7 across both runs. The
-          all-arrival cohort includes the extra demand stream when enabled. Both cohorts exclude
-          arrivals during the 120-day warm-up.
-        </p>
-        <p>
-          ED wait runs from disposition to physical departure. Its median and P90 use departed
-          episodes. Placement wait runs from readiness to commitment and uses committed placements.
-          P90 is the 90th percentile. A dash indicates an empty denominator.
-        </p>
-        <p>
-          Waiting burden adds every cohort member’s time in the ED through departure or the end of
-          day 7. Unresolved cases contribute their elapsed time. Completed-only waits can understate
-          the longest waits. Changes use the unrounded values. A single seed illustrates one
-          synthetic network history.
-        </p>
-      </details>
       <footer className="cmp-foot">
         <span>Simulated operations · Single seed {seed}</span>
         <span>

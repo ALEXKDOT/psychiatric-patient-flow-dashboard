@@ -71,6 +71,9 @@ async function verifyFiltersAndDirectory(page) {
   await page.getByRole('button', { name: 'Clear filters', exact: true }).click()
   await expect(inspector.getByRole('heading', { name: /Westchester/ })).toBeVisible()
 
+  await page.keyboard.press('Control+k')
+  await expect(page.getByRole('dialog').getByRole('searchbox')).toBeVisible()
+  await page.keyboard.press('Escape')
   await page.getByRole('button', { name: 'Campuses', exact: true }).click()
   panel = page.getByRole('dialog')
   const search = panel.getByRole('searchbox')
@@ -86,7 +89,10 @@ async function verifyFiltersAndDirectory(page) {
   await panel.getByText('Sources and dates', { exact: false }).click()
   assert.ok(await panel.getByRole('link', { name: /DATA-001/ }).count())
   await page.keyboard.press('Escape')
-  await page.getByRole('button', { name: 'Schematic transfer', exact: false }).click()
+  const listTransfers = page.getByRole('button', { name: 'Schematic transfers', exact: true })
+  if (!(await listTransfers.isVisible()))
+    await page.getByRole('button', { name: 'Map layers', exact: true }).click()
+  await listTransfers.click()
   const heading = page.getByRole('dialog').getByRole('heading', { name: 'Intercampus transfers' })
   await expect(heading).toBeVisible()
   await page.keyboard.press('Escape')
@@ -127,21 +133,29 @@ async function verifyMap(page) {
     'true',
   )
 
-  const layers = map.getByRole('button', { name: 'Layers', exact: true })
-  await layers.click()
-  const campuses = map.getByRole('switch', { name: 'Campuses', exact: true })
-  await campuses.click()
+  const campuses = page.getByRole('checkbox', { name: 'Campus sites', exact: true })
+  const layers = page.getByRole('button', { name: /^(?:Map )?Layers$/i })
+  const collapsed = !(await campuses.isVisible())
+  if (collapsed) await layers.click()
+  await campuses.focus()
+  await page.keyboard.press('Space')
+  await expect(campuses).not.toBeChecked()
   await expect(map.locator('.geo-node')).toHaveCount(0)
-  await campuses.click()
+  await page.keyboard.press('Space')
+  await expect(campuses).toBeChecked()
   expect(await map.locator('.geo-node').count()).toBeGreaterThan(0)
-  const movements = map.getByRole('switch', { name: 'In transit', exact: true })
+  const movements = page.getByRole('checkbox', { name: 'Transfer tracks', exact: true })
   const trips = await map.locator('.geo-trip').count()
-  await movements.click()
+  await movements.focus()
+  await page.keyboard.press('Space')
   await expect(map.locator('.geo-trip')).toHaveCount(0)
-  await movements.click()
+  await movements.focus()
+  await page.keyboard.press('Space')
   await expect(map.locator('.geo-trip')).toHaveCount(trips)
-  await page.keyboard.press('Escape')
-  await expect(layers).toBeFocused()
+  if (collapsed) {
+    await page.keyboard.press('Escape')
+    await expect(layers).toBeFocused()
+  }
   await page.getByRole('button', { name: 'Expand map', exact: true }).click()
   await expect(page.getByRole('button', { name: 'Exit expanded map' })).toBeVisible()
   await page.keyboard.press('Escape')
@@ -254,6 +268,27 @@ async function verifyFallback() {
   }
 }
 
+async function verifyResponsiveSizes(page) {
+  const widths = [320, 360, 375, 390, 600, 730, 768, 920, 1024, 1280, 1440, 1920]
+  for (const width of widths) {
+    await page.setViewportSize({
+      width,
+      height: width === 1920 ? 1080 : width === 1440 ? 900 : 844,
+    })
+    await page.evaluate(
+      () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
+    )
+    const pageWidth = await page.evaluate(() => document.documentElement.scrollWidth)
+    assert.ok(
+      pageWidth <= width,
+      `Horizontal overflow at ${width}px: document is ${pageWidth}px wide`,
+    )
+  }
+  console.log(
+    'No page-level horizontal overflow at ' + widths.length + ' sampled widths from 320 to 1920px.',
+  )
+}
+
 async function main() {
   const browser = await launch()
   try {
@@ -274,6 +309,7 @@ async function main() {
     await verifyFiltersAndDirectory(page)
     await verifyPlayback(page)
     if (!values.operations) await verifyComparison(page)
+    await verifyResponsiveSizes(page)
     console.log('Browser', browser.version())
     assert.deepEqual(errors, [])
     assert.deepEqual(external, [])

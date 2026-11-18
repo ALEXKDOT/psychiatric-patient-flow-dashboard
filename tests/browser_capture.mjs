@@ -7,7 +7,11 @@ import { pathToFileURL } from 'node:url'
 import { parseArgs } from 'node:util'
 import assert from 'node:assert/strict'
 
-export const sizes = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } }
+export const sizes = {
+  desktop: { width: 1440, height: 900 },
+  wide: { width: 1920, height: 1080 },
+  mobile: { width: 390, height: 844 },
+}
 
 export function launch(noWebGL = false) {
   const binary =
@@ -50,7 +54,7 @@ export async function ready(page, url) {
   await page.evaluate(() => document.fonts.ready)
 }
 
-export async function capture(url, out, prefix) {
+export async function capture(url, out, prefix, comparison = false) {
   await mkdir(out, { recursive: true })
   const browser = await launch()
   try {
@@ -68,24 +72,46 @@ export async function capture(url, out, prefix) {
       const renderer = await page.locator('.geo-map').getAttribute('data-renderer')
       const filename = path.join(out, `${prefix}-${name}.png`)
       await page.screenshot({ path: filename, animations: 'disabled' })
-      const widths = await page.evaluate(() => ({
-        page: document.documentElement.scrollWidth,
-        viewport: innerWidth,
-      }))
+      const layout = await page.evaluate(() => {
+        const map = document.querySelector('.geo-map').getBoundingClientRect()
+        const visibleHeight = Math.max(0, Math.min(innerHeight, map.bottom) - Math.max(0, map.top))
+        const visibleWidth = Math.max(0, Math.min(innerWidth, map.right) - Math.max(0, map.left))
+        return {
+          viewportWidth: innerWidth,
+          pageWidth: document.documentElement.scrollWidth,
+          mapTop: Math.round(map.top),
+          mapWidth: Math.round(map.width),
+          mapHeight: Math.round(map.height),
+          mapViewportPercent: +(
+            (100 * visibleHeight * visibleWidth) /
+            (innerHeight * innerWidth)
+          ).toFixed(1),
+        }
+      })
       console.log(
         JSON.stringify({
           file: filename,
           size,
           renderer,
           browser: browser.version(),
-          widths,
+          layout,
           errors,
           external,
         }),
       )
+      if (comparison && name === 'desktop') {
+        await page.getByRole('button', { name: 'Scenario lab', exact: true }).click()
+        await page
+          .getByRole('dialog')
+          .getByRole('heading', { name: 'Scenario comparison' })
+          .waitFor()
+        const filename = path.join(out, 'scenario-lab.png')
+        await page.screenshot({ path: filename, animations: 'disabled' })
+        console.log(JSON.stringify({ file: filename, size, browser: browser.version() }))
+      }
       assert.deepEqual(errors, [])
       assert.deepEqual(external, [])
-      assert.ok(widths.page <= widths.viewport, JSON.stringify(widths))
+      assert.ok(layout.pageWidth <= layout.viewportWidth, JSON.stringify(layout))
       await context.close()
     }
   } finally {
@@ -99,7 +125,8 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       url: { type: 'string', default: 'http://127.0.0.1:5173' },
       out: { type: 'string', default: 'docs/screenshots' },
       prefix: { type: 'string', default: 'observatory' },
+      comparison: { type: 'boolean', default: false },
     },
   })
-  await capture(values.url, values.out, values.prefix)
+  await capture(values.url, values.out, values.prefix, values.comparison)
 }

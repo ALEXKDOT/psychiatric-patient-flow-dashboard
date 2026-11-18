@@ -1,13 +1,13 @@
 .geo-map {
-  --map-ink: #303d3b;
-  --map-border: #b9c2ba;
+  --map-ink: #343a39;
+  --map-border: #b4bab7;
   position: relative;
   isolation: isolate;
   width: 100%;
   height: 100%;
   min-height: 220px;
   overflow: hidden;
-  background: #d6e4e6;
+  background: #f2f4f3;
   color: var(--map-ink);
   font-family: 'IBM Plex Sans Variable', 'IBM Plex Sans', Arial, sans-serif;
 }
@@ -36,65 +36,102 @@
   outline-offset: -3px;
 }
 .geo-coordinates,
-.geo-labels {
+.geo-labels,
+.geo-site-codes,
+.geo-leader {
   pointer-events: none;
 }
-.geo-coordinates path {
-  stroke: #899997;
-  stroke-width: 0.65;
+.geo-ruler {
+  stroke: #7b8281;
+  stroke-width: 0.8;
+  opacity: 0.8;
+}
+.geo-graticule {
+  stroke: #8e9694;
+  stroke-width: 0.68;
+  stroke-dasharray: 1.2 4.8;
+  opacity: 0.47;
+}
+.geo-register {
+  stroke: #737d7b;
+  stroke-width: 0.75;
+  opacity: 0.74;
 }
 .geo-coordinates text {
+  fill: #646d6b;
   font:
     8px 'IBM Plex Mono',
     monospace;
-  fill: #627678;
+  letter-spacing: 0.4px;
+  paint-order: stroke;
+  stroke: #edf0ed;
+  stroke-width: 2.5px;
 }
 .geo-label-borough {
   font:
-    600 11px 'IBM Plex Sans Variable',
+    600 13px 'IBM Plex Sans Variable',
     Arial,
     sans-serif;
   letter-spacing: 2.8px;
-  fill: #657168;
-  stroke: #eeeee5;
-  stroke-width: 2.8px;
+  fill: #5c6160;
   paint-order: stroke;
+  stroke: #edf0ed;
+  stroke-width: 3px;
+  stroke-linejoin: round;
 }
 .geo-label-water {
   font:
     italic 13px Georgia,
     serif;
-  letter-spacing: 0.55px;
-  fill: #66878a;
-  stroke: #d8e6e6;
-  stroke-width: 1.8px;
+  letter-spacing: 0.65px;
+  fill: #717b7d;
   paint-order: stroke;
+  stroke: #f3f6f5;
+  stroke-width: 2.5px;
 }
 .geo-label-place {
   font:
     10px 'IBM Plex Sans Variable',
     Arial,
     sans-serif;
-  fill: #758075;
-  stroke: #eeeee4;
-  stroke-width: 2.6px;
+  letter-spacing: 0.15px;
+  fill: #666c69;
   paint-order: stroke;
+  stroke: #eceeeb;
+  stroke-width: 2.8px;
+}
+.geo-site-codes {
+  fill: #454b49;
+}
+.geo-site-codes text {
+  font:
+    8px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.5px;
+  paint-order: stroke;
+  stroke: #f1f2ef;
+  stroke-width: 2;
+}
+.geo-site-codes path {
+  stroke: #646a68;
+  stroke-width: 0.7;
+  fill: none;
 }
 .geo-trail .geo-arc {
-  stroke: #7d8e88;
-  stroke-width: 1.1;
+  stroke: #747f7c;
+  stroke-width: 1.2;
   stroke-dasharray: 3 3;
   fill: none;
-  opacity: 0.72;
+  opacity: 0.8;
 }
 .geo-trip .geo-arc {
-  stroke: #cb693d;
-  stroke-width: 1.8;
+  stroke: #d35a25;
+  stroke-width: 1.9;
   fill: none;
 }
 .geo-referral {
-  stroke: #686c89;
-  stroke-width: 1.35;
+  stroke: #5d6474;
+  stroke-width: 1.3;
   stroke-dasharray: 1.8 3.6;
   fill: none;
 }
@@ -103,52 +140,107 @@
   outline: none;
 }
 .geo-node-shell {
-  fill: #495f5a;
-  stroke: #fafaf3;
-  stroke-width: 1.65px;
+  fill: #363c3b;
+  stroke: #fff;
+  stroke-width: 1.5px;
 }
 .geo-node:hover .geo-node-shell,
 .geo-node:focus-visible .geo-node-shell {
-  fill: #1f302b;
-  stroke: #d95922;
-  stroke-width: 2.2px;
+  fill: #262c2b;
+  stroke: #e16027;
+  stroke-width: 2px;
   r: 6px;
 }
 .geo-bracket {
   fill: none;
-  stroke: #c35229;
-  stroke-width: 1.5;
+  stroke: #d65a24;
+  stroke-width: 2;
 }
 .geo-halo {
-  fill: #db6b32;
-  fill-opacity: 0.11;
-  stroke: #d77c52;
-  stroke-opacity: 0.48;
+  fill: #f8f4ee;
+  fill-opacity: 0.4;
+  stroke: #d27244;
+  stroke-opacity: 0.78;
   stroke-width: 1;
-  stroke-dasharray: 1 3;
+  stroke-dasharray: 1 3.8;
 }
-.geo-tag {
-  pointer-events: none;
+.geo-sights {
+  fill: none;
+  stroke: #c65320;
+  stroke-width: 1.1;
+}
+.geo-leader {
+  fill: none;
+  stroke: #cc5626;
+  stroke-width: 1.15;
+}
+.geo-nameplate,
+.geo-hover-tag {
   position: absolute;
+  pointer-events: none;
+}
+.geo-nameplate {
+  font-family: 'IBM Plex Sans Variable', Arial, sans-serif;
+  line-height: 1.1;
+  background: #303534;
+  color: #fff;
+  border-left: 3px solid #e76c34;
+  box-shadow: 1px 2px 3px #23292826;
+  clip-path: polygon(0 0, calc(100% - 5px) 0, 100% 5px, 100% 100%, 0 100%);
+}
+.geo-tag-head {
   display: flex;
   align-items: center;
-  max-width: min(172px, 40%);
-  padding: 5px 8px;
-  background: #f9faf4;
-  border: 1px solid #a6b0a8;
-  box-shadow: 0 1px 3px #3647381c;
-  color: #283834;
-  font-size: 11px;
-  font-weight: 600;
-  line-height: 1.15;
+  gap: 6px;
+  padding: 6px 8px 0;
+  font:
+    500 8px/12px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.8px;
+  color: #edf0ec;
 }
-.geo-tag span {
-  overflow: hidden;
+.geo-tag-head i {
+  background: #fa803f;
+  width: 5px;
+  height: 5px;
+}
+.geo-tag-head span {
+  color: #8c9491;
+}
+.geo-nameplate strong {
+  display: block;
+  padding: 1px 8px 6px;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.15px;
 }
-.geo-tag.is-active {
-  border-left: 3px solid #d65e2c;
+.geo-tag-coords {
+  padding: 4px 8px 5px;
+  font:
+    8px/10px 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.18px;
+  color: #454b48;
+  background: #f5f6f1;
+  border: 1px solid #a8afaa;
+  border-left: 0;
+}
+.geo-tag-coords span {
+  color: #9a9f98;
+}
+.geo-hover-tag {
+  background: #f9faf6;
+  color: #303734;
+  border: 1px solid #8c938e;
+  padding: 4px 7px;
+  font:
+    500 11px 'IBM Plex Sans Variable',
+    Arial,
+    sans-serif;
+  max-width: 150px;
 }
 .geo-extent,
 .geo-layers,
@@ -163,13 +255,13 @@
 .geo-nav,
 .geo-layer-menu {
   border: 1px solid var(--map-border);
-  background: #fbfcf6f5;
-  border-radius: 4px;
+  background: #f7f8f5f5;
+  border-radius: 1px;
   box-shadow: 0 1px 3px #30483812;
 }
 .geo-extent {
   top: 13px;
-  left: 14px;
+  right: 14px;
   display: flex;
   padding: 2px;
 }
@@ -189,17 +281,18 @@
 .geo-extent button {
   background: transparent;
   border: 0;
-  border-radius: 2px;
+  border-radius: 0px;
   padding: 4px 9px;
   font-size: 11px;
   line-height: 1.1;
 }
 .geo-extent button[aria-pressed='true'] {
   font-weight: 600;
-  background: #e1e6de;
+  background: #414745;
+  color: #f8f9f5;
 }
 .geo-layers {
-  right: 14px;
+  left: 14px;
   top: 13px;
   z-index: 3;
 }
@@ -214,7 +307,7 @@
 }
 .geo-layer-menu {
   position: absolute;
-  right: 0;
+  left: 0;
   top: calc(100% + 5px);
   width: 154px;
   padding: 5px;
@@ -241,7 +334,7 @@
   display: grid;
   place-items: center;
   border: 1px solid #a2afa5;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 .geo-layer-menu button[aria-checked='true'] .geo-check {
   color: white;
@@ -249,8 +342,8 @@
   border-color: #455b51;
 }
 .geo-north {
-  right: 24px;
-  top: 57px;
+  right: 22px;
+  top: 59px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -285,7 +378,7 @@
 }
 .geo-scale {
   bottom: 11px;
-  left: 14px;
+  left: 16px;
   display: flex;
   gap: 6px;
   align-items: end;
@@ -296,9 +389,9 @@
   text-shadow: 0 1px #ffffff;
 }
 .geo-scale span {
-  height: 5px;
-  border: 1px solid #55655c;
-  border-top: none;
+  height: 4px;
+  border: 1px solid #494f4c;
+  background: linear-gradient(to right, #454b49 50%, #f4f5f2 50%);
   margin-bottom: 4px;
 }
 .geo-credit {
@@ -311,7 +404,7 @@
   color: #4b5b53;
   background: #f5f7f0d6;
   padding: 1px 4px;
-  border-radius: 2px;
+  border-radius: 0px;
 }
 @media (max-width: 600px) {
   .geo-label-borough {
@@ -325,12 +418,12 @@
     font-size: 11px;
   }
   .geo-extent {
-    left: 9px;
+    right: 9px;
     top: 9px;
   }
   .geo-layers {
     top: 9px;
-    right: 9px;
+    left: 9px;
   }
   .geo-scale {
     left: 9px;
@@ -338,8 +431,17 @@
   .geo-nav {
     right: 9px;
   }
-  .geo-tag {
-    font-size: 10px;
+  .geo-nameplate strong {
+    font-size: 13px;
+  }
+  .geo-tag-coords {
+    padding: 4px 5px;
+    font-size: 7.5px;
+  }
+  .geo-tag-head {
+    gap: 4px;
+    padding-left: 5px;
+    letter-spacing: 0.6px;
   }
   .geo-north {
     right: 18px;

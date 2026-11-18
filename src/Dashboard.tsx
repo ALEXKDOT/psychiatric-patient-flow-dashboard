@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import {
-  Activity,
-  ArrowUpRight,
+  Radar,
+  Search,
+  Layers,
+  LocateFixed,
   ArrowRight,
   Building2,
   ChevronDown,
@@ -9,7 +11,6 @@ import {
   FlaskConical,
   GitCompareArrows,
   ListFilter,
-  Map as MapIcon,
   Maximize2,
   Minimize2,
 } from 'lucide-react'
@@ -17,7 +18,9 @@ import { GeoMap } from './GeoMap'
 import { Movements } from './Movements'
 import { Instruments } from './Instruments'
 import { Modal } from './ui'
+import { LayerControls, initialLayers, type VisibleLayers } from './LayerControls'
 import { NetworkMetrics } from './NetworkMetrics'
+import { RegionLocator } from './RegionLocator'
 import { CampusInspector } from './CampusInspector'
 import { About } from './About'
 import {
@@ -31,7 +34,10 @@ import {
   humanize,
   type CampusFilters,
 } from './data'
-import type { Frame, Scenario } from './sim'
+import { DEFAULT_SEED, MODEL_VERSION, type Frame, type Scenario } from './sim'
+
+const runStamp = 'SEED ' + DEFAULT_SEED + ' / ' + MODEL_VERSION + ' / DATA ' + DATA_VERSION
+const searchShortcut = /Mac|iPhone|iPad/.test(navigator.platform) ? '⌘ K' : 'Ctrl K'
 
 const networkNodes = campuses.map((c, i) => ({
   id: c.id,
@@ -73,9 +79,13 @@ export function Dashboard({
 }: Props) {
   const [selected, setSelected] = useState('nyc_bellevue')
   const [panel, setPanel] = useState<
-    null | 'data' | 'directory' | 'compare' | 'about' | 'filters' | 'movements'
+    null | 'data' | 'directory' | 'compare' | 'about' | 'filters' | 'movements' | 'layers'
   >(null)
   const [filters, setFilters] = useState<CampusFilters>({})
+  const [layers, setLayers] = useState(initialLayers)
+  function toggleLayer(key: keyof VisibleLayers) {
+    setLayers((old) => ({ ...old, [key]: !old[key] }))
+  }
   const [big, setBig] = useState(false)
   const [chosenTrip, setChosenTrip] = useState<string | null>(null)
   const [movementScope, setMovementScope] = useState<string | null>(null)
@@ -85,6 +95,7 @@ export function Dashboard({
     onInspect?.()
     setPanel('movements')
   }
+  const stage = useRef<HTMLElement>(null)
   const mapExpand = useRef<HTMLButtonElement>(null)
   const results = filterCampuses(filters),
     ids = results.map((c) => c.id)
@@ -98,6 +109,7 @@ export function Dashboard({
     setPanel(null)
   }
   function fromDirectory(id: string) {
+    setBig(false)
     setFilters({})
     select(id)
   }
@@ -109,15 +121,61 @@ export function Dashboard({
   }
   useEffect(() => {
     if (!big) return
-    const key = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && !document.querySelector('dialog[open]')) {
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const background = document.querySelectorAll<HTMLElement>(
+      '.console-bar,.control-rail,.instruments,.system-foot,.skip',
+    )
+    background.forEach((element) => {
+      element.inert = true
+    })
+    function key(event: KeyboardEvent) {
+      if (document.querySelector('dialog[open]')) return
+      if (event.key === 'Escape') {
         setBig(false)
         mapExpand.current?.focus()
       }
+      if (event.key !== 'Tab' || !stage.current) return
+      const controls = [
+        ...stage.current.querySelectorAll<HTMLElement>(
+          'button:not(:disabled),select,input,[tabindex="0"]',
+        ),
+      ].filter((el) => el.getClientRects().length)
+      const first = controls[0],
+        last = controls.at(-1)
+      if (event.shiftKey && document.activeElement === first && last) {
+        event.preventDefault()
+        last.focus()
+      }
+      if (!event.shiftKey && document.activeElement === last && first) {
+        event.preventDefault()
+        first.focus()
+      }
     }
     window.addEventListener('keydown', key)
-    return () => window.removeEventListener('keydown', key)
+    return () => {
+      window.removeEventListener('keydown', key)
+      document.body.style.overflow = previousOverflow
+      background.forEach((element) => {
+        element.inert = false
+      })
+    }
   }, [big])
+  useEffect(() => {
+    function shortcut(event: KeyboardEvent) {
+      if (
+        (event.metaKey || event.ctrlKey) &&
+        event.key.toLowerCase() === 'k' &&
+        directory &&
+        !document.querySelector('dialog[open]')
+      ) {
+        event.preventDefault()
+        setPanel('directory')
+      }
+    }
+    window.addEventListener('keydown', shortcut)
+    return () => window.removeEventListener('keydown', shortcut)
+  }, [directory])
   const transfers = frame.transfers
   const related = transfers.filter((t) => t.from === selected || t.to === selected)
   return (
@@ -125,27 +183,57 @@ export function Dashboard({
       <a className="skip" href="#overview">
         Skip to observatory
       </a>
-      <header className="mast">
-        <div className="mast-inner">
-          <div className="brand">
-            <img src="/atlas.svg" alt="" width="34" height="34" />
-            <strong>Flow Atlas</strong>
-          </div>
-          <nav aria-label="Workspace">
+      <header className="console-bar">
+        <div className="brand">
+          <img src="/atlas.svg" width="31" height="31" alt="" />
+          <strong>Flow Atlas</strong>
+        </div>
+        <div className="product-label">Psychiatric operations</div>
+        <div className="bar-tools">
+          <span className="run-meta">{runStamp}</span>
+          {directory && (
             <button
-              className="nav-active"
+              className="search-launch"
+              onClick={() => setPanel('directory')}
+              aria-label="Search campuses"
+              aria-keyshortcuts="Control+K Meta+K"
+            >
+              <Search size={14} />
+              <span>Search campuses</span>
+              <kbd aria-hidden="true">{searchShortcut}</kbd>
+            </button>
+          )}
+          <span className="sim-badge">
+            <i /> <span>Simulated operations</span>
+          </span>
+          <button
+            className="help"
+            aria-label="About the simulation"
+            onClick={() => setPanel('about')}
+          >
+            <CircleHelp size={17} />
+          </button>
+        </div>
+      </header>
+      <main className="console-layout" id="overview">
+        <div className="control-rail">
+          <nav className="rail-nav" aria-label="Workspace">
+            <h2 className="rail-caption">Workspace</h2>
+            <button
+              className="nav-current"
+              aria-current="page"
               onClick={() => {
                 setPanel(null)
                 document.getElementById('overview')?.scrollIntoView()
               }}
             >
-              <Activity />
+              <Radar />
               Observatory
             </button>
             {directory && (
-              <button onClick={() => setPanel('directory')}>
+              <button onClick={() => setPanel('directory')} aria-label="Campuses">
                 <Building2 />
-                Campuses
+                Campuses <small>{campuses.length}</small>
               </button>
             )}
             {comparison && (
@@ -155,94 +243,105 @@ export function Dashboard({
               </button>
             )}
           </nav>
-          <div className="mast-end">
-            <span className="status-lamp" />
-            <span className="mast-status">Simulated operations</span>
-            <span className="mast-mobile">Simulation</span>{' '}
-            <button
-              onClick={() => setPanel('about')}
-              className="help"
-              aria-label="About the simulation"
-            >
-              <CircleHelp size={17} />
-            </button>
+          <div className="rail-layers">
+            <LayerControls
+              layers={layers}
+              onToggle={toggleLayer}
+              onMovements={() => showMovements()}
+              activeCount={transfers.length}
+            />
+          </div>
+          <CampusInspector
+            campus={campus}
+            focus={focus}
+            pool={pool}
+            openReferrals={
+              frame.referrals.filter((r) => r.status === 'pending' && r.from === selected).length
+            }
+            relatedCount={related.length}
+            selectionVisible={selectionVisible}
+            onRecord={record ? () => setPanel('data') : undefined}
+            onMovements={() => showMovements(null, selected)}
+          />
+
+          <RegionLocator selectedId={selectionVisible ? selected : null} />
+          <div className="rail-foot">
+            <span>Source snapshot</span>
+            <time dateTime={DATA_VERSION}>{DATA_VERSION}</time>
           </div>
         </div>
-      </header>
-      <main className="page" id="overview">
-        <div className="intro">
-          <div>
-            <div className="eyebrow region">
-              <span />
-              NEW YORK REGION / ADULT PSYCHIATRY
+        <section
+          ref={stage}
+          role={big ? 'dialog' : undefined}
+          aria-modal={big || undefined}
+          aria-label="Geographic network"
+          className={'network-stage' + (big ? ' map-expanded' : '')}
+        >
+          <header className="stage-head">
+            <div className="scene-name">
+              <div className="scene-scope">
+                <span />
+                NEW YORK METRO <b>/</b> ADULT PSYCHIATRY
+              </div>
+              <h1>Patient flow observatory</h1>
             </div>
-            <h1>Patient flow observatory</h1>
-            <p>
-              Public facility information <span aria-hidden="true">·</span> Simulated operations
-            </p>
-          </div>
-          <div className="scenario-block">
-            <div className="scenario-select">
-              <FlaskConical size={18} />
-              <div>
-                <span className="eyebrow">Scenario</span>
+            <div className="scene-tools">
+              <label className="scenario-select">
+                <FlaskConical size={15} />
                 {setScenario ? (
                   <select
                     aria-label="Scenario"
                     value={scenario}
                     onChange={(e) => setScenario(e.target.value as Scenario)}
                   >
-                    {Object.entries(scenarioNames).map(([key, v]) => (
-                      <option key={key} value={key}>
+                    {Object.entries(scenarioNames).map(([k, v]) => (
+                      <option key={k} value={k}>
                         {v}
                       </option>
                     ))}
                   </select>
                 ) : (
-                  <strong>Baseline</strong>
+                  <span>Baseline</span>
                 )}
-              </div>
-              {setScenario && <ChevronDown size={14} />}
+                <ChevronDown size={12} />
+              </label>
+              <button
+                className={'tool-btn filter-action' + (isFiltered ? ' is-filtered' : '')}
+                onClick={() => setPanel('filters')}
+                aria-label={
+                  'Filters' +
+                  (isFiltered ? ' · ' + Object.values(filters).filter(Boolean).length : '')
+                }
+              >
+                <ListFilter size={15} />
+                <span>Filters</span>
+                {isFiltered && <b>{Object.values(filters).filter(Boolean).length}</b>}
+              </button>
+              <button
+                className="icon-btn layer-action"
+                aria-label="Map layers"
+                onClick={() => setPanel('layers')}
+              >
+                <Layers size={15} />
+              </button>
+              <button
+                className="icon-btn"
+                ref={mapExpand}
+                aria-label={big ? 'Exit expanded map' : 'Expand map'}
+                onClick={() => setBig(!big)}
+              >
+                {big ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+              </button>
             </div>
-            <span className="provenance-top">Seed 42 · FLOW-1.0 · 2026-11-18</span>
-          </div>
-        </div>
-        <NetworkMetrics frame={frame} />
-        <div className="workbench">
-          <section
-            aria-label="Geographic network"
-            className={'map-panel panel' + (big ? ' map-expanded' : '')}
-          >
-            <header className="map-title">
-              <div>
-                <MapIcon size={18} />
-                <h2>Campus network</h2>
-                <span className="counter">
-                  {isFiltered ? ids.length + ' / ' : ''}
-                  {campuses.length} sites
-                </span>
-              </div>
-              <div>
-                <button
-                  className={'tool-btn' + (isFiltered ? ' is-filtered' : '')}
-                  onClick={() => setPanel('filters')}
-                >
-                  <ListFilter size={15} />
-                  Filters{isFiltered ? ' · ' + Object.values(filters).filter(Boolean).length : ''}
-                </button>
-                <button
-                  className="icon-btn"
-                  ref={mapExpand}
-                  onClick={() => setBig(!big)}
-                  aria-label={big ? 'Exit expanded map' : 'Expand map'}
-                >
-                  {big ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
-                </button>
-              </div>
-            </header>
+          </header>
+          <div className="geo-board">
+            <div className="metric-overlay">
+              <NetworkMetrics frame={frame} />
+            </div>
             <div className="map-canvas">
               <GeoMap
                 facilities={networkNodes}
+                layers={layers}
                 selectedPool={selectionVisible ? pool : undefined}
                 selectedId={selectionVisible ? selected : ''}
                 onSelect={select}
@@ -258,70 +357,41 @@ export function Dashboard({
                   .map((r) => ({ from: r.from, to: r.to }))}
                 visibleIds={ids}
               />
+
               {!ids.length && (
                 <div className="map-empty">
                   No matching campuses <button onClick={() => setFilters({})}>Clear filters</button>
                 </div>
               )}
             </div>
-            <div className="legend">
-              <span>
-                <i className="campus-dot" />
-                Campus
-              </span>
-              <span>
-                <i className="selected-dot" />
-                Selected
-              </span>
-              <button onClick={() => showMovements()}>
-                <i className="route-line" />
-                Schematic transfer <ArrowUpRight size={11} />
-              </button>
-              <span className="trail-key">
-                <i />
-                Recent · 2h
-              </span>
-              <span className="ref-key">
-                <i />
-                Referral
-              </span>
-            </div>
-            {playback}
-          </section>
-          <CampusInspector
-            campus={campus}
-            focus={focus}
-            pool={pool}
-            openReferrals={
-              frame.referrals.filter((r) => r.status === 'pending' && r.from === selected).length
-            }
-            relatedCount={related.length}
-            selectionVisible={selectionVisible}
-            onRecord={record ? () => setPanel('data') : undefined}
-            onMovements={() => showMovements(null, selected)}
-          />
-        </div>
+          </div>
+          {playback}
+          <div className="mobile-run-meta">{runStamp}</div>
+        </section>
         <Instruments
           frame={frame}
           selectedId={selected}
           visibleIds={isFiltered ? ids : undefined}
           onSelect={select}
         />
-        <footer>
-          <span>
-            <i />
-            Public facility information · Simulated operations
-          </span>
-          <span>
-            {scenarioNames[scenario]} / SEED 42 / MODEL 1.0 / DATA {DATA_VERSION}
-          </span>
-        </footer>
       </main>
+      <footer className="system-foot">
+        <span>
+          <i />
+          Public facility information · Simulated operations
+        </span>
+        <span className="region-readout">
+          <LocateFixed size={12} />
+          {ids.length} of {campuses.length} campuses
+        </span>
+        <span>{runStamp}</span>
+      </footer>
       {panel && (
         <Modal
           title={
             {
               about: 'About Flow Atlas',
+              layers: 'Map layers',
               data: 'Campus record',
               directory: 'Campus directory',
               filters: 'Network filters',
@@ -336,6 +406,14 @@ export function Dashboard({
           {panel === 'data' && record?.(selected)}
           {panel === 'compare' && comparison}
           {panel === 'about' && <About />}
+          {panel === 'layers' && (
+            <LayerControls
+              layers={layers}
+              onToggle={toggleLayer}
+              onMovements={() => showMovements()}
+              activeCount={transfers.length}
+            />
+          )}
           {panel === 'filters' && (
             <>
               <h2>Filter campuses</h2>

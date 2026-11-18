@@ -2,10 +2,19 @@ import type { FeatureCollection, MultiPolygon, Polygon, Feature, MultiLineString
 import landText from '../../docs/research/REGIONAL_GEOGRAPHY.geojson?raw'
 import linesText from './tract-lines.json?raw'
 import context from './regional-context.json?raw'
+import waterText from './tidal-water.json?raw'
+export { default as plateUrl } from './census-plate.webp'
+export const plateBounds = { west: -74.53, south: 40.39, east: -73.43, north: 41.19 }
 
 export const land: FeatureCollection<Polygon | MultiPolygon> = JSON.parse(landText)
 // The handoff stops at county boundaries. Add adjacent land to preserve the coastline.
 land.features.unshift({ type: 'Feature', properties: {}, geometry: JSON.parse(context) })
+const shoreline: {
+  type: 'FeatureCollection'
+  features: [Feature<MultiPolygon>, Feature<MultiLineString>]
+} = JSON.parse(waterText)
+export const tidalWater = shoreline.features[0]
+export const tidalShore = shoreline.features[1]
 export const tracts: Feature<MultiLineString> = JSON.parse(linesText)
 export type Point = [number, number]
 export const mercatorLat = (lat: number) =>
@@ -31,21 +40,25 @@ export const landPath = land.features
   })
   .join('')
 
+export const waterPath = tidalWater.geometry.coordinates
+  .map((poly) => poly.map((ring) => path(ring) + 'Z').join(''))
+  .join('')
+export const shorePath = tidalShore.geometry.coordinates.map(path).join('')
 export const tractsPath = tracts.geometry.coordinates.map(path).join('')
 
 export type Camera = { lon: number; lat: number; zoom: number }
-export const cityCamera: Camera = { lon: -73.962, lat: 40.749, zoom: 1.16 }
+export const cityCamera: Camera = { lon: -73.999, lat: 40.747, zoom: 1.44 }
 export const regionCamera: Camera = { lon: -73.966, lat: 40.783, zoom: 0.55 }
 export const palette = {
-  water: '#d6e4e6',
-  land: '#eae9df',
-  shoreline: '#b8c6c5',
-  tracts: '#cccec2',
-  tractLight: '#f7f6ed',
+  water: '#dde7e9',
+  land: '#e5e6e3',
+  shoreline: '#b0b4b2',
+  tracts: '#aeb2b0',
+  tractLight: '#f2f3f1',
 }
 const boroughs: [string, number, number, number?][] = [
-  ['MANHATTAN', -73.99, 40.782, -65],
-  ['BROOKLYN', -73.95, 40.627],
+  ['MANHATTAN', -73.97, 40.794, -64],
+  ['BROOKLYN', -73.92, 40.659],
   ['QUEENS', -73.82, 40.704],
   ['THE BRONX', -73.866, 40.857],
   ['STATEN ISLAND', -74.14, 40.588],
@@ -55,7 +68,7 @@ const boroughs: [string, number, number, number?][] = [
 ]
 const water: [string, number, number, number?][] = [
   ['Upper Bay', -74.051, 40.646, -16],
-  ['Hudson River', -74.011, 40.786, -65],
+  ['Hudson River', -74.013, 40.754, -67],
   ['East River', -73.923, 40.786, -17],
   ['Jamaica Bay', -73.831, 40.605],
   ['Raritan Bay', -74.144, 40.47],
@@ -75,6 +88,17 @@ const places: [string, number, number][] = [
   ['Coney Island', -73.988, 40.572],
   ['Fort Lee', -73.978, 40.854],
   ['White Plains', -73.76, 41.023],
+  ['Park Slope', -73.981, 40.67],
+  ['Williamsburg', -73.96, 40.713],
+  ['Astoria', -73.923, 40.768],
+  ['South Ozone Park', -73.822, 40.674],
+  ['Flatbush', -73.955, 40.648],
+  ['Bensonhurst', -74.002, 40.604],
+  ['East Harlem', -73.936, 40.797],
+  ['Elizabeth', -74.21, 40.663],
+  ['Hackensack', -74.043, 40.884],
+  ['Bloomfield', -74.189, 40.807],
+  ['Paterson', -74.173, 40.918],
 ]
 export const labels = [
   ...boroughs.map(([text, lon, lat, angle]) => ({ text, lon, lat, angle, kind: 'borough' })),

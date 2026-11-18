@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef, useState } from 'react'
 import type { Map as GLMap, StyleSpecification } from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { land, tracts, palette } from './base'
+import { land, tracts, palette, tidalWater, tidalShore, plateUrl, plateBounds as b } from './base'
 import type { Camera } from './base'
 
 const style: StyleSpecification = {
@@ -9,6 +9,18 @@ const style: StyleSpecification = {
   sources: {
     counties: { type: 'geojson', data: land, tolerance: 0.25 },
     tracts: { type: 'geojson', data: tracts, tolerance: 0.45 },
+    tidalWater: { type: 'geojson', data: tidalWater, tolerance: 0.12 },
+    tidalShore: { type: 'geojson', data: tidalShore, tolerance: 0.12 },
+    plate: {
+      type: 'image',
+      url: plateUrl,
+      coordinates: [
+        [b.west, b.north],
+        [b.east, b.north],
+        [b.east, b.south],
+        [b.west, b.south],
+      ],
+    },
   },
   layers: [
     { id: 'water', type: 'background', paint: { 'background-color': palette.water } },
@@ -16,32 +28,56 @@ const style: StyleSpecification = {
       id: 'coast-outer',
       type: 'line',
       source: 'counties',
-      paint: { 'line-color': '#c4d5d6', 'line-width': 7 },
+      paint: { 'line-color': '#d2d7d5', 'line-width': 5 },
     },
     {
       id: 'coast-inner',
       type: 'line',
       source: 'counties',
-      paint: { 'line-color': '#e8eeee', 'line-width': 4 },
+      paint: { 'line-color': '#fbfcfa', 'line-width': 3 },
     },
     { id: 'land', type: 'fill', source: 'counties', paint: { 'fill-color': palette.land } },
+    {
+      id: 'engraved-geography',
+      type: 'raster',
+      source: 'plate',
+      paint: { 'raster-fade-duration': 0 },
+    },
     {
       id: 'tract-halo',
       type: 'line',
       source: 'tracts',
-      paint: { 'line-color': palette.tractLight, 'line-width': 2.4 },
+      paint: { 'line-color': palette.tractLight, 'line-width': 1.3, 'line-opacity': 0.55 },
     },
     {
       id: 'tract-line',
       type: 'line',
       source: 'tracts',
-      paint: { 'line-color': palette.tracts, 'line-width': 0.6 },
+      paint: { 'line-color': palette.tracts, 'line-width': 0.48, 'line-opacity': 0.75 },
     },
     {
       id: 'county-line',
       type: 'line',
       source: 'counties',
       paint: { 'line-color': palette.shoreline, 'line-width': 1 },
+    },
+    {
+      id: 'tidal-water',
+      source: 'tidalWater',
+      type: 'fill',
+      paint: { 'fill-color': palette.water },
+    },
+    {
+      id: 'tidal-edge-light',
+      source: 'tidalShore',
+      type: 'line',
+      paint: { 'line-color': '#f8faf7', 'line-width': 2.8 },
+    },
+    {
+      id: 'tidal-edge',
+      source: 'tidalShore',
+      type: 'line',
+      paint: { 'line-color': '#899997', 'line-width': 0.75 },
     },
   ],
 }

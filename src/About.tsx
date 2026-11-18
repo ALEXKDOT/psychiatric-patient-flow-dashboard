@@ -1,3 +1,6 @@
+import shorelineLicense from './cartography/licenses/GSHHG-COPYING.LESSER.txt?url'
+import incorporatedTerms from './cartography/licenses/GSHHG-COPYING.txt?url'
+
 export function About() {
   return (
     <>
@@ -42,8 +45,16 @@ export function About() {
           transfer.
         </p>
         <p>
-          Map geometry and tract texture come from the U.S. Census Bureau. Each campus record links
-          to its public evidence.
+          The geographic field combines U.S. Census Bureau boundaries and block groups, NYC
+          Department of City Planning borough shorelines, and GSHHG shorelines by Paul Wessel and
+          Walter H. F. Smith. The regional water mask adapts GSHHG under LGPL 3.0 or later.{' '}
+          <a href={shorelineLicense} target="_blank" rel="noreferrer">
+            Shoreline license
+          </a>
+          {' · '}
+          <a href={incorporatedTerms} target="_blank" rel="noreferrer">
+            Incorporated GPL terms
+          </a>
         </p>
       </details>
     </>

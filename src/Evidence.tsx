@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowUpRight, BookOpen, Check, ChevronRight, MapPin, Search, X } from 'lucide-react'
 import {
   boroughs,
@@ -140,7 +140,7 @@ export function EvidenceRecord({ campus }: { campus: Campus }) {
         <span className="ev-kicker">
           <BookOpen size={14} /> Public facility record
         </span>
-        <h3>{campus.name}</h3>
+        <h2>{campus.name}</h2>
         <p>
           <MapPin size={14} />
           {r.address_line1}
@@ -172,17 +172,17 @@ export function EvidenceRecord({ campus }: { campus: Campus }) {
       </dl>
       <p className="ev-note">{r.notes}</p>
       <section>
-        <h4>
+        <h3>
           Program registry <span>{campus.programs.length}</span>
-        </h4>
+        </h3>
         {campus.programs.map((p) => (
           <ProgramDetails key={p.program_id} p={p} />
         ))}
       </section>
       <section>
-        <h4>
+        <h3>
           Provider service profiles <span>{campus.services.length}</span>
-        </h4>
+        </h3>
         {campus.services.length === 0 && (
           <p className="ev-note">
             This research snapshot has no separate provider profile for this campus. Its OMH program
@@ -234,6 +234,12 @@ export function EvidenceDirectory({
   filters,
   onFiltersChange,
 }: DirectoryProps) {
+  const search = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    // The enclosing native dialog opens in its mount effect.
+    const frame = requestAnimationFrame(() => search.current?.focus({ preventScroll: true }))
+    return () => cancelAnimationFrame(frame)
+  }, [])
   const [local, setLocal] = useState<CampusFilters>({})
   const current = filters ?? local
   const update = (next: CampusFilters) => {
@@ -244,114 +250,124 @@ export function EvidenceDirectory({
   const active = Object.values(current).some(Boolean)
   return (
     <section className="ev-directory">
-      <div className="ev-query">
-        <Search size={17} />
-        <input
-          type="search"
-          value={current.query ?? ''}
-          aria-label="Search campus directory"
-          placeholder="Search a campus, area, or service"
-          onChange={(e) => update({ ...current, query: e.target.value })}
-        />
-      </div>
-      <div className="ev-filters">
-        <label>
-          Area
-          <select
-            value={current.borough ?? ''}
-            onChange={(e) => update({ ...current, borough: e.target.value })}
-          >
-            <option value="">All areas</option>
-            {boroughs.map((b) => (
-              <option key={b}>{b}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Published service
-          <select
-            value={current.service ?? ''}
-            onChange={(e) => update({ ...current, service: e.target.value })}
-          >
-            <option value="">All services</option>
-            <optgroup label="OMH programs">
-              {[...new Set(campuses.flatMap((c) => c.programs.map((p) => p.program_type)))]
-                .sort()
-                .map((p) => (
-                  <option key={p}>{p}</option>
+      <div className="ev-controls">
+        <div className="ev-query">
+          <Search size={17} />
+          <input
+            ref={search}
+            type="text"
+            role="searchbox"
+            enterKeyHint="search"
+            value={current.query ?? ''}
+            aria-label="Search campus directory"
+            placeholder="Campus, area, or service"
+            onChange={(e) => update({ ...current, query: e.target.value })}
+          />
+        </div>
+        <div className="ev-filters">
+          <label>
+            Area
+            <select
+              value={current.borough ?? ''}
+              onChange={(e) => update({ ...current, borough: e.target.value })}
+            >
+              <option value="">All areas</option>
+              {boroughs.map((b) => (
+                <option key={b}>{b}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Published service
+            <select
+              value={current.service ?? ''}
+              onChange={(e) => update({ ...current, service: e.target.value })}
+            >
+              <option value="">All services</option>
+              <optgroup label="OMH programs">
+                {[...new Set(campuses.flatMap((c) => c.programs.map((p) => p.program_type)))]
+                  .sort()
+                  .map((p) => (
+                    <option key={p}>{p}</option>
+                  ))}
+              </optgroup>
+              <optgroup label="Provider profiles">
+                {serviceTypes.map((s) => (
+                  <option value={s} key={s}>
+                    {humanize(s)}
+                  </option>
                 ))}
-            </optgroup>
-            <optgroup label="Provider profiles">
-              {serviceTypes.map((s) => (
-                <option value={s} key={s}>
-                  {humanize(s)}
+              </optgroup>
+            </select>
+          </label>
+          <label>
+            OMH program population
+            <select
+              value={current.population ?? ''}
+              onChange={(e) => update({ ...current, population: e.target.value })}
+            >
+              <option value="">All populations</option>
+              {programPopulations.map((tag) => (
+                <option key={tag}>{tag}</option>
+              ))}
+            </select>
+          </label>
+          <label>
+            Published sponsor
+            <select
+              value={current.sponsor ?? ''}
+              onChange={(e) => update({ ...current, sponsor: e.target.value })}
+            >
+              <option value="">All sponsors</option>
+              {sponsorOptions.map(([id, name]) => (
+                <option value={id} key={id}>
+                  {name}
                 </option>
               ))}
-            </optgroup>
-          </select>
-        </label>
-        <label>
-          OMH program population
-          <select
-            value={current.population ?? ''}
-            onChange={(e) => update({ ...current, population: e.target.value })}
-          >
-            <option value="">All populations</option>
-            {programPopulations.map((tag) => (
-              <option key={tag}>{tag}</option>
-            ))}
-          </select>
-        </label>
-        <label>
-          Published sponsor
-          <select
-            value={current.sponsor ?? ''}
-            onChange={(e) => update({ ...current, sponsor: e.target.value })}
-          >
-            <option value="">All sponsors</option>
-            {sponsorOptions.map(([id, name]) => (
-              <option value={id} key={id}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </label>
+            </select>
+          </label>
+        </div>
       </div>
-      <div className="ev-result-count">
-        <span aria-live="polite">
-          {results.length} of {campuses.length} campuses
-        </span>
-        {active && (
-          <button type="button" onClick={() => update({})}>
-            <X size={12} />
-            Clear filters
-          </button>
-        )}
-      </div>
-      <ul aria-label="Facility results">
-        {results.map((c) => (
-          <li key={c.id}>
-            <button
-              type="button"
-              aria-current={c.id === selectedId || undefined}
-              onClick={() => onSelect(c.id)}
-            >
-              <span>
-                <strong>{c.shortName}</strong>
-                <small>
-                  {c.borough} · {c.raw.address_line1}
-                </small>
-              </span>
-              {c.id === selectedId ? (
-                <Check size={16} aria-label="Selected" />
-              ) : (
-                <ChevronRight size={16} />
-              )}
+      <div className="ev-results">
+        <div className="ev-result-count">
+          <span aria-live="polite">
+            {results.length} of {campuses.length} campuses
+          </span>
+          {active && (
+            <button type="button" onClick={() => update({})}>
+              <X size={12} />
+              Clear filters
             </button>
-          </li>
-        ))}
-      </ul>
-      {!results.length && <p className="ev-note">No campus matches these filters.</p>}
+          )}
+        </div>
+        <div className="ev-columnheads" aria-hidden="true">
+          <span>Campus / address</span>
+          <span>Area</span>
+        </div>
+        <ul aria-label="Facility results">
+          {results.map((c) => (
+            <li key={c.id}>
+              <button
+                type="button"
+                aria-current={c.id === selectedId || undefined}
+                onClick={() => onSelect(c.id)}
+              >
+                <span>
+                  <strong>{c.shortName}</strong>
+                  <small>{c.raw.address_line1}</small>
+                </span>
+                <span className="ev-area">{c.borough}</span>
+                {c.id === selectedId ? (
+                  <Check size={16} aria-label="Selected" />
+                ) : (
+                  <ChevronRight size={16} />
+                )}
+              </button>
+            </li>
+          ))}
+        </ul>
+        {!results.length && <p className="ev-note">No campus matches these filters.</p>}
+      </div>
     </section>
   )
 }
