@@ -1,0 +1,261 @@
+.ev-directory,
+.ev-record {
+  color: #27343a;
+  min-width: 0;
+  font-size: 14px;
+}
+.ev-directory :is(input, select, button) {
+  font: inherit;
+}
+.ev-query {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #abb4b5;
+  border-radius: 5px;
+  background: #fff;
+  padding: 0 12px;
+}
+.ev-query:focus-within {
+  outline: 2px solid #ba4c16;
+  outline-offset: 1px;
+}
+.ev-query input {
+  width: 100%;
+  min-width: 0;
+  border: none;
+  background: none;
+  padding: 12px 0;
+  color: inherit;
+}
+.ev-query input:focus {
+  outline: none;
+}
+.ev-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+  margin: 14px 0;
+}
+.ev-filters label {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.ev-filters select {
+  width: 100%;
+  min-width: 0;
+  color: #344349;
+  background: #fff;
+  border: 1px solid #bbc3c4;
+  border-radius: 4px;
+  padding: 8px;
+}
+.ev-result-count {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 18px 0 6px;
+  min-height: 24px;
+  color: #516166;
+  font:
+    12px 'IBM Plex Mono',
+    monospace;
+}
+.ev-result-count button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: none;
+  border: 0;
+  color: #92401b;
+  cursor: pointer;
+}
+.ev-directory ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid #cbd3d2;
+}
+.ev-directory li {
+  border-bottom: 1px solid #dce2df;
+}
+.ev-directory li button,
+.ev-item summary {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  text-align: left;
+  padding: 11px 8px;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.ev-directory li button:hover,
+.ev-item summary:hover,
+.ev-directory li button[aria-current] {
+  background: #f2f3ee;
+}
+.ev-directory li button[aria-current] {
+  box-shadow: inset 3px 0 #c35c24;
+}
+.ev-directory strong,
+.ev-item summary strong {
+  display: block;
+  font-weight: 600;
+}
+.ev-directory li small,
+.ev-item summary small {
+  display: block;
+  margin-top: 4px;
+  color: #596869;
+  font-size: 12px;
+}
+.ev-header {
+  border-bottom: 1px solid #c8d1ce;
+  padding: 0 0 15px;
+}
+.ev-kicker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #4b6261;
+  font:
+    600 11px 'IBM Plex Mono',
+    monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.ev-header h3 {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 600;
+  line-height: 1.18;
+  margin: 11px 0;
+  letter-spacing: -0.025em;
+}
+.ev-header p {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  color: #586765;
+  line-height: 1.5;
+  margin: 0;
+}
+.ev-header p svg,
+.ev-item svg {
+  flex-shrink: 0;
+}
+.ev-summary,
+.ev-record dl {
+  margin: 4px 0 12px;
+}
+.ev-fact {
+  display: grid;
+  grid-template-columns: minmax(112px, 1fr) 2.2fr;
+  gap: 12px;
+  border-bottom: 1px solid #dce2df;
+  padding: 9px 0;
+  line-height: 1.5;
+}
+.ev-fact dt {
+  font-size: 12px;
+  color: #556460;
+}
+.ev-fact dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.ev-citations {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  vertical-align: baseline;
+}
+.ev-citations a {
+  display: inline-flex;
+  align-items: center;
+  gap: 1px;
+  color: #415f63;
+  font:
+    11px 'IBM Plex Mono',
+    monospace;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ev-record h4 {
+  font-size: 17px;
+  margin: 24px 0 8px;
+  line-height: 1.35;
+}
+.ev-record h4 span {
+  font:
+    12px 'IBM Plex Mono',
+    monospace;
+  color: #61716b;
+  margin-left: 5px;
+}
+.ev-note {
+  margin: 12px 0;
+  font-size: 13px;
+  color: #536462;
+  line-height: 1.5;
+}
+.ev-item {
+  border-top: 1px solid #cbd3d2;
+}
+.ev-item summary {
+  list-style: none;
+  line-height: 1.35;
+}
+.ev-item summary::-webkit-details-marker {
+  display: none;
+}
+.ev-item[open] summary {
+  background: #f0f3ef;
+}
+.ev-item[open] summary svg {
+  transform: rotate(90deg);
+}
+.ev-item dl {
+  padding: 0 9px;
+}
+.ev-sources {
+  border-top: 1px solid #cbd3d2;
+  margin-top: 20px;
+  line-height: 1.5;
+}
+.ev-sources summary {
+  font-weight: 600;
+  padding: 12px 0;
+  cursor: pointer;
+}
+.ev-sources > div {
+  padding: 10px 0;
+  border-top: 1px solid #dce2df;
+}
+.ev-sources p,
+.ev-sources small {
+  margin: 3px 0;
+  color: #51605c;
+}
+.ev-directory :focus-visible,
+.ev-record :focus-visible {
+  outline: 2px solid #a84718;
+  outline-offset: 2px;
+}
+@media (max-width: 520px) {
+  .ev-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+  .ev-fact {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+}

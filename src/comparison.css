@@ -1,0 +1,185 @@
+.comparison {
+  --cmp-paper: #f9f9f5;
+  --cmp-ink: #263633;
+  --cmp-muted: #53645f;
+  --cmp-line: #d8ded9;
+  color: var(--cmp-ink);
+  font-variant-numeric: tabular-nums;
+}
+.cmp-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.cmp-header h2 {
+  margin: 0;
+  line-height: 1.15;
+  font-size: clamp(22px, 3.4vw, 30px);
+  font-weight: 550;
+  letter-spacing: -0.035em;
+}
+.cmp-header p,
+.cmp-intervention,
+.cmp-method p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cmp-muted);
+}
+.cmp-export,
+.cmp-switch button,
+.cmp-options select {
+  min-height: 36px;
+  border: 1px solid var(--cmp-line);
+  background: var(--cmp-paper);
+  border-radius: 4px;
+  color: var(--cmp-ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+}
+.cmp-export {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+}
+.cmp-options {
+  margin: 22px 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 24px;
+  align-items: flex-end;
+}
+.cmp-options label,
+.cmp-label {
+  display: block;
+  color: var(--cmp-muted);
+  font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.065em;
+  font-weight: 500;
+}
+.cmp-options select {
+  display: block;
+  margin-top: 5px;
+  padding: 0 26px 0 10px;
+  font-family: 'IBM Plex Sans Variable', sans-serif;
+}
+.cmp-switch {
+  margin-top: 5px;
+  display: inline-flex;
+}
+.cmp-switch button {
+  padding: 0 12px;
+  border-radius: 4px 0 0 4px;
+}
+.cmp-switch button + button {
+  border-left: 0;
+  border-radius: 0 4px 4px 0;
+}
+.cmp-switch button[aria-pressed='true'] {
+  background: #33443e;
+  border-color: #33443e;
+  color: #fff;
+}
+.cmp-switch button:hover,
+.cmp-export:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cmp-table-scroll {
+  overflow: auto;
+  margin-top: 18px;
+}
+.cmp-table-scroll table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 350px;
+}
+.cmp-table-scroll caption {
+  text-align: left;
+  padding: 10px 0;
+  border-top: 1px solid var(--cmp-line);
+  color: var(--cmp-ink);
+  font-weight: 600;
+  font-size: 14px;
+}
+.cmp-table-scroll thead {
+  background: #eff1ec;
+}
+.cmp-table-scroll th,
+.cmp-table-scroll td {
+  border-bottom: 1px solid var(--cmp-line);
+  padding: 7px 9px;
+  font-size: 13px;
+  line-height: 1.3;
+}
+.cmp-table-scroll thead th {
+  font-size: 11px;
+  font-weight: 600;
+  text-align: right;
+  white-space: nowrap;
+}
+.cmp-table-scroll th:first-child {
+  text-align: left;
+}
+.cmp-table-scroll tbody th {
+  font-weight: 500;
+}
+.cmp-table-scroll small {
+  margin-left: 6px;
+  font-weight: 400;
+  color: var(--cmp-muted);
+  font-size: 11px;
+}
+.cmp-table-scroll td {
+  font-family: 'IBM Plex Mono', monospace;
+  text-align: right;
+  white-space: nowrap;
+}
+.cmp-table-scroll td:last-child {
+  color: var(--cmp-muted);
+}
+.cmp-method {
+  margin-top: 14px;
+  font-size: 13px;
+}
+.cmp-method summary {
+  padding: 4px 0;
+  cursor: pointer;
+  font-weight: 550;
+}
+.cmp-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: space-between;
+  padding-top: 15px;
+  font:
+    10px 'IBM Plex Mono',
+    monospace;
+  color: var(--cmp-muted);
+}
+@media (max-width: 540px) {
+  .cmp-options {
+    margin-top: 15px;
+  }
+  .cmp-table-scroll table {
+    min-width: 304px;
+  }
+  .cmp-table-scroll th,
+  .cmp-table-scroll td {
+    padding: 6px;
+  }
+  .cmp-table-scroll small {
+    display: block;
+    margin: 1px 0 0;
+  }
+  .cmp-export {
+    min-height: 32px;
+  }
+}
