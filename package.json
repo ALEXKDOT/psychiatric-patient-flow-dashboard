@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "build": "npm run typecheck && vite build",
     "predeploy:pages": "npm run build",
-    "deploy:pages": "gh-pages -d dist --nojekyll -m \"Publish Flow Atlas to GitHub Pages\"",
+    "deploy:pages": "gh-pages -d dist --nojekyll --remove \"{**/*,.!(git),.!(git)/**/*}\" -m \"Publish Flow Atlas to GitHub Pages\"",
     "preview": "vite preview --host 0.0.0.0",
     "test": "tsx --test tests/*.test.ts",
     "lint": "eslint src tests/*.ts vite.config.ts --max-warnings=0",
