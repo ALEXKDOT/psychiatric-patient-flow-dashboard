@@ -4,6 +4,14 @@ Flow Atlas is a psychiatric patient-flow observatory for New York City and Westc
 
 ![Flow Atlas desktop overview](docs/screenshots/observatory-desktop.png)
 
+## GitHub Pages
+
+[Open Flow Atlas](https://alexkdot.github.io/psychiatric-patient-flow-dashboard/)
+
+The `main` branch holds the source. To publish a release from a checkout with push access to `origin`, install the locked dependencies with `npm ci` and run `npm run deploy:pages`. The command builds the app and pushes the contents of `dist/` to `gh-pages`, including the local map, fonts and licenses. GitHub serves that branch at the repository's project URL.
+
+The publishing source in [Settings → Pages](https://github.com/ALEXKDOT/psychiatric-patient-flow-dashboard/settings/pages) is **Deploy from a branch → gh-pages → / (root)**. The deployment run appears in [Actions](https://github.com/ALEXKDOT/psychiatric-patient-flow-dashboard/actions).
+
 ## Run locally
 
 Use Node.js 22.12 or later and npm. Development and verification used Node.js 24.22.1. From the repository root:

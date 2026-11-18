@@ -185,7 +185,7 @@ export function Dashboard({
       </a>
       <header className="console-bar">
         <div className="brand">
-          <img src="/atlas.svg" width="31" height="31" alt="" />
+          <img src="./atlas.svg" width="31" height="31" alt="" />
           <strong>Flow Atlas</strong>
         </div>
         <div className="product-label">Psychiatric operations</div>
