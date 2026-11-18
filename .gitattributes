@@ -1,0 +1,2 @@
+# Keep supplied research records byte-for-byte reproducible from the handoff.
+docs/research/* -text whitespace=cr-at-eol
