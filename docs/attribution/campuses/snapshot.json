@@ -1,0 +1,222 @@
+{
+  "public/campuses/nyc_bellevue/buildings.geojson": {
+    "bytes": 769921,
+    "sha256": "81b2335b600e6cea32debc9d3cc7b0a60fee180aa304473f41d3472ec0c38048"
+  },
+  "public/campuses/nyc_bellevue/streets.geojson": {
+    "bytes": 112520,
+    "sha256": "e8bda74bda5adf47d40b57188208975bb50d99d5907c0a8fc45c70f2c59e85bf"
+  },
+  "public/campuses/nyc_harlem/buildings.geojson": {
+    "bytes": 1253864,
+    "sha256": "4a44b26850e2e8b5e473ef70fb9c67e618960a78089d5e16723c6950df6bbdb4"
+  },
+  "public/campuses/nyc_harlem/streets.geojson": {
+    "bytes": 137402,
+    "sha256": "901b14f29f063a1fa61e24902d0557cbd7ffb4b76a436fa9400855e1d7a01d8b"
+  },
+  "public/campuses/nyc_metropolitan/buildings.geojson": {
+    "bytes": 808118,
+    "sha256": "adb327ea0dadc80c23bf16518e55d0fa82ed895b2f6da3cd51c48ba5d9ada38a"
+  },
+  "public/campuses/nyc_metropolitan/streets.geojson": {
+    "bytes": 92752,
+    "sha256": "495867a5bfb20a283c8d40854b4ae8479b0dbf9c4865b0ceba503485f07d43b9"
+  },
+  "public/campuses/nyc_kings_county/buildings.geojson": {
+    "bytes": 1970959,
+    "sha256": "eb3185e5249265419d5af9d07a7fc06f3d156e41e9f9f3fc360badcbcd8414f1"
+  },
+  "public/campuses/nyc_kings_county/streets.geojson": {
+    "bytes": 72099,
+    "sha256": "aa4f3907572c7761676eb250c4a1821797e5c48d877bb6dcb84cbd0fac9a989b"
+  },
+  "public/campuses/nyc_woodhull/buildings.geojson": {
+    "bytes": 1134307,
+    "sha256": "42f1521136412a232798ba54fa07f7452a37c7961c98b270aaac32f941711555"
+  },
+  "public/campuses/nyc_woodhull/streets.geojson": {
+    "bytes": 138756,
+    "sha256": "bb38ed8b47366085cceaefaa9ba237ad5786413f408aab9ade0d41cbc3041ae9"
+  },
+  "public/campuses/nyc_south_brooklyn/buildings.geojson": {
+    "bytes": 1572813,
+    "sha256": "2155e8265035b323f5392939a9fcab677622299a97fc54485cf26141503a15ac"
+  },
+  "public/campuses/nyc_south_brooklyn/streets.geojson": {
+    "bytes": 160673,
+    "sha256": "d043c579a4140b539cc5746598f00038160a9b6831f9832cda9b9ab76315b205"
+  },
+  "public/campuses/nyc_elmhurst/buildings.geojson": {
+    "bytes": 1871572,
+    "sha256": "f867019e50d806e7ee49a72801eaa67b3cc45a0a6b9ca18d1eb08e1e4d1746f4"
+  },
+  "public/campuses/nyc_elmhurst/streets.geojson": {
+    "bytes": 98138,
+    "sha256": "7a534e68b15143e2bf4ff2d3419134ddb83c1bb7ae564519a48e47ee1febdd1c"
+  },
+  "public/campuses/nyc_queens/buildings.geojson": {
+    "bytes": 2148870,
+    "sha256": "e25a1940d0b6edd3f4ef987cf8d4f21bb7208e7290d9b46faf36febd71a58fcd"
+  },
+  "public/campuses/nyc_queens/streets.geojson": {
+    "bytes": 112817,
+    "sha256": "d9bb8cd0b882eabcf3e3e5a29dea737e555718ce4d3848b0820ffa5ce3ead9e7"
+  },
+  "public/campuses/nyc_jacobi/buildings.geojson": {
+    "bytes": 1391378,
+    "sha256": "3a388cc0017912214feac3999751500b1af26f7fde1326c72532867256872f5e"
+  },
+  "public/campuses/nyc_jacobi/streets.geojson": {
+    "bytes": 76395,
+    "sha256": "0fb430c31327fc4c22bb67a93bd4ceac6cf6c95d6309747e619bb5781a77935c"
+  },
+  "public/campuses/nyc_north_central_bronx/buildings.geojson": {
+    "bytes": 692578,
+    "sha256": "1d00aa30d1e876b2299ac518fdc75a5fab365faf8d1df9bc84f08161eab21509"
+  },
+  "public/campuses/nyc_north_central_bronx/streets.geojson": {
+    "bytes": 96361,
+    "sha256": "64e7cc74816c9e6f59ee1a7f5a25bc569be7eb8af6e58a4583ff00055f9f25c3"
+  },
+  "public/campuses/nyc_lincoln/buildings.geojson": {
+    "bytes": 727743,
+    "sha256": "851c30e85ad518bb9039b9da37493c452d35afc3bc12127ec2a33e0a82de8cad"
+  },
+  "public/campuses/nyc_lincoln/streets.geojson": {
+    "bytes": 166022,
+    "sha256": "f23a9af3f2410ffdad65dfbf13a45e979678dccdcb9a8065eaa173ad247f9617"
+  },
+  "public/campuses/nyc_mount_sinai/buildings.geojson": {
+    "bytes": 734259,
+    "sha256": "8d921896d0145dd815acb87e39e87e0c8883a448594b1f5d7f7f5427f855cddd"
+  },
+  "public/campuses/nyc_mount_sinai/streets.geojson": {
+    "bytes": 143713,
+    "sha256": "56c0a59142acb4f1fff214aadb2c368a6c49e182ee3808e213f52390ba07aa4b"
+  },
+  "public/campuses/nyc_mount_sinai_bhc/buildings.geojson": {
+    "bytes": 1584650,
+    "sha256": "79c40996e4e1fd0cfb202b088a0e83131bc467fb7808765f879e0475ba8f936b"
+  },
+  "public/campuses/nyc_mount_sinai_bhc/streets.geojson": {
+    "bytes": 146546,
+    "sha256": "5c5fdab4ae97e05190c081f689c6d3919ae5232cdf2322035c1730eab681de45"
+  },
+  "public/campuses/nyc_mount_sinai_morningside/buildings.geojson": {
+    "bytes": 1059723,
+    "sha256": "5a21d780b064fc81d34d1e453fff30f71a90a08b40f3a8e166ccedca466199e6"
+  },
+  "public/campuses/nyc_mount_sinai_morningside/streets.geojson": {
+    "bytes": 104350,
+    "sha256": "e9d3b0366b8a55fb10403b0dfeab61b10ebe9445dee3f2efa329e1959e67c4e8"
+  },
+  "public/campuses/nyc_mount_sinai_west/buildings.geojson": {
+    "bytes": 601611,
+    "sha256": "bc51d9fa4a01a87e61e7964b8a433ec7362da26bd4dac815fb1c9a67786bdb87"
+  },
+  "public/campuses/nyc_mount_sinai_west/streets.geojson": {
+    "bytes": 89585,
+    "sha256": "5ba1af96773ae1437d8c32cc5e790299ea45809e107c99958ca09bd84539800b"
+  },
+  "public/campuses/nyc_nyp_weill_cornell/buildings.geojson": {
+    "bytes": 786723,
+    "sha256": "f28edbc20f17052f17a7c838955abc87e8b95d8d9a45a469f860d32f2ec72d2a"
+  },
+  "public/campuses/nyc_nyp_weill_cornell/streets.geojson": {
+    "bytes": 124297,
+    "sha256": "8adf9ca2538d3d308cd442c9cd541e38fa528df037d6e27e2e5c3d0c14347d1c"
+  },
+  "public/campuses/nyc_nyp_columbia/buildings.geojson": {
+    "bytes": 773807,
+    "sha256": "e4878e0c490da2bb2988976dc870f766fb8483952e30def1fa988cab5cd8f6f0"
+  },
+  "public/campuses/nyc_nyp_columbia/streets.geojson": {
+    "bytes": 122258,
+    "sha256": "7e088f610a31f2c4b3f819f30a4807450efcbfbea02fd27a7933e8296e09d82c"
+  },
+  "public/campuses/nyc_nyp_allen/buildings.geojson": {
+    "bytes": 537682,
+    "sha256": "97366a8012851bcfed0010623335caee574f2c02098904a895846d5c68e790fe"
+  },
+  "public/campuses/nyc_nyp_allen/streets.geojson": {
+    "bytes": 100123,
+    "sha256": "4c69b78671a878f36c4456e698642d32ba86f0b21062963a89dbbcf5dbc639b6"
+  },
+  "public/campuses/ny_nyp_westchester_bh/buildings.geojson": {
+    "bytes": 714610,
+    "sha256": "d0e415620d2133ab7aff049ba82e0630c44384e02c1b15f3b0d52acaaad7a793"
+  },
+  "public/campuses/ny_nyp_westchester_bh/streets.geojson": {
+    "bytes": 149984,
+    "sha256": "582a0727eb9de167793e9359a0965f6a36681f719285824c768b48555c9ff7ec"
+  },
+  "public/campuses/nyc_rumc/buildings.geojson": {
+    "bytes": 1743231,
+    "sha256": "55a5fa26e5ed52b23c6c9f440c2f1e8b388589b678b152145d54b5a117d9828c"
+  },
+  "public/campuses/nyc_rumc/streets.geojson": {
+    "bytes": 69745,
+    "sha256": "85acbadfc9cc38bcd07660cd7ff074a6e889b383dd34d03189969942bfbb4912"
+  },
+  "public/campuses/nyc_siuh_princes_bay/buildings.geojson": {
+    "bytes": 490432,
+    "sha256": "a2fef49ba4e9bdb0d576b6cc4d35735b07045beaa14bc7311f2ef813d011cd79"
+  },
+  "public/campuses/nyc_siuh_princes_bay/streets.geojson": {
+    "bytes": 100856,
+    "sha256": "ef24504214f7a8db3fd7ecb27d33d7e3f59e582e5f26309568c0910f5f69cba5"
+  },
+  "public/campuses/nyc_zucker_hillside/buildings.geojson": {
+    "bytes": 1382816,
+    "sha256": "ff3a2a7f247fc32542af61dd18e06130d940e1099eeb3fd9f6ee9e0e48838ec3"
+  },
+  "public/campuses/nyc_zucker_hillside/streets.geojson": {
+    "bytes": 71523,
+    "sha256": "e4daec4b788de3f8bdc7fc81131efd0735f8b60c28ccd92f63e8ec3ac79a9cbe"
+  },
+  "public/campuses/nyc_montefiore_moses/buildings.geojson": {
+    "bytes": 800682,
+    "sha256": "9aea3d9d22ebd8093b65f3010b53525720e2b51b68cfe6ecc4e7a4f46812b226"
+  },
+  "public/campuses/nyc_montefiore_moses/streets.geojson": {
+    "bytes": 95280,
+    "sha256": "ba0871f5c2c47ba0656365094ef67c6f78b7f2c552499174cfe8f1bdeafb3d76"
+  },
+  "src/cartography/campus/targets.json": {
+    "bytes": 19925,
+    "sha256": "c2c3ff1756dedcd8df022b3fe7ee2e9c99d0b97dc7d31e3fdf5b936826541e81"
+  },
+  "docs/attribution/campuses/nyc-manifest.json": {
+    "bytes": 28256,
+    "sha256": "88355664d7f4d766ee755af8e1be334b7493f5b8c55d8ad66822e79a5b4e802a"
+  },
+  "docs/attribution/campuses/westchester-manifest.json": {
+    "bytes": 1251,
+    "sha256": "fb55e6b90ee64837474ddde4388bb0a05ae1a1161e653a93c40cf1edecb3047d"
+  },
+  "docs/attribution/campuses/coverage.csv": {
+    "bytes": 2824,
+    "sha256": "3b30e9cdc5ce01f8423d03030f0769600a1ad644a147dde73386004df4f8b4de"
+  },
+  "docs/attribution/campuses/property-evidence.json": {
+    "bytes": 12125,
+    "sha256": "6acf0c601655bd2932cf4f6f3c63fbdd73efeabd3e50dc6912ec9e25a5e32bf1"
+  },
+  "docs/attribution/campuses/bellevue-dob.json": {
+    "bytes": 375,
+    "sha256": "9b3addcb5d92bd42cc59b1b1eb16f75018ae1ec6ba98b4f98927f1a79e849406"
+  },
+  "docs/attribution/campuses/bellevue-height-filings.json": {
+    "bytes": 3645,
+    "sha256": "2a270bddfbabafb7404fd136b7601b4faee5f14bdd4705dbe9b99e820677b7ad"
+  },
+  "docs/attribution/campuses/south-brooklyn-dob.json": {
+    "bytes": 197,
+    "sha256": "f1f6c0d970a5f3152f3ff6c762352d27b735fc870d4b5ccce517d27feb1a845b"
+  },
+  "docs/attribution/campuses/address-lookup.json": {
+    "bytes": 36908,
+    "sha256": "5a8c981ca5f29761027fd7957e6db8ea3063845faa56b2e801546c04838bfd66"
+  }
+}

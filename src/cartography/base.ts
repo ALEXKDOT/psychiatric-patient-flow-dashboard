@@ -1,26 +1,21 @@
+import { mercatorLat } from './mercator'
+export { mercatorLat, latitudeOf } from './mercator'
 import type { FeatureCollection, MultiPolygon, Polygon, Feature, MultiLineString } from 'geojson'
 import landText from '../../docs/research/REGIONAL_GEOGRAPHY.geojson?raw'
-import linesText from './tract-lines.json?raw'
 import context from './regional-context.json?raw'
 import waterText from './tidal-water.json?raw'
-export { default as plateUrl } from './census-plate.webp'
-export const plateBounds = { west: -74.53, south: 40.39, east: -73.43, north: 41.19 }
+export const regionBounds = { west: -74.53, south: 40.39, east: -73.43, north: 41.19 }
 
 export const land: FeatureCollection<Polygon | MultiPolygon> = JSON.parse(landText)
 // The handoff stops at county boundaries. Add adjacent land to preserve the coastline.
 land.features.unshift({ type: 'Feature', properties: {}, geometry: JSON.parse(context) })
-const shoreline: {
+export const shoreline: {
   type: 'FeatureCollection'
   features: [Feature<MultiPolygon>, Feature<MultiLineString>]
 } = JSON.parse(waterText)
 export const tidalWater = shoreline.features[0]
 export const tidalShore = shoreline.features[1]
-export const tracts: Feature<MultiLineString> = JSON.parse(linesText)
 export type Point = [number, number]
-export const mercatorLat = (lat: number) =>
-  (Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360)) * 180) / Math.PI
-export const latitudeOf = (y: number) =>
-  ((2 * Math.atan(Math.exp((y * Math.PI) / 180)) - Math.PI / 2) * 180) / Math.PI
 export const localPoint = (lon: number, lat: number): Point => [
   (lon + 74) * 2048,
   (mercatorLat(40.75) - mercatorLat(lat)) * 2048,
@@ -44,7 +39,6 @@ export const waterPath = tidalWater.geometry.coordinates
   .map((poly) => poly.map((ring) => path(ring) + 'Z').join(''))
   .join('')
 export const shorePath = tidalShore.geometry.coordinates.map(path).join('')
-export const tractsPath = tracts.geometry.coordinates.map(path).join('')
 
 export type Camera = { lon: number; lat: number; zoom: number }
 export const cityCamera: Camera = { lon: -73.999, lat: 40.747, zoom: 1.44 }

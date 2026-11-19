@@ -1,0 +1,273 @@
+{
+  "source": "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png",
+  "encoding": "terrarium",
+  "tileSize": 256,
+  "tileCount": 358,
+  "accessed": "2026-11-18T22:29:49.198956+00:00",
+  "regions": [
+    {
+      "id": "network",
+      "bounds": [
+        -74.53,
+        40.39,
+        -73.43,
+        41.19
+      ],
+      "minzoom": 8,
+      "maxzoom": 11
+    },
+    {
+      "id": "nyc_bellevue",
+      "bounds": [
+        -73.9858749,
+        40.7326535,
+        -73.9669051,
+        40.7470265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_harlem",
+      "bounds": [
+        -73.9497356,
+        40.8076235,
+        -73.9307444,
+        40.8219965
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_metropolitan",
+      "bounds": [
+        -73.9538913,
+        40.7776035,
+        -73.9349087,
+        40.7919765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_kings_county",
+      "bounds": [
+        -73.9558431,
+        40.6500035,
+        -73.9368969,
+        40.6643765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_woodhull",
+      "bounds": [
+        -73.9512691,
+        40.6924535,
+        -73.9323109,
+        40.7068265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_south_brooklyn",
+      "bounds": [
+        -73.9737129,
+        40.5783735,
+        -73.9547871,
+        40.5927465
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_elmhurst",
+      "bounds": [
+        -73.8944055,
+        40.7374235,
+        -73.8754345,
+        40.7517965
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_queens",
+      "bounds": [
+        -73.8134416,
+        40.7100035,
+        -73.7944784,
+        40.7243765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_jacobi",
+      "bounds": [
+        -73.8562216,
+        40.8497135,
+        -73.8372184,
+        40.8640865
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_north_central_bronx",
+      "bounds": [
+        -73.891195,
+        40.8732035,
+        -73.872185,
+        40.8875765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_lincoln",
+      "bounds": [
+        -73.933426,
+        40.8105235,
+        -73.914434,
+        40.8248965
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_mount_sinai",
+      "bounds": [
+        -73.961952,
+        40.7823835,
+        -73.942968,
+        40.7967565
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_mount_sinai_bhc",
+      "bounds": [
+        -74.0005322,
+        40.7137035,
+        -73.9815678,
+        40.7280765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_mount_sinai_morningside",
+      "bounds": [
+        -73.9714043,
+        40.7984635,
+        -73.9524157,
+        40.8128365
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_mount_sinai_west",
+      "bounds": [
+        -73.9972292,
+        40.7630535,
+        -73.9782508,
+        40.7774265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_nyp_weill_cornell",
+      "bounds": [
+        -73.9648983,
+        40.7570135,
+        -73.9459217,
+        40.7713865
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_nyp_columbia",
+      "bounds": [
+        -73.9520994,
+        40.8341535,
+        -73.9331006,
+        40.8485265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_nyp_allen",
+      "bounds": [
+        -73.9226239,
+        40.8658035,
+        -73.9036161,
+        40.8801765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "ny_nyp_westchester_bh",
+      "bounds": [
+        -73.7678765,
+        41.0223535,
+        -73.7488235,
+        41.0367265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_rumc",
+      "bounds": [
+        -74.1158901,
+        40.6286035,
+        -74.0969499,
+        40.6429765
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_siuh_princes_bay",
+      "bounds": [
+        -74.2057933,
+        40.5102535,
+        -74.1868867,
+        40.5246265
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_zucker_hillside",
+      "bounds": [
+        -73.7204164,
+        40.7433935,
+        -73.7014436,
+        40.7577665
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    },
+    {
+      "id": "nyc_montefiore_moses",
+      "bounds": [
+        -73.8894349,
+        40.8725835,
+        -73.8704251,
+        40.8869565
+      ],
+      "minzoom": 12,
+      "maxzoom": 15
+    }
+  ]
+}

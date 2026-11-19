@@ -20,19 +20,17 @@ export function Playback({
   onSeek,
   sample,
 }: Props) {
+  const complete = minute >= duration
+  const displayTime = complete ? 'D7 · 24:00' : clockLabel(minute)
+  const playLabel = complete ? 'Replay from Day 1' : playing ? 'Pause replay' : 'Play replay'
   return (
     <section className="playback" aria-label="Simulation playback">
-      <button
-        onClick={onPlay}
-        className="play-toggle"
-        title={playing ? 'Pause replay' : 'Play replay'}
-        aria-label={playing ? 'Pause replay' : 'Play replay'}
-      >
+      <button onClick={onPlay} className="play-toggle" title={playLabel} aria-label={playLabel}>
         {playing ? <Pause size={13} fill="currentColor" /> : <Play size={13} fill="currentColor" />}
       </button>
       <div className="replay-clock">
-        <span>{playing ? 'PLAYING' : 'REPLAY PAUSED'}</span>
-        <output>{clockLabel(minute)}</output>
+        <span>{complete ? 'Replay complete' : playing ? 'Simulated replay' : 'Replay paused'}</span>
+        <output aria-live="off">{displayTime}</output>
       </div>
       <div className="replay-track">
         <div className="day-labels" aria-hidden="true">
@@ -49,9 +47,9 @@ export function Playback({
             step={1}
             value={minute}
             onChange={(e) => onSeek(Number(e.target.value))}
-            aria-valuetext={clockLabel(minute)}
+            aria-valuetext={displayTime.replace(/^D/, 'Day ')}
             style={{
-              background:
+              backgroundImage:
                 'linear-gradient(to right,var(--orange) ' +
                 (100 * minute) / duration +
                 '%,#d2d6d5 0)',

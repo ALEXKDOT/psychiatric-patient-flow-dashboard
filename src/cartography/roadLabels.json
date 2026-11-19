@@ -1,0 +1,134 @@
+[
+  {
+    "text": "Brooklyn Queens Expy",
+    "lon": -73.96122,
+    "lat": 40.70145,
+    "angle": -69
+  },
+  {
+    "text": "FDR Dr",
+    "lon": -73.96506,
+    "lat": 40.75181,
+    "angle": -56
+  },
+  {
+    "text": "Grand Central Pkwy",
+    "lon": -73.83032,
+    "lat": 40.71715,
+    "angle": 18
+  },
+  {
+    "text": "Harlem River Dr",
+    "lon": -73.92292,
+    "lat": 40.85613,
+    "angle": -87
+  },
+  {
+    "text": "Major Deegan Expy",
+    "lon": -73.9306,
+    "lat": 40.83656,
+    "angle": -75
+  },
+  {
+    "text": "Cross Bronx Expy",
+    "lon": -73.87209,
+    "lat": 40.83621,
+    "angle": 8
+  },
+  {
+    "text": "Long Island Expy",
+    "lon": -73.60892,
+    "lat": 40.78049,
+    "angle": 27
+  },
+  {
+    "text": "Belt Pkwy",
+    "lon": -73.95756,
+    "lat": 40.58498,
+    "angle": -7
+  },
+  {
+    "text": "Gowanus Expy",
+    "lon": -74.02043,
+    "lat": 40.63767,
+    "angle": 42
+  },
+  {
+    "text": "Van Wyck Expy",
+    "lon": -73.8142,
+    "lat": 40.69791,
+    "angle": 68
+  },
+  {
+    "text": "Holland Tunl",
+    "lon": -74.00757,
+    "lat": 40.72576,
+    "angle": 11
+  },
+  {
+    "text": "Henry Hudson Pkwy",
+    "lon": -73.95076,
+    "lat": 40.83145,
+    "angle": -75
+  },
+  {
+    "text": "New Jersey Tpke",
+    "lon": -74.34645,
+    "lat": 40.52383,
+    "angle": -28
+  },
+  {
+    "text": "Brooklyn Battery Tunl",
+    "lon": -74.01567,
+    "lat": 40.70193,
+    "angle": -87
+  },
+  {
+    "text": "Bronx River Pkwy",
+    "lon": -73.79614,
+    "lat": 41.00893,
+    "angle": -59
+  },
+  {
+    "text": "Nassau Expy",
+    "lon": -73.78505,
+    "lat": 40.66344,
+    "angle": 13
+  },
+  {
+    "text": "Hutchinson River Pkwy",
+    "lon": -73.77722,
+    "lat": 40.96875,
+    "angle": -16
+  },
+  {
+    "text": "Ocean Pkwy",
+    "lon": -73.48849,
+    "lat": 40.59849,
+    "angle": -11
+  },
+  {
+    "text": "Palisades Interstate Pkwy",
+    "lon": -73.99119,
+    "lat": 41.09717,
+    "angle": 83
+  },
+  {
+    "text": "Cross Island Pkwy",
+    "lon": -73.76531,
+    "lat": 40.77364,
+    "angle": 54
+  },
+  {
+    "text": "Prospect Expy",
+    "lon": -73.97842,
+    "lat": 40.65444,
+    "angle": 42
+  },
+  {
+    "text": "Pulaski Skwy",
+    "lon": -74.07257,
+    "lat": 40.73878,
+    "angle": -13
+  }
+]

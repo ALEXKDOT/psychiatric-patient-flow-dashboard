@@ -1,0 +1,302 @@
+[
+  {
+    "campus_id": "nyc_harlem",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354984",
+      "property_name": "H+H_4151_Harlem Hospital: Martin Luther King Pavilion",
+      "parent_property_name": "Benchmarking Group - 8",
+      "address_1": "506 Lenox Ave",
+      "nyc_borough_block_and_lot": "1017340001",
+      "nyc_building_identification": "1053899",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354984&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_metropolitan",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354949",
+      "property_name": "H+H_9692_Metropolitan Hospital: Main Building",
+      "parent_property_name": "Benchmarking Group - 7",
+      "address_1": "1901 1st Ave",
+      "nyc_borough_block_and_lot": "1016690001",
+      "nyc_building_identification": "1083929",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354949&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_kings_county",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354542",
+      "property_name": "H+H_9208_Kings County Hospital: Building R",
+      "parent_property_name": "Benchmarking Group - 38",
+      "address_1": "410 Winthrop St",
+      "nyc_borough_block_and_lot": "3048290001",
+      "nyc_building_identification": "3327710",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "0"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354542&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_woodhull",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21353742",
+      "property_name": "H+H_4327_Woodhull Medical and Mental Health Center",
+      "parent_property_name": "Benchmarking Group - 115",
+      "address_1": "760 Broadway",
+      "nyc_borough_block_and_lot": "3017230001",
+      "nyc_building_identification": "3048341",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21353742&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_elmhurst",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354620",
+      "property_name": "H+H_4330_Elmhurst Hospital: Main Building",
+      "parent_property_name": "Benchmarking Group - 45",
+      "address_1": "79-01 Broadway",
+      "nyc_borough_block_and_lot": "4015000002",
+      "nyc_building_identification": "4437132",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354620&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_queens",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354813",
+      "property_name": "H+H_9696_Queens Hospital: Main Building",
+      "parent_property_name": "Benchmarking Group - 52",
+      "address_1": "82-70 164th St",
+      "nyc_borough_block_and_lot": "4068580001",
+      "nyc_building_identification": "4442433",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354813&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_jacobi",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21354435",
+      "property_name": "H+H_4295_Jacobi Medical Center: Jacobi Building",
+      "parent_property_name": "Benchmarking Group - 23",
+      "address_1": "1400 Pelham Pkwy South",
+      "nyc_borough_block_and_lot": "2042050001",
+      "nyc_building_identification": "2097550",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354435&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_north_central_bronx",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21355364",
+      "property_name": "H+H_4305_North Central Bronx Hospital",
+      "parent_property_name": "Not Applicable: Standalone Property",
+      "address_1": "3424 Kossuth Ave",
+      "nyc_borough_block_and_lot": "2033270200",
+      "nyc_building_identification": "2017787",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21355364&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_lincoln",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21355016",
+      "property_name": "H+H_4298_Lincoln Medical and Mental Health Center",
+      "parent_property_name": "Benchmarking Group - 88",
+      "address_1": "234 East 149th St",
+      "nyc_borough_block_and_lot": "2023350016",
+      "nyc_building_identification": "2097050",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21355016&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_mount_sinai",
+    "record": {
+      "report_year": "2025",
+      "property_id": "12423357",
+      "property_name": "Guggenheim Pavilion",
+      "parent_property_name": "Mount Sinai Hospital Main Campus",
+      "address_1": "1190 - 5th Avenue",
+      "nyc_borough_block_and_lot": "1016040006",
+      "nyc_building_identification": "1083923",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=12423357&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_bhc",
+    "record": {
+      "report_year": "2025",
+      "property_id": "15497839",
+      "property_name": "Mount Sinai Beth Israel Comprehensive Behavioral Health Center (45 Rivington)",
+      "parent_property_name": "Not Applicable: Standalone Property",
+      "address_1": "45 Rivington Street",
+      "nyc_borough_block_and_lot": "1004207502",
+      "nyc_building_identification": "1005601",
+      "primary_property_type_self": "Other - Specialty Hospital",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=15497839&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_morningside",
+    "record": {
+      "report_year": "2025",
+      "property_id": "21028435",
+      "property_name": "Morningside Womans &amp; Babcock West",
+      "parent_property_name": "Morningside Campus Parent",
+      "address_1": "1101 AMSTERDAM AVENUE",
+      "nyc_borough_block_and_lot": "1018670001",
+      "nyc_building_identification": "1056035",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21028435&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_west",
+    "record": {
+      "report_year": "2025",
+      "property_id": "5876639",
+      "property_name": "MSHS. Mount Sinai West",
+      "parent_property_name": "Not Applicable: Standalone Property",
+      "address_1": "1000 10th AVE",
+      "nyc_borough_block_and_lot": "1010680001",
+      "nyc_building_identification": "1082718",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=5876639&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_nyp_weill_cornell",
+    "record": {
+      "report_year": "2025",
+      "property_id": "74274295",
+      "property_name": "Greenberg Pavilion - 1084780",
+      "parent_property_name": "NYP Cornell (East Campus)",
+      "address_1": "525 East 68th Street",
+      "nyc_borough_block_and_lot": "1014800001",
+      "nyc_building_identification": "1084780",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=74274295&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_nyp_columbia",
+    "record": {
+      "report_year": "2025",
+      "property_id": "70291992",
+      "property_name": "Milstein Hospital, Heart Center",
+      "parent_property_name": "NYP Columbia (West Campus)",
+      "address_1": "177 Fort Washington Avenue",
+      "nyc_borough_block_and_lot": "1021390001",
+      "nyc_building_identification": "1076746",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=70291992&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_nyp_allen",
+    "record": {
+      "report_year": "2025",
+      "property_id": "28404",
+      "property_name": "The Allen Hospital",
+      "parent_property_name": "Not Applicable: Standalone Property",
+      "address_1": "5141 Broadway",
+      "nyc_borough_block_and_lot": "1022440100",
+      "nyc_building_identification": "1065045",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=28404&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_rumc",
+    "record": {
+      "report_year": "2025",
+      "property_id": "4495604",
+      "property_name": "RUMC Main Hospital",
+      "parent_property_name": "Not Applicable: Standalone Property",
+      "address_1": "355 Bard Avenue",
+      "nyc_borough_block_and_lot": "5001020001",
+      "nyc_building_identification": "5106522",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=4495604&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_siuh_princes_bay",
+    "record": {
+      "report_year": "2025",
+      "property_id": "3296715",
+      "property_name": "SI SIHS 351 Seguine Ave 5082757",
+      "parent_property_name": "SI Hospital South (Seguine) Campus",
+      "address_1": "351 Seguine Avenue",
+      "nyc_borough_block_and_lot": "5066700001",
+      "nyc_building_identification": "5082757",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=3296715&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_zucker_hillside",
+    "record": {
+      "report_year": "2025",
+      "property_id": "2641471",
+      "property_name": "NH LIJ Medical 75-59 263rd St 4463314",
+      "parent_property_name": "NH LIJ ZH Hospital Campus",
+      "address_1": "75-59 263rd Street",
+      "nyc_borough_block_and_lot": "4085200002",
+      "nyc_building_identification": "4463314",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=2641471&report_year=2025"
+  },
+  {
+    "campus_id": "nyc_montefiore_moses",
+    "record": {
+      "report_year": "2025",
+      "property_id": "2731799",
+      "property_name": "3401 BAINBRIDGE AVE",
+      "parent_property_name": "Moses Campus",
+      "address_1": "3401 BAINBRIDGE AVE",
+      "nyc_borough_block_and_lot": "2033270001",
+      "nyc_building_identification": "2096399",
+      "primary_property_type_self": "Hospital (General Medical & Surgical)",
+      "number_of_buildings": "1"
+    },
+    "url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=2731799&report_year=2025"
+  }
+]

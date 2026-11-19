@@ -1,0 +1,24 @@
+campus_id,building_label,id_namespace,source_feature_id,building_id,source_height_m,display_height_m,point_offset_m,footprint_features,street_features
+nyc_bellevue,Bellevue Main Hospital · Building H,NYC BUILDING objectid,1088855,1091053,28.956,80.4672,217,1188,333
+nyc_harlem,Martin Luther King Pavilion,NYC BUILDING objectid,623444,1053899,70.973,70.973,86,2035,420
+nyc_metropolitan,Metropolitan Hospital · Main Building,NYC BUILDING objectid,306661,1083929,67.122,67.122,78,1101,273
+nyc_kings_county,Kings County Hospital · Building R,NYC BUILDING objectid,1082278,3327710,33.833,33.833,57,3504,231
+nyc_woodhull,Woodhull Medical and Mental Health Center,NYC BUILDING objectid,203766,3048341,74.932,74.932,78,2107,467
+nyc_south_brooklyn,Ruth Bader Ginsburg Hospital,NYC BUILDING objectid,1087904,3425771,57.912,57.912,98,3097,555
+nyc_elmhurst,Elmhurst Hospital · Main Building,NYC BUILDING objectid,90187,4437132,46.967,46.967,78,3306,348
+nyc_queens,Queens Hospital · Main Building,NYC BUILDING objectid,69556,4442433,31.394,31.394,41,4065,367
+nyc_jacobi,Jacobi Building,NYC BUILDING objectid,80425,2097550,45.924,45.924,101,2565,254
+nyc_north_central_bronx,North Central Bronx Hospital,NYC BUILDING objectid,882226,2017787,71.196,71.196,61,905,296
+nyc_lincoln,Lincoln Medical and Mental Health Center,NYC BUILDING objectid,1064010,2097050,61.874,61.874,101,1102,531
+nyc_mount_sinai,Guggenheim Pavilion,NYC BUILDING objectid,67279,1083923,50.902,50.902,106,1001,323
+nyc_mount_sinai_bhc,Mount Sinai Behavioral Health Center · 45 Rivington,NYC BUILDING objectid,1075331,1005601,29.925,29.925,32,2633,512
+nyc_mount_sinai_morningside,Morningside · Babcock West complex,NYC BUILDING objectid,1084251,1056035,41.581,41.581,32,1327,308
+nyc_mount_sinai_west,Mount Sinai West,NYC BUILDING objectid,804074,1082718,63.118,63.118,110,845,290
+nyc_nyp_weill_cornell,Greenberg Pavilion,NYC BUILDING objectid,22923,1084780,60.223,60.223,181,1071,380
+nyc_nyp_columbia,Milstein Hospital · Heart Center,NYC BUILDING objectid,89233,1076746,49.872,49.872,79,783,341
+nyc_nyp_allen,The Allen Hospital,NYC BUILDING objectid,232997,1065045,22.046,22.046,45,586,266
+ny_nyp_westchester_bh,Main hospital complex (site plan match),Westchester Buildings objectid,274916,274916,13.716,13.716,434,1205,514
+nyc_rumc,Richmond University Medical Center · Main Hospital,NYC BUILDING objectid,785257,5106522,6.13,6.13,143,3174,244
+nyc_siuh_princes_bay,Staten Island University Hospital · Seguine campus building,NYC BUILDING objectid,599691,5082757,17.672,17.672,39,868,185
+nyc_zucker_hillside,Zucker Hillside campus · 75-59 263rd Street,NYC BUILDING objectid,810499,4463314,11.564,11.564,71,2617,249
+nyc_montefiore_moses,Moses campus · 3401 Bainbridge Avenue,NYC BUILDING objectid,559106,2096399,43.865,43.865,51,1046,295

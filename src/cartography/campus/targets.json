@@ -1,0 +1,555 @@
+[
+  {
+    "campus_id": "nyc_bellevue",
+    "display_name": "NYC Health + Hospitals/Bellevue",
+    "target_label": "Bellevue Main Hospital · Building H",
+    "network_marker": [
+      -73.97639,
+      40.73984
+    ],
+    "focus_lonlat": [
+      -73.97430063,
+      40.73870929
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1088855,
+    "doitt_id": "1302248",
+    "bin": "1091053",
+    "bbl": "1009620100",
+    "recorded_height_m": 28.956,
+    "evidence_type": "city DOB filing and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/w9ak-ipjd.json?job_filing_number=M01356904-I1&%24select=job_filing_number,bin,borough,block,lot,job_description",
+    "note": "DOB Building H filing and H+H site plan. This mass represents a mapped polygon. It is not an architectural survey of every roof step.",
+    "display_height_m": 80.4672,
+    "display_height_basis": "NYC DOB filed existing building height, 264 ft. 22 positive records agree. NYC footprint retains conflicting 95 ft.",
+    "height_evidence_url": "https://data.cityofnewyork.us/resource/w9ak-ipjd.json?bin=1091053&%24select=job_filing_number,existing_stories,existing_height"
+  },
+  {
+    "campus_id": "nyc_harlem",
+    "display_name": "NYC Health + Hospitals/Harlem",
+    "target_label": "Martin Luther King Pavilion",
+    "network_marker": [
+      -73.94024,
+      40.81481
+    ],
+    "focus_lonlat": [
+      -73.9397341,
+      40.8141397
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 623444,
+    "doitt_id": "791046",
+    "bin": "1053899",
+    "bbl": "1017340001",
+    "recorded_height_m": 70.973,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354984&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 70.973,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_metropolitan",
+    "display_name": "NYC Health + Hospitals/Metropolitan",
+    "target_label": "Metropolitan Hospital · Main Building",
+    "network_marker": [
+      -73.9444,
+      40.78479
+    ],
+    "focus_lonlat": [
+      -73.9451555,
+      40.7851931
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 306661,
+    "doitt_id": "80428",
+    "bin": "1083929",
+    "bbl": "1016690001",
+    "recorded_height_m": 67.122,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354949&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 67.122,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_kings_county",
+    "display_name": "NYC Health + Hospitals/Kings County",
+    "target_label": "Kings County Hospital · Building R",
+    "network_marker": [
+      -73.94637,
+      40.65719
+    ],
+    "focus_lonlat": [
+      -73.9461657,
+      40.6567029
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1082278,
+    "doitt_id": "991155",
+    "bin": "3327710",
+    "bbl": "3048290001",
+    "recorded_height_m": 33.833,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354542&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 33.833,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_woodhull",
+    "display_name": "NYC Health + Hospitals/Woodhull",
+    "target_label": "Woodhull Medical and Mental Health Center",
+    "network_marker": [
+      -73.94179,
+      40.69964
+    ],
+    "focus_lonlat": [
+      -73.9424848,
+      40.7001015
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 203766,
+    "doitt_id": "654321",
+    "bin": "3048341",
+    "bbl": "3017230001",
+    "recorded_height_m": 74.932,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21353742&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 74.932,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_south_brooklyn",
+    "display_name": "NYC Health + Hospitals/South Brooklyn Health",
+    "target_label": "Ruth Bader Ginsburg Hospital",
+    "network_marker": [
+      -73.96425,
+      40.58556
+    ],
+    "focus_lonlat": [
+      -73.9647686,
+      40.586346
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1087904,
+    "doitt_id": "1301076",
+    "bin": "3425771",
+    "bbl": "3072390001",
+    "recorded_height_m": 57.912,
+    "evidence_type": "DCAS FY2024 facility address and DOB new-building filing matched to city footprint",
+    "evidence_url": "https://data.cityofnewyork.us/resource/ic3t-wcy2.json?job__=320911171&doc__=02&%24select=job__,bin__,house__,street_name,job_description",
+    "note": "DCAS identifies the building at 2619 Ocean Parkway. Match DOB job 320911171 to the footprint. The campus mailing address at 2601 points to another building.",
+    "display_height_m": 57.912,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_elmhurst",
+    "display_name": "NYC Health + Hospitals/Elmhurst",
+    "target_label": "Elmhurst Hospital · Main Building",
+    "network_marker": [
+      -73.88492,
+      40.74461
+    ],
+    "focus_lonlat": [
+      -73.8857928,
+      40.7448507
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 90187,
+    "doitt_id": "1115239",
+    "bin": "4437132",
+    "bbl": "4015000002",
+    "recorded_height_m": 46.967,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354620&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 46.967,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_queens",
+    "display_name": "NYC Health + Hospitals/Queens",
+    "target_label": "Queens Hospital · Main Building",
+    "network_marker": [
+      -73.80396,
+      40.71719
+    ],
+    "focus_lonlat": [
+      -73.80444567,
+      40.71715902
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 69556,
+    "doitt_id": "68658",
+    "bin": "4442433",
+    "bbl": "4068580001",
+    "recorded_height_m": 31.394,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354813&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 31.394,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_jacobi",
+    "display_name": "NYC Health + Hospitals/Jacobi",
+    "target_label": "Jacobi Building",
+    "network_marker": [
+      -73.84672,
+      40.8569
+    ],
+    "focus_lonlat": [
+      -73.8475828,
+      40.8562692
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 80425,
+    "doitt_id": "116247",
+    "bin": "2097550",
+    "bbl": "2042050001",
+    "recorded_height_m": 45.924,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21354435&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 45.924,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_north_central_bronx",
+    "display_name": "NYC Health + Hospitals/North Central Bronx",
+    "target_label": "North Central Bronx Hospital",
+    "network_marker": [
+      -73.88169,
+      40.88039
+    ],
+    "focus_lonlat": [
+      -73.8810086,
+      40.8805659
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 882226,
+    "doitt_id": "614684",
+    "bin": "2017787",
+    "bbl": "2033270200",
+    "recorded_height_m": 71.196,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21355364&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 71.196,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_lincoln",
+    "display_name": "NYC Health + Hospitals/Lincoln",
+    "target_label": "Lincoln Medical and Mental Health Center",
+    "network_marker": [
+      -73.92393,
+      40.81771
+    ],
+    "focus_lonlat": [
+      -73.924604,
+      40.8169596
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1064010,
+    "doitt_id": "806124",
+    "bin": "2097050",
+    "bbl": "2023350016",
+    "recorded_height_m": 61.874,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21355016&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 61.874,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_mount_sinai",
+    "display_name": "The Mount Sinai Hospital",
+    "target_label": "Guggenheim Pavilion",
+    "network_marker": [
+      -73.95246,
+      40.78957
+    ],
+    "focus_lonlat": [
+      -73.952884,
+      40.7904671
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 67279,
+    "doitt_id": "539619",
+    "bin": "1083923",
+    "bbl": "1016040006",
+    "recorded_height_m": 50.902,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=12423357&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 50.902,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_bhc",
+    "display_name": "Mount Sinai Behavioral Health Center",
+    "target_label": "Mount Sinai Behavioral Health Center · 45 Rivington",
+    "network_marker": [
+      -73.99105,
+      40.72089
+    ],
+    "focus_lonlat": [
+      -73.9911932,
+      40.7206234
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1075331,
+    "doitt_id": "68728",
+    "bin": "1005601",
+    "bbl": "1004200047",
+    "recorded_height_m": 29.925,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=15497839&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 29.925,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_morningside",
+    "display_name": "Mount Sinai Morningside",
+    "target_label": "Morningside · Babcock West complex",
+    "network_marker": [
+      -73.96191,
+      40.80565
+    ],
+    "focus_lonlat": [
+      -73.9615596,
+      40.8055469
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 1084251,
+    "doitt_id": "1296263",
+    "bin": "1056035",
+    "bbl": "1018670001",
+    "recorded_height_m": 41.581,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=21028435&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 41.581,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_mount_sinai_west",
+    "display_name": "Mount Sinai West",
+    "target_label": "Mount Sinai West",
+    "network_marker": [
+      -73.98774,
+      40.77024
+    ],
+    "focus_lonlat": [
+      -73.9867123,
+      40.769635
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 804074,
+    "doitt_id": "899051",
+    "bin": "1082718",
+    "bbl": "1010680001",
+    "recorded_height_m": 63.118,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=5876639&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 63.118,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_nyp_weill_cornell",
+    "display_name": "NewYork-Presbyterian/Weill Cornell Medical Center",
+    "target_label": "Greenberg Pavilion",
+    "network_marker": [
+      -73.95541,
+      40.7642
+    ],
+    "focus_lonlat": [
+      -73.9532617,
+      40.7641927
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 22923,
+    "doitt_id": "562941",
+    "bin": "1084780",
+    "bbl": "1014800001",
+    "recorded_height_m": 60.223,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=74274295&report_year=2025",
+    "note": "The published address geocodes to another structure on the same campus. Selected the named Greenberg Pavilion property.",
+    "display_height_m": 60.223,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_nyp_columbia",
+    "display_name": "NewYork-Presbyterian/Columbia University Irving Medical Center",
+    "target_label": "Milstein Hospital · Heart Center",
+    "network_marker": [
+      -73.9426,
+      40.84134
+    ],
+    "focus_lonlat": [
+      -73.9435393,
+      40.841348
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 89233,
+    "doitt_id": "585114",
+    "bin": "1076746",
+    "bbl": "1021390001",
+    "recorded_height_m": 49.872,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=70291992&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 49.872,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_nyp_allen",
+    "display_name": "NewYork-Presbyterian Allen Hospital",
+    "target_label": "The Allen Hospital",
+    "network_marker": [
+      -73.91312,
+      40.87299
+    ],
+    "focus_lonlat": [
+      -73.9129467,
+      40.8733706
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 232997,
+    "doitt_id": "649462",
+    "bin": "1065045",
+    "bbl": "1022440100",
+    "recorded_height_m": 22.046,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=28404&report_year=2025",
+    "note": "Representative documented exterior on the campus.",
+    "display_height_m": 22.046,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "ny_nyp_westchester_bh",
+    "display_name": "NewYork-Presbyterian Westchester Behavioral Health Center",
+    "target_label": "Main hospital complex (site plan match)",
+    "network_marker": [
+      -73.75835,
+      41.02954
+    ],
+    "focus_lonlat": [
+      -73.7538926,
+      41.0275733
+    ],
+    "publisher_feature_key": "Westchester Buildings objectid",
+    "feature_id": 274916,
+    "doitt_id": null,
+    "bin": null,
+    "bbl": null,
+    "recorded_height_m": 13.716,
+    "evidence_type": "county footprint shape and operator grounds map",
+    "evidence_url": "https://www.nyp.org/sites/default/files/acquiadam/2020-09/nyp_westchester_grounds_map.pdf",
+    "note": "Aggregated connected wings. See county notes for height and data vintage.",
+    "display_height_m": 13.716,
+    "display_height_basis": "county published height, feet interpretation corroborated, 2018 source photography; approximate"
+  },
+  {
+    "campus_id": "nyc_rumc",
+    "display_name": "Richmond University Medical Center",
+    "target_label": "Richmond University Medical Center · Main Hospital",
+    "network_marker": [
+      -74.10642,
+      40.63579
+    ],
+    "focus_lonlat": [
+      -74.1068461,
+      40.6370362
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 785257,
+    "doitt_id": "1062295",
+    "bin": "5106522",
+    "bbl": "5001020001",
+    "recorded_height_m": 6.13,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=4495604&report_year=2025",
+    "note": "PAD at 355 Bard points to the ED. Used the separately named RUMC Main Hospital record.",
+    "display_height_m": 6.13,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_siuh_princes_bay",
+    "display_name": "Staten Island University Hospital Prince's Bay",
+    "target_label": "Staten Island University Hospital · Seguine campus building",
+    "network_marker": [
+      -74.19634,
+      40.51744
+    ],
+    "focus_lonlat": [
+      -74.1961263,
+      40.5171334
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 599691,
+    "doitt_id": "847407",
+    "bin": "5082757",
+    "bbl": "5066700001",
+    "recorded_height_m": 17.672,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=3296715&report_year=2025",
+    "note": "Child property at 351 Seguine on the named hospital campus. Campus mailing address is 375 Seguine.",
+    "display_height_m": 17.672,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_zucker_hillside",
+    "display_name": "Zucker Hillside Hospital",
+    "target_label": "Zucker Hillside campus · 75-59 263rd Street",
+    "network_marker": [
+      -73.71093,
+      40.75058
+    ],
+    "focus_lonlat": [
+      -73.7117487,
+      40.7507206
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 810499,
+    "doitt_id": "34334",
+    "bin": "4463314",
+    "bbl": "4085200002",
+    "recorded_height_m": 11.564,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=2641471&report_year=2025",
+    "note": "2025 parent-campus/child-property record identifies this building. PAD associates the address with a different campus structure. Label as a campus building and omit entrance claims.",
+    "display_height_m": 11.564,
+    "display_height_basis": "NYC published height above ground"
+  },
+  {
+    "campus_id": "nyc_montefiore_moses",
+    "display_name": "Montefiore Medical Center – Moses Campus",
+    "target_label": "Moses campus · 3401 Bainbridge Avenue",
+    "network_marker": [
+      -73.87993,
+      40.87977
+    ],
+    "focus_lonlat": [
+      -73.8797854,
+      40.8802151
+    ],
+    "publisher_feature_key": "NYC BUILDING objectid",
+    "feature_id": 559106,
+    "doitt_id": "970135",
+    "bin": "2096399",
+    "bbl": "2033270001",
+    "recorded_height_m": 43.865,
+    "evidence_type": "named reported property and city footprint BIN",
+    "evidence_url": "https://data.cityofnewyork.us/resource/5zyy-y8am.json?property_id=2731799&report_year=2025",
+    "note": "Used a named child of Moses Campus. Different years assign the main mailing address to different BINs.",
+    "display_height_m": 43.865,
+    "display_height_basis": "NYC published height above ground"
+  }
+]

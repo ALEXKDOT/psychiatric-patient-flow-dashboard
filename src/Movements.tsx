@@ -5,15 +5,14 @@ import { clockLabel } from './ui'
 
 export function Movements({
   frame,
-  chosenTrip,
+  onInspect,
   scope,
 }: {
   frame: Frame
-  chosenTrip: string | null
+  onInspect: (id: string) => void
   scope: string | null
 }) {
-  const visible = (t: Transfer) =>
-    (!scope || t.from === scope || t.to === scope) && (!chosenTrip || t.id === chosenTrip)
+  const visible = (t: Transfer) => !scope || t.from === scope || t.to === scope
   const active = frame.transfers.filter(visible),
     recent = frame.recentTransfers.filter(visible)
   function row(t: Transfer, completed: boolean) {
@@ -25,6 +24,9 @@ export function Movements({
           <span className="eyebrow">{t.id}</span>
           <span className="tag">{completed ? 'Arrived' : 'In transit'}</span>
         </div>
+        <button className="trip-inspect-link" onClick={() => onInspect(t.id)}>
+          Inspect {t.id} <ArrowRight size={13} />
+        </button>
         <p className="endpoints">
           {campusById[t.from].shortName}
           <ArrowRight size={16} aria-label="to" />
@@ -55,13 +57,10 @@ export function Movements({
         lines connect simulated departure and arrival campuses.
       </p>
       {!!active.length && active.map((t) => row(t, false))}
-      {!active.length && !chosenTrip && <p>No episodes in transit at this time.</p>}
-      {(!chosenTrip || recent.length > 0) && <h3>Recent arrivals · last 2 hours</h3>}
+      {!active.length && <p>No episodes in transit at this time.</p>}
+      {recent.length > 0 && <h3>Recent arrivals · last 2 hours</h3>}
       {recent.map((t) => row(t, true))}
-      {!recent.length && !chosenTrip && <p>No recent intercampus arrivals.</p>}
-      {chosenTrip && !active.length && !recent.length && (
-        <p>This episode falls outside the displayed movement window.</p>
-      )}
+      {!recent.length && <p>No recent intercampus arrivals.</p>}
     </>
   )
 }

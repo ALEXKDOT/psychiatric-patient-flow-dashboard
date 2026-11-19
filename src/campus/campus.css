@@ -1,0 +1,327 @@
+.campus-scene {
+  --campus-ink: #343d39;
+  --campus-ground: #dce0d5;
+  --campus-water: #c1d6d9;
+  --campus-curb: #bbc3b8;
+  --campus-street: #f6f7ef;
+  --campus-roof: #e9ece2;
+  --campus-foot-edge: #9ba89b;
+  --campus-target: #dfab87;
+  --campus-accent: #b55227;
+  --campus-panel: #fafaf5f2;
+  --campus-edge: #abb4ac;
+  --campus-muted: #5b685f;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--campus-ground);
+  color: var(--campus-ink);
+  font-family: 'IBM Plex Sans Variable', Arial, sans-serif;
+}
+.campus-scene[data-theme='dark'] {
+  --campus-ground: #303938;
+  --campus-water: #16272b;
+  --campus-street: #4b5855;
+  --campus-curb: #67746f;
+  --campus-ink: #e5eae2;
+  --campus-roof: #68746e;
+  --campus-foot-edge: #46514e;
+  --campus-target: #af7858;
+  --campus-accent: #ff9e67;
+  --campus-panel: #202725f2;
+  --campus-muted: #bdc9c1;
+  --campus-edge: #59655e;
+}
+.campus-gl,
+.campus-gl-canvas,
+.campus-label-overlay,
+.campus-plan {
+  position: absolute;
+  inset: 0;
+}
+.campus-plan svg {
+  touch-action: none;
+  cursor: grab;
+  display: block;
+}
+.campus-plan svg:active {
+  cursor: grabbing;
+}
+.campus-label-overlay {
+  pointer-events: none;
+}
+.campus-street-label {
+  fill: var(--campus-muted);
+  font:
+    500 10px 'IBM Plex Sans Variable',
+    Arial,
+    sans-serif;
+  letter-spacing: 0.5px;
+  text-anchor: middle;
+  paint-order: stroke;
+  stroke: var(--campus-street);
+  stroke-width: 2.8;
+  stroke-linejoin: round;
+}
+.campus-scene button,
+.campus-scene a {
+  color: inherit;
+}
+.campus-tools {
+  position: absolute;
+  right: 14px;
+  top: 58px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.campus-tools button,
+.campus-credit button,
+.campus-source-card button,
+.campus-pending button {
+  font:
+    500 11px 'IBM Plex Sans Variable',
+    Arial,
+    sans-serif;
+  background: var(--campus-panel);
+  border: 1px solid var(--campus-edge);
+  color: var(--campus-ink);
+  cursor: pointer;
+}
+.campus-tools button:hover:not(:disabled),
+.campus-source-card button:hover {
+  border-color: var(--campus-ink);
+}
+.campus-tools button:disabled {
+  cursor: default;
+}
+.campus-tools .orbit-toggle {
+  padding: 7px 11px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.campus-tools .campus-tool-stack {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--campus-edge);
+}
+.campus-tool-stack button {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: 31px;
+  height: 30px;
+  border: 0;
+  border-bottom: 1px solid var(--campus-edge);
+}
+.campus-tool-stack button:last-child {
+  border-bottom: 0;
+}
+.campus-tool-stack svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 1.5;
+}
+.campus-caption {
+  position: absolute;
+  left: 17px;
+  bottom: 45px;
+  display: grid;
+  border-left: 3px solid #d87643;
+  background: var(--campus-panel);
+  padding: 8px 12px 9px;
+  max-width: min(330px, calc(100% - 80px));
+  pointer-events: none;
+  box-shadow: 0 1px 5px #20272017;
+}
+.campus-caption small,
+.campus-caption span,
+.campus-scale {
+  font:
+    9px/1.4 'IBM Plex Mono',
+    monospace;
+  letter-spacing: 0.3px;
+}
+.campus-caption small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--campus-muted);
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+.campus-caption i {
+  width: 5px;
+  height: 5px;
+  background: #d87643;
+}
+.campus-caption strong {
+  font-size: 16px;
+  line-height: 1.22;
+  font-weight: 550;
+  letter-spacing: -0.35px;
+  margin: 3px 0;
+}
+.campus-caption span {
+  font-size: 10px;
+  color: var(--campus-muted);
+}
+.campus-scale {
+  position: absolute;
+  left: 17px;
+  bottom: 9px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--campus-ink);
+  background: var(--campus-panel);
+  padding: 2px 5px;
+}
+.campus-scale:before {
+  content: '';
+  display: block;
+  height: 4px;
+  width: var(--ruler-width, 40px);
+  border: 1px solid var(--campus-ink);
+  background: linear-gradient(to right, var(--campus-ink) 50%, transparent 50%);
+}
+.campus-credit {
+  position: absolute;
+  bottom: 4px;
+  right: 7px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--campus-panel);
+  color: var(--campus-muted);
+  padding: 2px 4px;
+  font:
+    9px 'IBM Plex Sans Variable',
+    Arial,
+    sans-serif;
+}
+.campus-credit button {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 9px;
+  padding: 1px 4px;
+  border: 0;
+  background: none;
+}
+.campus-source-card {
+  position: absolute;
+  right: 8px;
+  bottom: 30px;
+  z-index: 5;
+  width: min(330px, calc(100% - 16px));
+  max-height: 65%;
+  overflow: auto;
+  padding: 12px;
+  background: var(--campus-panel);
+  border: 1px solid var(--campus-edge);
+  font-size: 12px;
+  line-height: 1.4;
+}
+.campus-source-card p {
+  margin: 7px 0;
+}
+.campus-source-card a {
+  margin: 3px 12px 3px 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.campus-source-card button {
+  display: block;
+  margin-top: 8px;
+  padding: 5px 9px;
+}
+.campus-pending {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 49px, #89968729 49px 50px),
+    repeating-linear-gradient(90deg, transparent 0 49px, #89968729 49px 50px);
+}
+.campus-pending > svg {
+  color: var(--campus-accent);
+}
+.campus-pending span,
+.campus-pending p {
+  font:
+    11px 'IBM Plex Mono',
+    monospace;
+  color: var(--campus-muted);
+  margin: 0;
+}
+.campus-pending button {
+  padding: 6px 14px;
+}
+@media (max-width: 650px) {
+  .campus-tools {
+    top: 51px;
+    right: 8px;
+    gap: 5px;
+  }
+  .campus-tools .orbit-toggle {
+    min-height: 40px;
+    padding: 6px 8px;
+  }
+  .campus-tool-stack button {
+    width: 39px;
+    height: 38px;
+  }
+  .campus-caption {
+    bottom: 37px;
+    left: 9px;
+    padding: 6px 8px;
+  }
+  .campus-caption strong {
+    font-size: 13px;
+  }
+  .campus-caption small {
+    font-size: 8px;
+  }
+  .campus-caption span {
+    font-size: 8px;
+  }
+  .campus-credit {
+    font-size: 8px;
+  }
+  .campus-scale {
+    bottom: 8px;
+    left: 8px;
+    font-size: 8px;
+  }
+  .campus-street-label {
+    font-size: 9px;
+  }
+}
+@media (min-width: 651px) {
+  .campus-caption {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 21px;
+    min-width: 210px;
+  }
+}
+@media (max-width: 650px) {
+  .campus-tool-stack button {
+    width: 44px;
+    height: 44px;
+  }
+  .campus-tools .orbit-toggle {
+    min-height: 44px;
+  }
+}

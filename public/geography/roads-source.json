@@ -1,0 +1,39 @@
+{
+  "accessed": "2026-11-18T22:34:43.963317+00:00",
+  "bounds": [
+    -74.53,
+    40.39,
+    -73.43,
+    41.19
+  ],
+  "layers": {
+    "primary": {
+      "layer": 2,
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Transportation/MapServer/2/query",
+      "query": {
+        "where": "1=1",
+        "geometry": "-74.53,40.39,-73.43,41.19",
+        "geometryType": "esriGeometryEnvelope",
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "returnIdsOnly": "true"
+      },
+      "found": 754,
+      "retained": 754
+    },
+    "secondary": {
+      "layer": 6,
+      "url": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Transportation/MapServer/6/query",
+      "query": {
+        "where": "1=1",
+        "geometry": "-74.53,40.39,-73.43,41.19",
+        "geometryType": "esriGeometryEnvelope",
+        "inSR": 4326,
+        "spatialRel": "esriSpatialRelIntersects",
+        "returnIdsOnly": "true"
+      },
+      "found": 1796,
+      "retained": 1796
+    }
+  }
+}

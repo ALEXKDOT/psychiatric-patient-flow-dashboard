@@ -1,0 +1,47 @@
+.campus-trail-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.campus-trail-overlay path {
+  fill: none;
+  stroke: #c65424;
+  stroke-width: 2.2;
+  stroke-dasharray: 4 3;
+}
+.campus-traveler-hit {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.campus-traveler-hit::after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  transform: rotate(45deg);
+  background: #b64e24;
+  border: 1.5px solid white;
+  box-shadow: 0 0 0 1px #743619;
+}
+.campus-traveler-hit[hidden] {
+  display: none;
+}
+.campus-traveler-hit:focus-visible {
+  outline: 2px solid #d45d24;
+}
+
+.campus-plan [data-campus-hit]:focus-visible {
+  outline: none;
+}
+.campus-plan [data-campus-hit]:focus-visible circle {
+  stroke: var(--campus-accent);
+  stroke-width: 2;
+}

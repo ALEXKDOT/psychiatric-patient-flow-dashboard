@@ -14,6 +14,7 @@ import {
   type Program,
   type Service,
 } from './data'
+import { ExteriorEvidence } from './ExteriorEvidence'
 import './evidence.css'
 
 function SourceLinks({ ids }: { ids: string }) {
@@ -171,6 +172,7 @@ export function EvidenceRecord({ campus }: { campus: Campus }) {
         <Fact label="Real bed availability">Unknown</Fact>
       </dl>
       <p className="ev-note">{r.notes}</p>
+      <ExteriorEvidence campusId={campus.id} />
       <section>
         <h3>
           Program registry <span>{campus.programs.length}</span>

@@ -1,0 +1,37 @@
+{
+  "campus_id": "ny_nyp_westchester_bh",
+  "retrieved": "2026-11-18",
+  "publisher": "Westchester County GIS",
+  "bbox_wgs84": [
+    -73.7663,
+    41.0193,
+    -73.7437,
+    41.0363
+  ],
+  "program_marker_lon_lat": [
+    -73.75835,
+    41.02954
+  ],
+  "main_complex_objectid": 274916,
+  "main_complex_interior_lon_lat": [
+    -73.7538926,
+    41.0275733
+  ],
+  "main_complex_evidence": "Operator grounds-map silhouette matched to the connected county footprint",
+  "height_m_basis": "Published roof-minus-base difference, interpreted as feet and converted at 0.3048 m/ft; estimated massing",
+  "source_credits": "Westchester County GIS",
+  "layers": {
+    "buildings": {
+      "source_url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_BasemapPlanimetrics/MapServer/5",
+      "source_object_ids_returned": 1238,
+      "feature_count": 1205,
+      "sha256": "d0e415620d2133ab7aff049ba82e0630c44384e02c1b15f3b0d52acaaad7a793"
+    },
+    "streets": {
+      "source_url": "https://giswww.westchestergov.com/arcgis/rest/services/DataHub_BasemapPlanimetrics/MapServer/13",
+      "source_object_ids_returned": 520,
+      "feature_count": 514,
+      "sha256": "582a0727eb9de167793e9359a0965f6a36681f719285824c768b48555c9ff7ec"
+    }
+  }
+}

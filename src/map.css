@@ -479,3 +479,9 @@
   stroke-width: 2;
   opacity: 1;
 }
+
+/* Preserve the regional GL context across campus visits, without a rendered
+   regional surface or interactive descendants underneath the campus map. */
+.regional-map-cache[hidden] {
+  display: none;
+}

@@ -21,9 +21,16 @@ export function launch(noWebGL = false) {
   return chromium.launch({ executablePath: binary, args })
 }
 
-export async function localPage(browser, url, viewport, reducedMotion = 'reduce') {
+export async function localPage(
+  browser,
+  url,
+  viewport,
+  reducedMotion = 'reduce',
+  { cache = false } = {},
+) {
   const context = await browser.newContext({
     viewport,
+    hasTouch: viewport.width === sizes.mobile.width,
     deviceScaleFactor: 1,
     locale: 'en-US',
     timezoneId: 'America/New_York',
@@ -32,15 +39,22 @@ export async function localPage(browser, url, viewport, reducedMotion = 'reduce'
   })
   const external = []
   const errors = []
-  await context.route('**/*', (route) => {
-    const target = new URL(route.request().url())
-    if (['https:', 'http:'].includes(target.protocol) && target.origin !== new URL(url).origin) {
-      external.push(target.href)
-      return route.abort()
-    }
-    return route.continue()
-  })
+  const origin = new URL(url).origin
+  const isExternal = (address) => {
+    const target = new URL(address)
+    return ['https:', 'http:'].includes(target.protocol) && target.origin !== origin
+  }
+  // Playwright's routing disables HTTP cache. Use an uninstrumented cache in
+  // timing trials and still fail the trial if any outside host was requested.
+  if (!cache) {
+    await context.route('**/*', (route) =>
+      isExternal(route.request().url()) ? route.abort() : route.continue(),
+    )
+  }
   const page = await context.newPage()
+  page.on('request', (request) => {
+    if (isExternal(request.url())) external.push(request.url())
+  })
   page.on('pageerror', (error) => errors.push(String(error)))
   return { context, page, external, errors }
 }
@@ -52,6 +66,60 @@ export async function ready(page, url) {
     .waitFor({ timeout: 30000 })
   await page.locator('.geo-map').waitFor({ timeout: 30000 })
   await page.evaluate(() => document.fonts.ready)
+}
+
+export async function measureLayout(page) {
+  return page.evaluate(() => {
+    const map = document.querySelector('.geo-map').getBoundingClientRect()
+    const visibleHeight = Math.max(0, Math.min(innerHeight, map.bottom) - Math.max(0, map.top))
+    const visibleWidth = Math.max(0, Math.min(innerWidth, map.right) - Math.max(0, map.left))
+    const overlaps = (a, b) =>
+      a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top
+    const obstacles = [
+      ...document.querySelectorAll(
+        '.network-telemetry, .subject-panel, .geo-nameplate, .geo-extent, .geo-scale, .geo-north, .geo-nav, .geo-credit, .playback, .map-status, .map-guide',
+      ),
+    ]
+      .map((el) => el.getBoundingClientRect())
+      .filter((r) => r.width && r.height && overlaps(r, map))
+    const centerX = (map.left + map.right) / 2
+    const centerY = (map.top + map.bottom) / 2
+    // Largest axis-aligned clear rectangle containing the center. Candidate
+    // sides are the map or overlay edges, so no screenshot sampling is needed.
+    const x = [map.left, map.right, ...obstacles.flatMap((r) => [r.left, r.right])].filter(
+      (v) => v >= map.left && v <= map.right,
+    )
+    const y = [map.top, map.bottom, ...obstacles.flatMap((r) => [r.top, r.bottom])].filter(
+      (v) => v >= map.top && v <= map.bottom,
+    )
+    let best = { x: 0, y: 0, width: 0, height: 0 }
+    for (const left of x.filter((i) => i <= centerX))
+      for (const right of x.filter((i) => i >= centerX)) {
+        for (const top of y.filter((i) => i <= centerY))
+          for (const bottom of y.filter((i) => i >= centerY)) {
+            const width = right - left,
+              height = bottom - top
+            if (
+              width * height > best.width * best.height &&
+              !obstacles.some((r) => overlaps(r, { left, right, top, bottom }))
+            ) {
+              best = { x: left, y: top, width, height }
+            }
+          }
+      }
+    return {
+      clearCenterRect: Object.fromEntries(Object.entries(best).map(([k, v]) => [k, Math.round(v)])),
+      viewportWidth: innerWidth,
+      pageWidth: document.documentElement.scrollWidth,
+      mapTop: Math.round(map.top),
+      mapWidth: Math.round(map.width),
+      mapHeight: Math.round(map.height),
+      mapViewportPercent: +(
+        (100 * visibleHeight * visibleWidth) /
+        (innerHeight * innerWidth)
+      ).toFixed(1),
+    }
+  })
 }
 
 export async function capture(url, out, prefix, comparison = false) {
@@ -72,22 +140,7 @@ export async function capture(url, out, prefix, comparison = false) {
       const renderer = await page.locator('.geo-map').getAttribute('data-renderer')
       const filename = path.join(out, `${prefix}-${name}.png`)
       await page.screenshot({ path: filename, animations: 'disabled' })
-      const layout = await page.evaluate(() => {
-        const map = document.querySelector('.geo-map').getBoundingClientRect()
-        const visibleHeight = Math.max(0, Math.min(innerHeight, map.bottom) - Math.max(0, map.top))
-        const visibleWidth = Math.max(0, Math.min(innerWidth, map.right) - Math.max(0, map.left))
-        return {
-          viewportWidth: innerWidth,
-          pageWidth: document.documentElement.scrollWidth,
-          mapTop: Math.round(map.top),
-          mapWidth: Math.round(map.width),
-          mapHeight: Math.round(map.height),
-          mapViewportPercent: +(
-            (100 * visibleHeight * visibleWidth) /
-            (innerHeight * innerWidth)
-          ).toFixed(1),
-        }
-      })
+      const layout = await measureLayout(page)
       console.log(
         JSON.stringify({
           file: filename,
@@ -105,7 +158,7 @@ export async function capture(url, out, prefix, comparison = false) {
           .getByRole('dialog')
           .getByRole('heading', { name: 'Scenario comparison' })
           .waitFor()
-        const filename = path.join(out, 'scenario-lab.png')
+        const filename = path.join(out, prefix + '-scenario-lab.png')
         await page.screenshot({ path: filename, animations: 'disabled' })
         console.log(JSON.stringify({ file: filename, size, browser: browser.version() }))
       }

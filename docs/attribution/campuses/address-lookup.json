@@ -1,0 +1,1414 @@
+{
+  "source": "NYC Planning GeoSearch (PAD)",
+  "retrieved_utc": "2026-11-18T22:31:29.448484+00:00",
+  "queries": [
+    {
+      "campus_id": "nyc_bellevue",
+      "submitted": "462 First Avenue, Manhattan, NY 10016",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=462+First+Avenue%2C+Manhattan%2C+NY+10016&size=3",
+      "results": [
+        {
+          "name": "462 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10016",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1009620100",
+              "bin": "1086515",
+              "version": "26c"
+            }
+          },
+          "id": "108334",
+          "coordinates": [
+            -73.975002,
+            40.739174
+          ]
+        },
+        {
+          "name": "447 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10016",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1009320017",
+              "bin": "1020610",
+              "version": "26c"
+            }
+          },
+          "id": "106095",
+          "coordinates": [
+            -73.977534,
+            40.739368
+          ]
+        },
+        {
+          "name": "453 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10016",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1009320017",
+              "bin": "1020610",
+              "version": "26c"
+            }
+          },
+          "id": "106101",
+          "coordinates": [
+            -73.977534,
+            40.739368
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_harlem",
+      "submitted": "506 Lenox Avenue, Manhattan, NY 10037",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=506+Lenox+Avenue%2C+Manhattan%2C+NY+10037&size=3",
+      "results": [
+        {
+          "name": "506 LENOX AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10037",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1017340001",
+              "bin": "1053899",
+              "version": "26c"
+            }
+          },
+          "id": "236258",
+          "coordinates": [
+            -73.939711,
+            40.814111
+          ]
+        },
+        {
+          "name": "521 LENOX AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10037",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1019210029",
+              "bin": "1058330",
+              "version": "26c"
+            }
+          },
+          "id": "273173",
+          "coordinates": [
+            -73.940643,
+            40.815036
+          ]
+        },
+        {
+          "name": "527 LENOX AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10037",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1019210032",
+              "bin": "1058333",
+              "version": "26c"
+            }
+          },
+          "id": "273193",
+          "coordinates": [
+            -73.940507,
+            40.815189
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_metropolitan",
+      "submitted": "1901 First Avenue, Manhattan, NY 10029",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=1901+First+Avenue%2C+Manhattan%2C+NY+10029&size=3",
+      "results": [
+        {
+          "name": "1901 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016690001",
+              "bin": "1083929",
+              "version": "26c"
+            }
+          },
+          "id": "226663",
+          "coordinates": [
+            -73.944937,
+            40.785071
+          ]
+        },
+        {
+          "name": "1933 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016710023",
+              "bin": "1000000",
+              "version": "26c"
+            }
+          },
+          "id": "226705",
+          "coordinates": [
+            -73.94354,
+            40.78543
+          ]
+        },
+        {
+          "name": "1941 FIRST AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016710027",
+              "bin": "1000000",
+              "version": "26c"
+            }
+          },
+          "id": "226714",
+          "coordinates": [
+            -73.94336,
+            40.78567
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_kings_county",
+      "submitted": "410 Winthrop Street, Brooklyn, NY 11203",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=410+Winthrop+Street%2C+Brooklyn%2C+NY+11203&size=3",
+      "results": [
+        {
+          "name": "410 WINTHROP STREET",
+          "borough": "Brooklyn",
+          "postalcode": "11203",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3048290001",
+              "bin": "3327710",
+              "version": "26c"
+            }
+          },
+          "id": "1223731",
+          "coordinates": [
+            -73.946168,
+            40.656631
+          ]
+        },
+        {
+          "name": "410 WINTHROP AVENUE",
+          "borough": "Brooklyn",
+          "postalcode": "11203",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3048290001",
+              "bin": "3327710",
+              "version": "26c"
+            }
+          },
+          "id": "1223730",
+          "coordinates": [
+            -73.946168,
+            40.656631
+          ]
+        },
+        {
+          "name": "785 WINTHROP STREET",
+          "borough": "Brooklyn",
+          "postalcode": "11203",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3046020001",
+              "bin": "3327558",
+              "version": "26c"
+            }
+          },
+          "id": "1194102",
+          "coordinates": [
+            -73.933345,
+            40.658852
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_woodhull",
+      "submitted": "760 Broadway, Brooklyn, NY 11206",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=760+Broadway%2C+Brooklyn%2C+NY+11206&size=3",
+      "results": [
+        {
+          "name": "760 BROADWAY",
+          "borough": "Brooklyn",
+          "postalcode": "11206",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3017230001",
+              "bin": "3048341",
+              "version": "26c"
+            }
+          },
+          "id": "935739",
+          "coordinates": [
+            -73.942288,
+            40.699542
+          ]
+        },
+        {
+          "name": "760 B'WAY",
+          "borough": "Brooklyn",
+          "postalcode": "11206",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3017230001",
+              "bin": "3048341",
+              "version": "26c"
+            }
+          },
+          "id": "935738",
+          "coordinates": [
+            -73.942288,
+            40.699542
+          ]
+        },
+        {
+          "name": "760 BWAY EAST",
+          "borough": "Brooklyn",
+          "postalcode": "11206",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3017230001",
+              "bin": "3048341",
+              "version": "26c"
+            }
+          },
+          "id": "935740",
+          "coordinates": [
+            -73.942288,
+            40.699542
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_south_brooklyn",
+      "submitted": "2601 Ocean Parkway, Brooklyn, NY 11235",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=2601+Ocean+Parkway%2C+Brooklyn%2C+NY+11235&size=3",
+      "results": [
+        {
+          "name": "2601 OCEAN PARKWAY",
+          "borough": "Brooklyn",
+          "postalcode": "11235",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3072390001",
+              "bin": "3430086",
+              "version": "26c"
+            }
+          },
+          "id": "1584268",
+          "coordinates": [
+            -73.96487,
+            40.58565
+          ]
+        },
+        {
+          "name": "2442 OCEAN PARKWAY",
+          "borough": "Brooklyn",
+          "postalcode": "11235",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3071990021",
+              "bin": "3195309",
+              "version": "26c"
+            }
+          },
+          "id": "1579611",
+          "coordinates": [
+            -73.965979,
+            40.590103
+          ]
+        },
+        {
+          "name": "2490 OCEAN PARKWAY",
+          "borough": "Brooklyn",
+          "postalcode": "11235",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "3071990068",
+              "bin": "3195335",
+              "version": "26c"
+            }
+          },
+          "id": "1579672",
+          "coordinates": [
+            -73.966196,
+            40.589007
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_elmhurst",
+      "submitted": "79-01 Broadway, Queens, NY 11373",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=79-01+Broadway%2C+Queens%2C+NY+11373&size=3",
+      "results": [
+        {
+          "name": "79-01 BROADWAY",
+          "borough": "Queens",
+          "postalcode": "11373",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4015000002",
+              "bin": "4437132",
+              "version": "26c"
+            }
+          },
+          "id": "2014645",
+          "coordinates": [
+            -73.885989,
+            40.745023
+          ]
+        },
+        {
+          "name": "79-01 B'WAY",
+          "borough": "Queens",
+          "postalcode": "11373",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4015000002",
+              "bin": "4437132",
+              "version": "26c"
+            }
+          },
+          "id": "2014644",
+          "coordinates": [
+            -73.885989,
+            40.745023
+          ]
+        },
+        {
+          "name": "79-08 B'WAY",
+          "borough": "Queens",
+          "postalcode": "11373",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4014990051",
+              "bin": "4037047",
+              "version": "26c"
+            }
+          },
+          "id": "2014592",
+          "coordinates": [
+            -73.885744,
+            40.74404
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_queens",
+      "submitted": "82-68 164th Street, Queens, NY 11432",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=82-68+164th+Street%2C+Queens%2C+NY+11432&size=3",
+      "results": [
+        {
+          "name": "82-68 164 STREET",
+          "borough": "Queens",
+          "postalcode": "11432",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4068580001",
+              "bin": "4442431",
+              "version": "26c"
+            }
+          },
+          "id": "2867753",
+          "coordinates": [
+            -73.804176,
+            40.717004
+          ]
+        },
+        {
+          "name": "82-68 164 PLACE",
+          "borough": "Queens",
+          "postalcode": "11432",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4070430068",
+              "bin": "4152534",
+              "version": "26c"
+            }
+          },
+          "id": "2891014",
+          "coordinates": [
+            -73.802419,
+            40.7174
+          ]
+        },
+        {
+          "name": "82-68 GARAGE 164 PLACE",
+          "borough": "Queens",
+          "postalcode": "11432",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4070430068",
+              "bin": "4606130",
+              "version": "26c"
+            }
+          },
+          "id": "2891016",
+          "coordinates": [
+            -73.802603,
+            40.717324
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_jacobi",
+      "submitted": "1400 Pelham Parkway South, Bronx, NY 10461",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=1400+Pelham+Parkway+South%2C+Bronx%2C+NY+10461&size=3",
+      "results": [
+        {
+          "name": "1400 PELHAM PARKWAY SOUTH",
+          "borough": "Bronx",
+          "postalcode": "10461",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2042050001",
+              "bin": "2097550",
+              "version": "26c"
+            }
+          },
+          "id": "560260",
+          "coordinates": [
+            -73.847523,
+            40.856603
+          ]
+        },
+        {
+          "name": "1400 PELHAM PARKWAY",
+          "borough": "Bronx",
+          "postalcode": "10461",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2042050001",
+              "bin": "2097550",
+              "version": "26c"
+            }
+          },
+          "id": "560264",
+          "coordinates": [
+            -73.847523,
+            40.856603
+          ]
+        },
+        {
+          "name": "1140 PELHAM PARKWAY SOUTH",
+          "borough": "Bronx",
+          "postalcode": "10461",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2043100001",
+              "bin": "2049243",
+              "version": "26c"
+            }
+          },
+          "id": "569548",
+          "coordinates": [
+            -73.855416,
+            40.856729
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_north_central_bronx",
+      "submitted": "3424 Kossuth Avenue, Bronx, NY 10467",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=3424+Kossuth+Avenue%2C+Bronx%2C+NY+10467&size=3",
+      "results": [
+        {
+          "name": "3424 KOSSUTH AVENUE",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033270200",
+              "bin": "2017787",
+              "version": "26c"
+            }
+          },
+          "id": "492516",
+          "coordinates": [
+            -73.881035,
+            40.880535
+          ]
+        },
+        {
+          "name": "3344 KOSSUTH AVENUE",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033260069",
+              "bin": "2017739",
+              "version": "26c"
+            }
+          },
+          "id": "492212",
+          "coordinates": [
+            -73.881535,
+            40.879962
+          ]
+        },
+        {
+          "name": "3215 KOSSUTH AVENUE",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033260149",
+              "bin": "2017761",
+              "version": "26c"
+            }
+          },
+          "id": "492276",
+          "coordinates": [
+            -73.882511,
+            40.879131
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_lincoln",
+      "submitted": "234 E. 149th Street, Bronx, NY 10451",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=234+E.+149th+Street%2C+Bronx%2C+NY+10451&size=3",
+      "results": [
+        {
+          "name": "234 EAST 149 STREET",
+          "borough": "Bronx",
+          "postalcode": "10451",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2023350016",
+              "bin": "2097050",
+              "version": "26c"
+            }
+          },
+          "id": "368322",
+          "coordinates": [
+            -73.92437,
+            40.817045
+          ]
+        },
+        {
+          "name": "149 EAST 149 STREET",
+          "borough": "Bronx",
+          "postalcode": "10451",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2023470035",
+              "bin": "2091160",
+              "version": "26c"
+            }
+          },
+          "id": "369820",
+          "coordinates": [
+            -73.927785,
+            40.818926
+          ]
+        },
+        {
+          "name": "149 REAR EAST 149 STREET",
+          "borough": "Bronx",
+          "postalcode": "10451",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2023470035",
+              "bin": "2127463",
+              "version": "26c"
+            }
+          },
+          "id": "369826",
+          "coordinates": [
+            -73.927701,
+            40.819066
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_mount_sinai",
+      "submitted": "1 Gustave Levy Place, Manhattan, NY 10029",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=1+Gustave+Levy+Place%2C+Manhattan%2C+NY+10029&size=3",
+      "results": [
+        {
+          "name": "1 GUSTAVE LEVY PLACE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016040006",
+              "bin": "1083923",
+              "version": "26c"
+            }
+          },
+          "id": "217700",
+          "coordinates": [
+            -73.952805,
+            40.790434
+          ]
+        },
+        {
+          "name": "1 GUSTAVE L LEVY PLACE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016040006",
+              "bin": "1083923",
+              "version": "26c"
+            }
+          },
+          "id": "217699",
+          "coordinates": [
+            -73.952805,
+            40.790434
+          ]
+        },
+        {
+          "name": "1 LEVY PLACE",
+          "borough": "Manhattan",
+          "postalcode": "10029",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1016040006",
+              "bin": "1083923",
+              "version": "26c"
+            }
+          },
+          "id": "217701",
+          "coordinates": [
+            -73.952805,
+            40.790434
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_mount_sinai_bhc",
+      "submitted": "45 Rivington Street, Manhattan, NY 10002",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=45+Rivington+Street%2C+Manhattan%2C+NY+10002&size=3",
+      "results": [
+        {
+          "name": "45 RIVINGTON STREET",
+          "borough": "Manhattan",
+          "postalcode": "10002",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1004207502",
+              "bin": "1005601",
+              "version": "26c"
+            }
+          },
+          "id": "36938",
+          "coordinates": [
+            -73.99115,
+            40.720707
+          ]
+        },
+        {
+          "name": "187 RIVINGTON STREET",
+          "borough": "Manhattan",
+          "postalcode": "10002",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1003430001",
+              "bin": "1004080",
+              "version": "26c"
+            }
+          },
+          "id": "27290",
+          "coordinates": [
+            -73.984086,
+            40.718234
+          ]
+        },
+        {
+          "name": "189 RIVINGTON STREET",
+          "borough": "Manhattan",
+          "postalcode": "10002",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1003430001",
+              "bin": "1004080",
+              "version": "26c"
+            }
+          },
+          "id": "27291",
+          "coordinates": [
+            -73.984086,
+            40.718234
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_mount_sinai_morningside",
+      "submitted": "1111 Amsterdam Avenue, Manhattan, NY 10025",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=1111+Amsterdam+Avenue%2C+Manhattan%2C+NY+10025&size=3",
+      "results": [
+        {
+          "name": "1111 AMSTERDAM AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10025",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1018670001",
+              "bin": "1056035",
+              "version": "26c"
+            }
+          },
+          "id": "260564",
+          "coordinates": [
+            -73.961445,
+            40.805705
+          ]
+        },
+        {
+          "name": "771 AMSTERDAM AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10025",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1018520001",
+              "bin": "1055899",
+              "version": "26c"
+            }
+          },
+          "id": "259371",
+          "coordinates": [
+            -73.969299,
+            40.795022
+          ]
+        },
+        {
+          "name": "781 AMSTERDAM AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10025",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1018520002",
+              "bin": "1000000",
+              "version": "26c"
+            }
+          },
+          "id": "259379",
+          "coordinates": [
+            -73.96904,
+            40.7954
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_mount_sinai_west",
+      "submitted": "1000 10th Avenue, Manhattan, NY 10019",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=1000+10th+Avenue%2C+Manhattan%2C+NY+10019&size=3",
+      "results": [
+        {
+          "name": "1000 10 AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10019",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1010680001",
+              "bin": "1082718",
+              "version": "26c"
+            }
+          },
+          "id": "128871",
+          "coordinates": [
+            -73.986792,
+            40.769668
+          ]
+        },
+        {
+          "name": "686 10 AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10019",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1010580001",
+              "bin": "1026579",
+              "version": "26c"
+            }
+          },
+          "id": "127699",
+          "coordinates": [
+            -73.99236,
+            40.763417
+          ]
+        },
+        {
+          "name": "688 10 AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10019",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1010580002",
+              "bin": "1026580",
+              "version": "26c"
+            }
+          },
+          "id": "127721",
+          "coordinates": [
+            -73.992324,
+            40.763479
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_nyp_weill_cornell",
+      "submitted": "525 E 68th Street, Manhattan, NY 10065",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=525+E+68th+Street%2C+Manhattan%2C+NY+10065&size=3",
+      "results": [
+        {
+          "name": "525 EAST 68 STREET",
+          "borough": "Manhattan",
+          "postalcode": "10065",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1014800001",
+              "bin": "1084781",
+              "version": "26c"
+            }
+          },
+          "id": "202969",
+          "coordinates": [
+            -73.953956,
+            40.764715
+          ]
+        },
+        {
+          "name": "110 EAST 68 STREET",
+          "borough": "Manhattan",
+          "postalcode": "10065",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1014020006",
+              "bin": "1085154",
+              "version": "26c"
+            }
+          },
+          "id": "185690",
+          "coordinates": [
+            -73.96498,
+            40.768045
+          ]
+        },
+        {
+          "name": "120 EAST 68 STREET",
+          "borough": "Manhattan",
+          "postalcode": "10065",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1014020006",
+              "bin": "1085154",
+              "version": "26c"
+            }
+          },
+          "id": "185695",
+          "coordinates": [
+            -73.96498,
+            40.768045
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_nyp_columbia",
+      "submitted": "177 Fort Washington Avenue, Manhattan, NY 10032",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=177+Fort+Washington+Avenue%2C+Manhattan%2C+NY+10032&size=3",
+      "results": [
+        {
+          "name": "177 FT WASHINGTON AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10032",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1021390001",
+              "bin": "1076746",
+              "version": "26c"
+            }
+          },
+          "id": "336896",
+          "coordinates": [
+            -73.943573,
+            40.841261
+          ]
+        },
+        {
+          "name": "177 FORT WASHINGTON AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10032",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1021390001",
+              "bin": "1076746",
+              "version": "26c"
+            }
+          },
+          "id": "336895",
+          "coordinates": [
+            -73.943573,
+            40.841261
+          ]
+        },
+        {
+          "name": "80 FT WASHINGTON AVENUE",
+          "borough": "Manhattan",
+          "postalcode": "10032",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1021370040",
+              "bin": "1063357",
+              "version": "26c"
+            }
+          },
+          "id": "335557",
+          "coordinates": [
+            -73.943645,
+            40.837836
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_nyp_allen",
+      "submitted": "5141 Broadway, Manhattan, NY 10034",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=5141+Broadway%2C+Manhattan%2C+NY+10034&size=3",
+      "results": [
+        {
+          "name": "5141 B'WAY",
+          "borough": "Manhattan",
+          "postalcode": "10034",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1022440100",
+              "bin": "1065045",
+              "version": "26c"
+            }
+          },
+          "id": "359849",
+          "coordinates": [
+            -73.912991,
+            40.873314
+          ]
+        },
+        {
+          "name": "5141 BROADWAY",
+          "borough": "Manhattan",
+          "postalcode": "10034",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1022440100",
+              "bin": "1065045",
+              "version": "26c"
+            }
+          },
+          "id": "359850",
+          "coordinates": [
+            -73.912991,
+            40.873314
+          ]
+        },
+        {
+          "name": "5102 B'WAY",
+          "borough": "Manhattan",
+          "postalcode": "10034",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "1022140001",
+              "bin": "1000000",
+              "version": "26c"
+            }
+          },
+          "id": "355328",
+          "coordinates": [
+            -73.91343,
+            40.87122
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_rumc",
+      "submitted": "355 Bard Avenue, Staten Island, NY 10310",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=355+Bard+Avenue%2C+Staten+Island%2C+NY+10310&size=3",
+      "results": [
+        {
+          "name": "355 BARD AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10310",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5001020001",
+              "bin": "5106523",
+              "version": "26c"
+            }
+          },
+          "id": "4277533",
+          "coordinates": [
+            -74.105864,
+            40.635678
+          ]
+        },
+        {
+          "name": "355 ED BARD AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10310",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5001020001",
+              "bin": "5000000",
+              "version": "26c"
+            }
+          },
+          "id": "4277526",
+          "coordinates": [
+            -74.10556,
+            40.63588
+          ]
+        },
+        {
+          "name": "349 BARD AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10310",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5001020001",
+              "bin": "5106523",
+              "version": "26c"
+            }
+          },
+          "id": "4277530",
+          "coordinates": [
+            -74.105864,
+            40.635678
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_siuh_princes_bay",
+      "submitted": "375 Seguine Avenue, Staten Island, NY 10309",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=375+Seguine+Avenue%2C+Staten+Island%2C+NY+10309&size=3",
+      "results": [
+        {
+          "name": "375 SEGUINE AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10309",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5066700001",
+              "bin": "5082757",
+              "version": "26c"
+            }
+          },
+          "id": "4506414",
+          "coordinates": [
+            -74.196231,
+            40.516929
+          ]
+        },
+        {
+          "name": "375 REAR SEGUINE AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10309",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5066700001",
+              "bin": "5154380",
+              "version": "26c"
+            }
+          },
+          "id": "4506418",
+          "coordinates": [
+            -74.195646,
+            40.516628
+          ]
+        },
+        {
+          "name": "1 SEGUINE AVENUE",
+          "borough": "Staten Island",
+          "postalcode": "10309",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "5046400032",
+              "bin": "5000000",
+              "version": "26c"
+            }
+          },
+          "id": "4448025",
+          "coordinates": [
+            -74.14508,
+            40.55207
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_zucker_hillside",
+      "submitted": "75-59 263rd Street, Queens, NY 11004",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=75-59+263rd+Street%2C+Queens%2C+NY+11004&size=3",
+      "results": [
+        {
+          "name": "75-59 263 STREET",
+          "borough": "Queens",
+          "postalcode": "11004",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4085200002",
+              "bin": "4445327",
+              "version": "26c"
+            }
+          },
+          "id": "3055434",
+          "coordinates": [
+            -73.710905,
+            40.750801
+          ]
+        },
+        {
+          "name": "75-12 263 STREET",
+          "borough": "Queens",
+          "postalcode": "11004",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4085350002",
+              "bin": "4457065",
+              "version": "26c"
+            }
+          },
+          "id": "3055524",
+          "coordinates": [
+            -73.712353,
+            40.749901
+          ]
+        },
+        {
+          "name": "75-26 263 STREET",
+          "borough": "Queens",
+          "postalcode": "11004",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "4085350002",
+              "bin": "4457071",
+              "version": "26c"
+            }
+          },
+          "id": "3055538",
+          "coordinates": [
+            -73.712091,
+            40.749472
+          ]
+        }
+      ]
+    },
+    {
+      "campus_id": "nyc_montefiore_moses",
+      "submitted": "111 E 210th Street, Bronx, NY 10467",
+      "url": "https://geosearch.planninglabs.nyc/v2/search?text=111+E+210th+Street%2C+Bronx%2C+NY+10467&size=3",
+      "results": [
+        {
+          "name": "111 EAST 210 STREET",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033270001",
+              "bin": "2096399",
+              "version": "26c"
+            }
+          },
+          "id": "492295",
+          "coordinates": [
+            -73.879574,
+            40.880523
+          ]
+        },
+        {
+          "name": "78 EAST 210 STREET",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033260069",
+              "bin": "2017739",
+              "version": "26c"
+            }
+          },
+          "id": "492210",
+          "coordinates": [
+            -73.881535,
+            40.879962
+          ]
+        },
+        {
+          "name": "76 EAST 210 STREET",
+          "borough": "Bronx",
+          "postalcode": "10467",
+          "confidence": 0.8,
+          "match_type": "fallback",
+          "addendum": {
+            "pad": {
+              "bbl": "2033260069",
+              "bin": "2017739",
+              "version": "26c"
+            }
+          },
+          "id": "492209",
+          "coordinates": [
+            -73.881535,
+            40.879962
+          ]
+        }
+      ]
+    }
+  ]
+}

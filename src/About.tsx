@@ -1,3 +1,6 @@
+import terrainAttribution from '../docs/attribution/terrain.md?url'
+import westchesterNotes from '../docs/attribution/campuses/westchester.md?url'
+import shorelineGeometry from './cartography/tidal-water.json?url'
 import shorelineLicense from './cartography/licenses/GSHHG-COPYING.LESSER.txt?url'
 import incorporatedTerms from './cartography/licenses/GSHHG-COPYING.txt?url'
 
@@ -45,15 +48,45 @@ export function About() {
           transfer.
         </p>
         <p>
-          The geographic field combines U.S. Census Bureau boundaries and block groups, NYC
+          Regional geography uses U.S. Census Bureau boundaries and TIGERweb major roads, NYC
           Department of City Planning borough shorelines, and GSHHG shorelines by Paul Wessel and
-          Walter H. F. Smith. The regional water mask adapts GSHHG under LGPL 3.0 or later.{' '}
+          Walter H. F. Smith. The water mask adapts GSHHG under LGPL 3.0 or later.{' '}
+          <a href={shorelineGeometry} download="tidal-water.geojson">
+            Download shoreline geometry
+          </a>
+          {' · '}
           <a href={shorelineLicense} target="_blank" rel="noreferrer">
             Shoreline license
           </a>
           {' · '}
           <a href={incorporatedTerms} target="_blank" rel="noreferrer">
             Incorporated GPL terms
+          </a>
+        </p>
+        <p>
+          Ground elevation and hillshade use local Mapzen Terrain Tiles. United States 3DEP
+          (formerly NED) and global GMTED2010 and SRTM terrain data courtesy of the U.S. Geological
+          Survey.{' '}
+          <a href={terrainAttribution} target="_blank" rel="noreferrer">
+            Terrain source credits
+          </a>
+        </p>
+        <p>
+          New York City campus exteriors and streets come from NYC Open Data. Published roof heights
+          and any documented alternatives appear in each campus record.{' '}
+          <a href="https://data.cityofnewyork.us/d/5zhs-2jue" target="_blank" rel="noreferrer">
+            Building footprints
+          </a>
+          {' · '}
+          <a href="https://data.cityofnewyork.us/d/inkn-q76z" target="_blank" rel="noreferrer">
+            Street centerlines
+          </a>
+        </p>
+        <p>
+          White Plains buildings and street geometry are provided by Westchester County GIS for
+          general information. The county disclaims survey, engineering and site-specific accuracy.{' '}
+          <a href={westchesterNotes} target="_blank" rel="noreferrer">
+            County source, height basis and terms
           </a>
         </p>
       </details>

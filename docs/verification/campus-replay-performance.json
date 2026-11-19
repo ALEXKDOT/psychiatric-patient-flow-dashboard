@@ -1,0 +1,209 @@
+{
+  "method": "Three isolated Chromium production trials on the project subpath. First campus and follow include the view change. Warm selection reuses parsed campus data. Callback intervals are browser RAF samples.",
+  "host": {
+    "cpu": "AMD EPYC 9V74 (host model)",
+    "cpuQuota": 4,
+    "memoryLimitGiB": 32,
+    "gpu": "SwiftShader Vulkan"
+  },
+  "trials": [
+    {
+      "trial": 1,
+      "browser": "156.0.8078.79",
+      "environment": {
+        "dpr": 1,
+        "viewport": [
+          1440,
+          900
+        ],
+        "logicalProcessors": 5,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "navigation": {
+        "domContentLoadedMs": 410,
+        "loadMs": 410,
+        "localMapReadyMs": 1816,
+        "firstContentfulPaintMs": 764,
+        "encodedResourceBytes": 2949379
+      },
+      "network": {
+        "elapsedMs": 4017,
+        "frames": 238,
+        "averageFps": 59.3,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.7,
+        "longestFrameIntervalMs": 50,
+        "mainThreadLongTasks": 1
+      },
+      "coldSelectionMs": 1757,
+      "firstCampus": [
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/buildings.geojson",
+          "encoded": 769921,
+          "transfer": 770221
+        },
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/streets.geojson",
+          "encoded": 112520,
+          "transfer": 112820
+        }
+      ],
+      "warmSelectionMs": 1687,
+      "orbit": {
+        "elapsedMs": 10016,
+        "frames": 347,
+        "averageFps": 34.6,
+        "medianFrameIntervalMs": 33.3,
+        "p95FrameIntervalMs": 50,
+        "longestFrameIntervalMs": 133.3,
+        "mainThreadLongTasks": 3
+      },
+      "follow": {
+        "elapsedMs": 4016,
+        "frames": 239,
+        "averageFps": 59.5,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.7,
+        "longestFrameIntervalMs": 33.4,
+        "mainThreadLongTasks": 0
+      },
+      "warm": {
+        "cachedResources": 0,
+        "total": 27,
+        "transferred": 8100
+      }
+    },
+    {
+      "trial": 2,
+      "browser": "156.0.8078.79",
+      "environment": {
+        "dpr": 1,
+        "viewport": [
+          1440,
+          900
+        ],
+        "logicalProcessors": 5,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "navigation": {
+        "domContentLoadedMs": 382,
+        "loadMs": 384,
+        "localMapReadyMs": 3478,
+        "firstContentfulPaintMs": 2492,
+        "encodedResourceBytes": 2949379
+      },
+      "network": {
+        "elapsedMs": 4017,
+        "frames": 241,
+        "averageFps": 60,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.7,
+        "longestFrameIntervalMs": 16.8,
+        "mainThreadLongTasks": 0
+      },
+      "coldSelectionMs": 1922,
+      "firstCampus": [
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/buildings.geojson",
+          "encoded": 769921,
+          "transfer": 770221
+        },
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/streets.geojson",
+          "encoded": 112520,
+          "transfer": 112820
+        }
+      ],
+      "warmSelectionMs": 1830,
+      "orbit": {
+        "elapsedMs": 10033,
+        "frames": 307,
+        "averageFps": 30.6,
+        "medianFrameIntervalMs": 33.3,
+        "p95FrameIntervalMs": 50,
+        "longestFrameIntervalMs": 66.7,
+        "mainThreadLongTasks": 10
+      },
+      "follow": {
+        "elapsedMs": 4016,
+        "frames": 241,
+        "averageFps": 60,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.7,
+        "longestFrameIntervalMs": 16.8,
+        "mainThreadLongTasks": 0
+      },
+      "warm": {
+        "cachedResources": 0,
+        "total": 27,
+        "transferred": 8100
+      }
+    },
+    {
+      "trial": 3,
+      "browser": "156.0.8078.79",
+      "environment": {
+        "dpr": 1,
+        "viewport": [
+          1440,
+          900
+        ],
+        "logicalProcessors": 5,
+        "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)"
+      },
+      "navigation": {
+        "domContentLoadedMs": 255,
+        "loadMs": 257,
+        "localMapReadyMs": 3865,
+        "firstContentfulPaintMs": 3064,
+        "encodedResourceBytes": 2949379
+      },
+      "network": {
+        "elapsedMs": 4016,
+        "frames": 239,
+        "averageFps": 59.5,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.8,
+        "longestFrameIntervalMs": 50,
+        "mainThreadLongTasks": 0
+      },
+      "coldSelectionMs": 1797,
+      "firstCampus": [
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/buildings.geojson",
+          "encoded": 769921,
+          "transfer": 770221
+        },
+        {
+          "path": "/psychiatric-patient-flow-dashboard/campuses/nyc_bellevue/streets.geojson",
+          "encoded": 112520,
+          "transfer": 112820
+        }
+      ],
+      "warmSelectionMs": 1754,
+      "orbit": {
+        "elapsedMs": 10016,
+        "frames": 311,
+        "averageFps": 31,
+        "medianFrameIntervalMs": 33.3,
+        "p95FrameIntervalMs": 50,
+        "longestFrameIntervalMs": 133.2,
+        "mainThreadLongTasks": 6
+      },
+      "follow": {
+        "elapsedMs": 4016,
+        "frames": 240,
+        "averageFps": 59.8,
+        "medianFrameIntervalMs": 16.7,
+        "p95FrameIntervalMs": 16.7,
+        "longestFrameIntervalMs": 33.3,
+        "mainThreadLongTasks": 0
+      },
+      "warm": {
+        "cachedResources": 0,
+        "total": 27,
+        "transferred": 8100
+      }
+    }
+  ]
+}

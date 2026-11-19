@@ -1,2 +1,9 @@
 # Keep supplied research records byte-for-byte reproducible from the handoff.
 docs/research/* -text whitespace=cr-at-eol
+docs/attribution/campuses/* -text whitespace=cr-at-eol
+public/campuses/**/*.geojson -text
+public/geography/*.geojson -text
+public/geography/roads-source.json -text
+public/geography/terrain/coverage.json -text
+src/cartography/campus/targets.json -text
+tests/fixtures/bellevue-queens.json -text

@@ -1,6 +1,7 @@
 // Run against the production preview started in another terminal. See docs/VERIFICATION.md.
 import { expect } from '@playwright/test'
 import { launch, localPage, ready, sizes } from './browser_capture.mjs'
+import { campusReady } from './browser_journey.mjs'
 import { sampleFrames, initialNavigation, observeMapReady } from './browser_perf.mjs'
 import { parseArgs } from 'node:util'
 import assert from 'node:assert/strict'
@@ -10,8 +11,14 @@ const { values } = parseArgs({
   options: {
     url: { type: 'string', default: 'http://127.0.0.1:4173' },
     operations: { type: 'boolean', default: false },
+    renderer: { type: 'string', default: 'both' },
   },
 })
+
+async function showSubject(page) {
+  const toggle = page.getByRole('button', { name: 'Show subject details' })
+  if (await toggle.isVisible()) await toggle.click()
+}
 
 async function verifyInstruments(page) {
   const open = page.getByRole('button', { name: 'Expand placement queue', exact: true })
@@ -56,6 +63,7 @@ async function verifyInstruments(page) {
 async function verifyFiltersAndDirectory(page) {
   const metrics = page.getByRole('region', { name: 'Network-wide simulation metrics' })
   const networkText = await metrics.innerText()
+  await showSubject(page)
   const inspector = page.getByRole('complementary', { name: 'Selected campus inspector' })
   await page.getByRole('button', { name: /^Filters/ }).click()
   let panel = page.getByRole('dialog')
@@ -81,6 +89,7 @@ async function verifyFiltersAndDirectory(page) {
   await search.fill('elmhurst')
   await expect(panel.getByText('1 of 23 campuses')).toBeVisible()
   await panel.getByRole('button', { name: /Elmhurst/ }).click()
+  await showSubject(page)
   await expect(inspector.getByRole('heading', { name: 'Elmhurst', exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'View campus record' }).click()
   panel = page.getByRole('dialog')
@@ -89,6 +98,7 @@ async function verifyFiltersAndDirectory(page) {
   await panel.getByText('Sources and dates', { exact: false }).click()
   assert.ok(await panel.getByRole('link', { name: /DATA-001/ }).count())
   await page.keyboard.press('Escape')
+  await page.getByRole('button', { name: 'Back to previous view' }).first().click()
   const listTransfers = page.getByRole('button', { name: 'Schematic transfers', exact: true })
   if (!(await listTransfers.isVisible()))
     await page.getByRole('button', { name: 'Map layers', exact: true }).click()
@@ -103,22 +113,25 @@ async function verifyFiltersAndDirectory(page) {
 
 async function verifyMap(page) {
   const map = page.locator('.geo-map')
+  await showSubject(page)
   const inspector = page.getByRole('complementary', { name: 'Selected campus inspector' })
   await map.getByRole('button', { name: 'Region', exact: true }).click()
   await expect(map.locator('.geo-node')).toHaveCount(23)
+  const renderer = await map.getAttribute('data-renderer')
   const elmhurst = map.getByRole('button', { name: 'Select Elmhurst', exact: true })
   await elmhurst.focus()
   await page.keyboard.press('Enter')
   await expect(inspector.getByRole('heading', { name: 'Elmhurst', exact: true })).toBeVisible()
-  await expect(elmhurst).toHaveAttribute('aria-pressed', 'true')
+  await campusReady(page, 'nyc_elmhurst', renderer)
+  await page.getByRole('button', { name: 'Back to previous view' }).first().press('Enter')
+  await expect(elmhurst).toBeFocused()
   const trip = map.getByRole('button', { name: /^In transit · / }).first()
   const episodeId = (await trip.getAttribute('aria-label')).split(' · ')[1]
   await trip.focus()
   await page.keyboard.press('Enter')
-  const details = page.getByRole('dialog')
-  await expect(details.getByText(episodeId, { exact: true })).toBeVisible()
-  await expect(details.getByText(/Destination slot reserved/)).toBeVisible()
-  await page.keyboard.press('Escape')
+  const details = page.getByRole('complementary', { name: 'Selected transfer inspector' })
+  await expect(details).toHaveAttribute('data-episode-id', episodeId)
+  await details.getByRole('button', { name: 'Exit transfer' }).click()
   const before = await elmhurst.getAttribute('transform')
   await map.getByRole('button', { name: 'Zoom in', exact: true }).click()
   await expect(elmhurst).not.toHaveAttribute('transform', before)
@@ -169,7 +182,12 @@ async function verifyPlayback(page) {
   const opening = await slider.inputValue()
   const initial = await metrics.innerText()
   const initialTransfers = await page.locator('.geo-trip').count()
-  assert.ok(initialTransfers > 0)
+  assert.equal(initialTransfers, 3)
+  const tokenIds = await page
+    .locator('[data-token]')
+    .evaluateAll((nodes) => nodes.map((node) => node.dataset.token).sort())
+  assert.deepEqual(tokenIds, ['EP-0190', 'EP-0192', 'EP-0193'])
+
   await shell.getByRole('button', { name: 'Reset to Day 1' }).click()
   await expect(slider).toHaveValue('0')
   const zero = await metrics.innerText()
@@ -245,8 +263,8 @@ async function verifyFallback() {
       await page.evaluate(() => !!document.createElement('canvas').getContext('webgl2')),
       false,
     )
-    await context.setOffline(true)
     await verifyMap(page)
+    await context.setOffline(true)
     await verifyPlayback(page)
     assert.equal(
       await page.evaluate(() => matchMedia('(prefers-reduced-motion: reduce)').matches),
@@ -278,11 +296,31 @@ async function verifyResponsiveSizes(page) {
     await page.evaluate(
       () => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))),
     )
-    const pageWidth = await page.evaluate(() => document.documentElement.scrollWidth)
-    assert.ok(
-      pageWidth <= width,
-      `Horizontal overflow at ${width}px: document is ${pageWidth}px wide`,
-    )
+    try {
+      await expect
+        .poll(() => page.evaluate(() => document.documentElement.scrollWidth), {
+          timeout: 1500,
+          message: 'Horizontal overflow at ' + width + 'px after resize',
+        })
+        .toBeLessThanOrEqual(width)
+    } catch (error) {
+      const offenders = await page.evaluate(() =>
+        [...document.querySelectorAll('body *')]
+          .filter(
+            (el) =>
+              el instanceof HTMLElement &&
+              el.offsetWidth &&
+              el.getBoundingClientRect().right > innerWidth + 1,
+          )
+          .slice(0, 12)
+          .map((el) => ({
+            element: el.className || el.tagName,
+            right: Math.round(el.getBoundingClientRect().right),
+          })),
+      )
+      console.error('Overflowing elements', offenders)
+      throw error
+    }
   }
   console.log(
     'No page-level horizontal overflow at ' + widths.length + ' sampled widths from 320 to 1920px.',
@@ -296,7 +334,7 @@ async function main() {
       browser,
       values.url,
       sizes.desktop,
-      'no-preference',
+      'reduce',
     )
     await observeMapReady(page)
     await ready(page, values.url)
@@ -319,5 +357,6 @@ async function main() {
   }
 }
 
-await main()
-await verifyFallback()
+assert.ok(['both', 'maplibre', 'svg'].includes(values.renderer))
+if (values.renderer !== 'svg') await main()
+if (values.renderer !== 'maplibre') await verifyFallback()

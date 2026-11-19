@@ -64,6 +64,10 @@ export interface Transfer {
   to: string
   progress: number
 }
+export interface MotionSegment extends Transfer {
+  startMinute: number
+  endMinute: number
+}
 export interface Metrics {
   queue: number
   openReferrals: number
@@ -107,12 +111,17 @@ export interface Comparison {
   medianPlacement: number | null
   p90Placement: number | null
 }
+export interface PresentationFrame extends Frame {
+  transfers: MotionSegment[]
+  recentTransfers: MotionSegment[]
+}
 export interface Run {
   scenario: Scenario
   seed: number
   focusId: string
   duration: number
   openingMinute: number
+  presentationAt(minute: number): PresentationFrame
   at(minute: number): Frame
   compare(minute?: number, cohort?: 'base' | 'all'): Comparison
 }
@@ -127,7 +136,14 @@ function random(key: string) {
 }
 
 type ActionKind =
-  'release' | 'discharge' | 'admit' | 'arrive' | 'depart' | 'dispose' | 'search' | 'review'
+  | 'release'
+  | 'discharge'
+  | 'admit'
+  | 'arrive'
+  | 'depart'
+  | 'dispose'
+  | 'search'
+  | 'review'
 const priority: Record<ActionKind, number> = {
   release: 0,
   discharge: 1,
@@ -186,7 +202,7 @@ function arriveStream(
   stream: Stream,
   start: number,
   end: number,
-  perDay: number,
+  perDay: number
 ) {
   let clock = start
   for (let i = 1; ; i++) {
@@ -207,7 +223,7 @@ function execute(
   seed: number,
   campuses: CampusInput[],
   horizon: number,
-  history?: History,
+  history?: History
 ) {
   const origins = campuses.filter((c) => c.origin)
   const ids = campuses.map((c) => c.id)
@@ -262,7 +278,7 @@ function execute(
       emit(
         'search',
         ep.origin,
-        ep.round === 1 ? 'Placement search opened' : 'Placement search renewed',
+        ep.round === 1 ? 'Placement search opened' : 'Placement search renewed'
       )
       for (const to of targets) {
         ep.refs.push({
@@ -392,7 +408,7 @@ function startState(campuses: CampusInput[], seed: number, rate: number) {
           pendingClosure: 0,
           queue: 0,
         },
-      ]),
+      ])
     )
     warm = { people: {}, pools, pending: [] }
     arriveStream(warm, seed, 'warmup', -WARMUP, 0, rate)
@@ -455,7 +471,7 @@ export function buildRun(
   campuses: CampusInput[],
   scenario: Scenario = 'baseline',
   seed = DEFAULT_SEED,
-  focusId = campuses[0]?.id,
+  focusId = campuses[0]?.id
 ): Run {
   if (
     !Number.isFinite(seed) ||
@@ -481,7 +497,7 @@ export function buildRun(
   const history: History = {
     events: [],
     pools: Object.fromEntries(
-      Object.values(world.pools).map((p) => [p.id, [{ time: 0, pool: { ...p } }]]),
+      Object.values(world.pools).map((p) => [p.id, [{ time: 0, pool: { ...p } }]])
     ),
   }
   if (scenario.startsWith('capacity-'))
@@ -501,7 +517,7 @@ export function buildRun(
   // No future events enter a projection or cohort calculation.
   execute(world, seed, campuses, DURATION + 90, history)
   const people = Object.values(world.people).sort(
-    (a, b) => a.disposition - b.disposition || a.id.localeCompare(b.id),
+    (a, b) => a.disposition - b.disposition || a.id.localeCompare(b.id)
   )
   const refs = people
     .flatMap((e) => e.refs)
@@ -522,12 +538,12 @@ export function buildRun(
   }
   const trends: Trend[] = []
   for (let hour = 0; hour <= DURATION; hour += 60) trends.push(trend(hour))
-  function at(minute: number): Frame {
+  function presentationAt(minute: number): PresentationFrame {
     const t = bound(minute)
     const episodes: Episode[] = [],
       queue: Episode[] = [],
-      transfers: Transfer[] = [],
-      recentTransfers: Transfer[] = []
+      transfers: MotionSegment[] = [],
+      recentTransfers: MotionSegment[] = []
     const pools: Record<string, Pool> = {}
     const metrics: Metrics = {
       queue: 0,
@@ -569,10 +585,19 @@ export function buildRun(
           id: e.id,
           from: e.origin,
           to: e.destination,
+          startMinute: v.departure,
+          endMinute: e.arrival!,
           progress: (t - v.departure) / (e.arrival! - v.departure),
         })
       else if (v.arrival !== null && v.arrival >= t - 120)
-        recentTransfers.push({ id: e.id, from: e.origin, to: e.destination, progress: 1 })
+        recentTransfers.push({
+          id: e.id,
+          from: e.origin,
+          to: e.destination,
+          progress: 1,
+          startMinute: v.departure,
+          endMinute: v.arrival,
+        })
     }
     const referrals: Referral[] = []
     for (const r of refs) {
@@ -611,7 +636,7 @@ export function buildRun(
   function compare(minute = DURATION, cohort: 'base' | 'all' = 'base'): Comparison {
     const t = bound(minute)
     const entrants = people.filter(
-      (e) => e.disposition >= 0 && e.disposition <= t && (cohort === 'all' || e.stream === 'base'),
+      (e) => e.disposition >= 0 && e.disposition <= t && (cohort === 'all' || e.stream === 'base')
     )
     const waits: number[] = [],
       placement: number[] = []
@@ -640,13 +665,13 @@ export function buildRun(
       e.arrival !== null &&
       e.destination !== e.origin &&
       e.departure >= 360 &&
-      e.arrival < DURATION,
+      e.arrival < DURATION
   )
   const score = (e: Person) => {
     const t = Math.floor((e.departure! + e.arrival!) / 2)
     const q = people.filter((p) => p.disposition <= t && !occurred(p.departure, t)).length
     const inFlight = people.filter(
-      (p) => p.destination !== p.origin && occurred(p.departure, t) && !occurred(p.arrival, t),
+      (p) => p.destination !== p.origin && occurred(p.departure, t) && !occurred(p.arrival, t)
     ).length
     return (
       (e.origin === focusId || e.destination === focusId ? 100 : 0) +
@@ -663,5 +688,21 @@ export function buildRun(
       openingMinute = Math.floor((e.departure! + e.arrival!) / 2)
     }
   }
-  return { scenario, seed, focusId, duration: DURATION, openingMinute, at, compare }
+  // The canonical export contract stays stable. Presentation adds only the
+  // interpolation window of a journey whose departure has already occurred.
+  function at(minute: number): Frame {
+    const frame = presentationAt(minute)
+    const canonical = ({ id, from, to, progress }: MotionSegment): Transfer => ({
+      id,
+      from,
+      to,
+      progress,
+    })
+    return {
+      ...frame,
+      transfers: frame.transfers.map(canonical),
+      recentTransfers: frame.recentTransfers.map(canonical),
+    }
+  }
+  return { scenario, seed, focusId, duration: DURATION, openingMinute, at, presentationAt, compare }
 }

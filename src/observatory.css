@@ -1,0 +1,975 @@
+/* Network, focus and follow share the same geographic stage. */
+.console-bar {
+  height: 45px;
+  gap: 15px;
+  padding-inline: clamp(12px, 1.25vw, 24px);
+}
+.console-bar .brand img {
+  width: 26px;
+  height: 26px;
+}
+.console-bar .brand strong {
+  font-size: 20px;
+}
+.workspaces,
+.workspaces button,
+.subject-links,
+.subject-links button,
+.watch-feature,
+.motion-pause,
+.view-back {
+  display: flex;
+  align-items: center;
+}
+.workspaces {
+  gap: 2px;
+}
+.workspaces button {
+  height: 30px;
+  padding: 0 8px;
+  gap: 5px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.workspaces button:hover {
+  background: var(--raised, #eef0ea);
+  color: var(--ink);
+}
+.console-layout {
+  display: block;
+  padding: 0 clamp(8px, 0.7vw, 16px);
+  max-width: 2560px;
+  margin-inline: auto;
+}
+.console-layout .network-stage {
+  border: 0;
+  background: transparent;
+}
+.network-stage .stage-head {
+  min-height: 49px;
+  padding: 6px 3px;
+  flex-wrap: nowrap;
+  gap: 9px;
+  background: transparent;
+}
+.stage-head .scene-name {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.stage-head .scene-scope {
+  font-size: 8.5px;
+  letter-spacing: 1px;
+}
+.stage-head .scene-name h1 {
+  margin: 0;
+  font-size: clamp(22px, 1.7vw, 30px);
+  line-height: 1.05;
+  font-weight: 565;
+  letter-spacing: -0.055em;
+}
+.stage-head .scene-tools {
+  flex: 0 0 auto;
+  width: auto;
+}
+.scene-tools .layer-action {
+  display: grid;
+}
+.stage-head .scenario-select select:focus-visible {
+  outline-offset: 1px;
+}
+.console-layout .geo-board {
+  position: relative;
+  display: block;
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.geo-board .map-canvas {
+  position: relative;
+  width: 100%;
+  height: clamp(415px, 70.75svh, 1060px);
+  min-height: 0;
+}
+.geo-board .map-canvas > .geo-map,
+.geo-board .map-canvas > .campus-scene,
+.geo-world {
+  position: absolute;
+  inset: 0;
+}
+.geo-world {
+  transform-origin: 0 0;
+}
+.geo-board .metric-overlay {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: min(38%, 495px);
+  z-index: 3;
+  pointer-events: none;
+}
+.metric-overlay .network-telemetry {
+  width: 100%;
+  border-radius: 2px;
+}
+.metric-overlay .telemetry-cell {
+  padding: 6px 9px 5px;
+}
+.metric-overlay .telemetry-cell + .telemetry-cell::before {
+  top: 7px;
+  bottom: 7px;
+}
+.metric-overlay .telemetry-readout {
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+}
+.metric-overlay .telemetry-readout strong {
+  font-size: 21px;
+  letter-spacing: -0.07em;
+}
+.metric-overlay .telemetry-readout svg {
+  height: 14px;
+  max-width: 36%;
+}
+.metric-overlay .telemetry-unit {
+  display: inline;
+  margin-left: 4px;
+  font-size: 8.5px;
+  line-height: 1;
+}
+.metric-overlay .telemetry-cell dt {
+  font-size: 8.5px;
+  line-height: 12px;
+}
+.view-back,
+.connection-caption,
+.quiet-map,
+.journey-status,
+.focus-locator {
+  position: absolute;
+  z-index: 4;
+  border: 1px solid var(--line);
+  background: var(--surface, #fbfcf8);
+  color: var(--ink);
+  border-radius: 2px;
+}
+.view-back {
+  top: 75px;
+  left: 12px;
+  gap: 6px;
+  min-height: 32px;
+  padding: 4px 9px;
+  font-size: 12px;
+  font-weight: 550;
+}
+.focus-locator {
+  width: 145px;
+  bottom: 29px;
+  left: 12px;
+  pointer-events: none;
+  box-shadow: 0 1px 5px #101c2217;
+}
+.focus-locator .region-locator {
+  display: block;
+  border: none;
+  padding: 6px;
+}
+.focus-locator .region-locator h2 {
+  margin: 0 0 3px;
+  font: 500 8px/1.1 var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.focus-locator .locator-plate {
+  max-height: 62px;
+}
+.connection-caption,
+.quiet-map,
+.journey-status {
+  width: max-content;
+  max-width: calc(100% - 130px);
+  padding: 6px 10px;
+  pointer-events: none;
+  font: 10px/1.4 var(--mono);
+}
+.connection-caption {
+  top: 12px;
+  left: 50%;
+  transform: translateX(-2%);
+}
+.connection-caption i {
+  display: inline-block;
+  width: 16px;
+  margin-right: 2px;
+  border-top: 2px solid var(--orange);
+  vertical-align: middle;
+}
+.quiet-map {
+  bottom: 30px;
+  left: 12px;
+  display: grid;
+  gap: 2px;
+}
+.quiet-map b {
+  font-family: 'IBM Plex Sans Variable', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+}
+.quiet-map span {
+  color: var(--muted);
+}
+.journey-status {
+  left: 50%;
+  bottom: 30px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.geo-board[data-view='campus'] .journey-status {
+  bottom: 32px;
+  left: 169px;
+  transform: none;
+  max-width: min(30%, 390px);
+}
+.transport-strip {
+  border: 1px solid var(--line);
+  border-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface, #fbfcf8);
+  padding: 0 7px 0 0;
+}
+.transport-strip .playback {
+  min-width: 0;
+  flex: 1;
+  min-height: 43px;
+  padding: 5px 7px;
+  gap: 9px;
+  background: transparent;
+}
+.transport-strip .replay-clock {
+  min-width: 85px;
+}
+.transport-strip .watch-feature,
+.transport-strip .motion-pause {
+  flex: 0 0 auto;
+  min-height: 30px;
+  padding: 5px 8px;
+  gap: 6px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 11.5px;
+}
+.watch-feature {
+  background: var(--tinted, #f6e9df);
+  color: var(--orange, #aa4924);
+}
+.motion-pause {
+  background: var(--raised, #f3f4ed);
+  color: var(--ink);
+}
+.watch-feature:hover,
+.motion-pause:hover {
+  filter: brightness(0.96);
+}
+.instrument-deck {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.88fr) minmax(0, 3fr);
+  gap: 9px;
+  align-items: start;
+  margin-top: 9px;
+}
+.subject-panel {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.subject-toggle {
+  display: none;
+}
+.subject-panel .campus-dossier,
+.subject-panel .trip-inspector {
+  border: 0;
+}
+.subject-panel .dossier-heading {
+  padding-block: 8px;
+}
+.subject-panel .dossier-identity h2 {
+  font-size: 19px;
+}
+.subject-panel .dossier-identity,
+.subject-panel .dossier-allocation {
+  padding: 8px 11px;
+}
+.subject-links {
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  padding: 7px 11px;
+  border-top: 1px solid var(--line);
+}
+.subject-links button {
+  gap: 4px;
+  padding: 1px 0;
+  min-height: 23px;
+  font-size: 11px;
+  font-weight: 520;
+}
+.subject-links button svg {
+  color: var(--orange);
+}
+.subject-links button small {
+  color: var(--muted);
+  font: 9px var(--mono);
+}
+.instrument-deck > .instruments {
+  min-width: 0;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.9fr) minmax(0, 1fr);
+}
+.instrument-deck .ins-panel {
+  min-height: 202px;
+}
+.instrument-deck .ins-panel + .ins-panel {
+  border-left: 1px solid var(--ins-rule);
+}
+.console-layout .network-stage.map-expanded {
+  position: fixed;
+  inset: 5px;
+  z-index: 25;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+}
+.map-expanded .stage-head {
+  padding-inline: 10px;
+}
+.map-expanded .geo-board {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+.map-expanded .geo-board .map-canvas {
+  flex: 1;
+  height: auto;
+}
+.map-expanded .transport-strip {
+  flex-shrink: 0;
+}
+.system-foot {
+  margin-top: 8px;
+}
+
+@media (min-width: 761px) and (max-width: 1180px) {
+  .console-bar {
+    gap: 9px;
+  }
+  .console-bar .run-meta {
+    display: none;
+  }
+  .instrument-deck {
+    grid-template-columns: minmax(210px, 0.8fr) minmax(0, 2.9fr);
+  }
+  .instrument-deck .ins-header-tools,
+  .instrument-deck .ins-title {
+    gap: 3px;
+  }
+  .instrument-deck .ins-header {
+    flex-wrap: wrap;
+  }
+  .instrument-deck .ins-panel {
+    padding-inline: 10px;
+  }
+}
+@media (max-width: 960px) and (min-width: 761px) {
+  .console-bar .product-label {
+    display: none;
+  }
+  .instrument-deck {
+    grid-template-columns: minmax(200px, 0.8fr) minmax(0, 2fr);
+  }
+  .instrument-deck > .instruments {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (min-width: 761px) and (max-width: 840px) {
+  .console-bar .search-launch kbd {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .console-bar {
+    height: 48px;
+    padding-inline: 7px;
+    gap: 5px;
+  }
+  .console-bar .product-label,
+  .console-bar .run-meta,
+  .console-bar kbd {
+    display: none;
+  }
+  .console-bar .brand {
+    gap: 3px;
+  }
+  .console-bar .brand strong {
+    font-size: 16px;
+    letter-spacing: -0.06em;
+  }
+  .console-bar .brand img {
+    width: 23px;
+    height: 23px;
+  }
+  .console-bar .bar-tools {
+    gap: 0;
+    margin-left: auto;
+  }
+  .console-bar .search-launch {
+    order: 0;
+  }
+  .console-bar .search-launch span {
+    display: none;
+  }
+  .console-bar .search-launch,
+  .console-bar .theme-control,
+  .console-bar .help,
+  .workspaces button {
+    border: 0;
+    background: transparent;
+    padding: 0;
+    min-width: 32px;
+    min-height: 44px;
+    justify-content: center;
+  }
+  .workspaces {
+    gap: 0;
+  }
+  .workspaces button {
+    font-size: 0;
+    gap: 0;
+  }
+  .console-bar .sim-badge {
+    padding: 3px 4px;
+    gap: 3px;
+    font-size: 8px;
+  }
+  .console-layout {
+    padding: 0 5px;
+  }
+  .network-stage .stage-head {
+    min-height: 48px;
+    padding: 5px 3px;
+  }
+  .stage-head .scene-scope {
+    font-size: 7.5px;
+    letter-spacing: 0.04em;
+  }
+  .stage-head .scene-name {
+    flex: 1;
+    width: auto;
+  }
+  .stage-head .scene-name h1 {
+    font-size: 21px;
+  }
+  .scene-tools .icon-btn,
+  .scene-tools .tool-btn {
+    min-width: 36px;
+    height: 40px;
+  }
+  .scene-tools .scenario-select {
+    min-height: 36px;
+    font-size: 11px;
+  }
+  .stage-head .scene-tools .filter-action span,
+  .stage-head .scene-tools .layer-action:after {
+    display: none;
+  }
+  .stage-head .scene-tools .filter-action,
+  .stage-head .scene-tools .layer-action {
+    padding: 0;
+    width: 36px;
+  }
+  .map-canvas .geo-extent button {
+    min-height: 36px;
+    min-width: 40px;
+  }
+  .map-canvas .geo-nav button {
+    width: 38px;
+    height: 38px;
+  }
+  .geo-board .metric-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+  }
+  .geo-board .metric-overlay > .network-telemetry {
+    border-width: 0 0 1px;
+    border-radius: 0;
+  }
+  .metric-overlay .telemetry-cell {
+    padding: 4px 6px;
+  }
+  .metric-overlay .telemetry-readout strong {
+    font-size: 16px;
+  }
+  .metric-overlay .telemetry-readout svg,
+  .metric-overlay .telemetry-meter {
+    display: none;
+  }
+  .metric-overlay .telemetry-unit {
+    display: inline-block;
+    margin: 0 0 0 4px;
+    font-size: 7.5px;
+  }
+  .metric-overlay .telemetry-cell dt {
+    font-size: 8px;
+    line-height: 10px;
+  }
+  .geo-board .map-canvas {
+    height: clamp(290px, 52svh, 530px);
+  }
+  .view-back {
+    top: 9px;
+    left: 8px;
+    min-height: 44px;
+    padding: 5px 8px;
+  }
+  .focus-locator {
+    top: 59px;
+    left: 8px;
+    bottom: auto;
+    width: 88px;
+  }
+  .focus-locator .region-locator {
+    padding: 3px;
+  }
+  .focus-locator .locator-plate {
+    max-height: 42px;
+  }
+  .focus-locator .region-locator h2 {
+    display: none;
+  }
+  .connection-caption {
+    top: auto;
+    bottom: 49px;
+    left: 8px;
+    max-width: calc(100% - 74px);
+    transform: none;
+    font-size: 9px;
+  }
+  .journey-status,
+  .geo-board[data-view='campus'] .journey-status {
+    top: auto;
+    bottom: 15px;
+    left: 8px;
+    max-width: calc(100% - 70px);
+    transform: none;
+    font-size: 9px;
+    padding: 3px 6px;
+  }
+  .geo-board[data-view='campus'] .journey-status {
+    top: 59px;
+    bottom: auto;
+    left: 101px;
+    max-width: calc(100% - 164px);
+  }
+  .quiet-map {
+    max-width: calc(100% - 67px);
+    padding: 4px 6px;
+    bottom: 25px;
+    left: 8px;
+  }
+  .transport-strip {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0;
+    padding: 0;
+  }
+  .transport-strip .playback {
+    grid-column: 1/-1;
+    gap: 5px;
+    min-height: 45px;
+    padding: 2px 5px;
+  }
+  .transport-strip .play-toggle,
+  .transport-strip .icon-btn {
+    width: 36px;
+    min-height: 42px;
+  }
+  .transport-strip .replay-clock {
+    min-width: 56px;
+  }
+  .transport-strip .speed {
+    min-height: 40px;
+  }
+  .transport-strip .motion-pause,
+  .transport-strip .watch-feature {
+    font-size: 11px;
+    border: 0;
+    border-top: 1px solid var(--line);
+    border-radius: 0;
+    padding: 4px 9px;
+    min-height: 40px;
+  }
+  .transport-strip .watch-feature {
+    justify-content: center;
+    border-left: 1px solid var(--line);
+  }
+  .network-stage .mobile-run-meta {
+    display: none;
+  }
+  .instrument-deck {
+    display: block;
+    margin-top: 6px;
+  }
+  .instrument-deck > .instruments {
+    grid-template-columns: 1fr 1fr;
+  }
+  .subject-panel {
+    position: fixed;
+    left: 5px;
+    right: 5px;
+    bottom: 0;
+    z-index: 11;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    border-radius: 5px 5px 0 0;
+    box-shadow: 0 -3px 13px #14201d28;
+  }
+  .subject-panel .subject-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 12px 5px;
+    min-height: 46px;
+    font-size: 14px;
+    font-weight: 550;
+    color: var(--ink);
+    background: var(--surface);
+  }
+  .subject-toggle::before {
+    content: '';
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--line);
+    position: absolute;
+    top: 4px;
+    left: calc(50% - 14px);
+  }
+  .subject-panel.open .subject-toggle svg {
+    transform: rotate(180deg);
+  }
+  .subject-panel:not(.open) .subject-content {
+    display: none;
+  }
+  .subject-panel.open .subject-content {
+    max-height: calc(34svh - 46px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-top: 1px solid var(--line);
+  }
+  .subject-panel .subject-links button,
+  .subject-content .dossier-record,
+  .subject-content .dossier-transfers {
+    min-height: 44px;
+  }
+  .console-layout:has(.subject-panel.open) .geo-board .map-canvas {
+    height: clamp(185px, 32svh, 320px);
+  }
+  body:has(.subject-panel) {
+    padding-bottom: calc(52px + env(safe-area-inset-bottom, 0px));
+  }
+  body:has(.subject-panel.open) {
+    padding-bottom: calc(34svh + 5px);
+  }
+  .system-foot {
+    margin-top: 5px;
+  }
+}
+@media (max-width: 540px) {
+  .network-stage .stage-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+    padding: 5px 3px;
+  }
+  .stage-head .scene-tools {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .stage-head .scene-tools .icon-btn:last-child {
+    margin-left: auto;
+  }
+  .stage-head .scene-tools :is(.icon-btn, .tool-btn, .scenario-select) {
+    min-height: 36px;
+    height: 36px;
+  }
+  .stage-head .scene-tools .filter-action span {
+    display: inline;
+  }
+  .stage-head .scene-tools .filter-action {
+    width: auto;
+    gap: 5px;
+    padding-inline: 9px;
+  }
+  .instrument-deck > .instruments {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .instrument-deck .ins-panel + .ins-panel {
+    border-left: 0;
+  }
+}
+@media (max-width: 360px) {
+  .workspaces button,
+  .console-bar .theme-control,
+  .console-bar .help,
+  .console-bar .search-launch {
+    min-width: 27px;
+    width: 27px;
+  }
+}
+
+/* Keep small chart traces in the label rail, with values and units on a single reading line. */
+.geo-board .metric-overlay .network-telemetry dl {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.27fr);
+}
+.geo-board .metric-overlay .telemetry-cell dd {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-top: 2px;
+}
+.geo-board .metric-overlay .telemetry-readout {
+  display: contents;
+}
+.geo-board .metric-overlay .telemetry-cell .telemetry-trace,
+.geo-board .metric-overlay .telemetry-cell .telemetry-meter {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 23px;
+  height: 11px;
+  margin: 0;
+}
+.geo-board .metric-overlay .telemetry-cell .telemetry-meter {
+  top: 9px;
+  height: 5px;
+}
+.geo-board .metric-overlay .telemetry-cell .telemetry-unit {
+  margin: 0;
+}
+.geo-credit:has(button) {
+  pointer-events: auto;
+}
+.geo-credit button {
+  font: inherit;
+  padding: 1px 4px;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.geo-road-name {
+  font: 9px var(--mono);
+  fill: #5d6562;
+  paint-order: stroke;
+  stroke: #f3f2e9;
+  stroke-width: 2px;
+}
+:root[data-theme='dark'] .geo-road-name {
+  fill: #c1cac5;
+  stroke: #272f30;
+}
+@media (min-width: 1181px) {
+  .instrument-deck {
+    grid-template-columns: minmax(330px, 0.98fr) minmax(0, 3fr);
+  }
+}
+@media (max-width: 760px) {
+  .geo-board .metric-overlay .telemetry-cell .telemetry-trace,
+  .geo-board .metric-overlay .telemetry-cell .telemetry-meter {
+    display: none;
+  }
+  .geo-board .metric-overlay .telemetry-cell dd {
+    gap: 3px;
+    margin-top: 0;
+  }
+  .console-layout:has(.subject-panel.open) .map-canvas {
+    min-height: 0;
+  }
+}
+.journey-status {
+  gap: 6px;
+}
+.journey-status > i {
+  width: 5px;
+  height: 5px;
+  background: var(--orange);
+}
+.journey-status > strong {
+  font-weight: 500;
+}
+.journey-status > small {
+  color: var(--muted);
+  font-size: inherit;
+}
+@media (max-width: 760px) {
+  .geo-board[data-view='campus'] .journey-status {
+    top: 9px;
+    bottom: auto;
+    left: 145px;
+    right: 7px;
+    width: auto;
+    max-width: none;
+    min-height: 42px;
+    align-content: center;
+    gap: 1px 5px;
+    line-height: 1.15;
+  }
+  .geo-board[data-view='campus'] .journey-status small {
+    display: block;
+    width: 100%;
+  }
+  .geo-board[data-view='transfer'] .journey-status {
+    bottom: 31px;
+  }
+  .network-stage .mobile-run-meta {
+    display: block;
+    padding: 2px 7px;
+    font-size: 8px;
+  }
+}
+@media (max-width: 540px) {
+  .stage-head .scene-tools :is(.scenario-select, .icon-btn, .tool-btn) {
+    min-height: 44px;
+    height: 44px;
+  }
+  .stage-head .scene-tools :is(.icon-btn, .layer-action) {
+    min-width: 44px;
+  }
+  .transport-strip .play-toggle,
+  .transport-strip .icon-btn,
+  .transport-strip .speed {
+    min-height: 44px;
+  }
+  .transport-strip .motion-pause,
+  .transport-strip .watch-feature {
+    min-height: 44px;
+  }
+  .geo-board .metric-overlay .telemetry-cell .telemetry-unit {
+    font-size: 8px;
+  }
+}
+@media (max-width: 360px) {
+  .geo-board .metric-overlay .telemetry-cell .telemetry-unit {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 650px) {
+  /* The open subject sheet shortens the GL stage; keep all five camera controls in view. */
+  .console-layout:has(.subject-panel.open) .campus-tool-stack:has(button:nth-child(4)) {
+    display: grid;
+    grid-template-columns: repeat(2, 44px);
+  }
+  .console-layout:has(.subject-panel.open) .campus-tool-stack button {
+    min-height: 44px;
+  }
+}
+
+/* The thin replay rule has a full-height pointer and touch target. */
+.transport-strip .replay-track {
+  position: relative;
+  height: 35px;
+}
+.transport-strip .replay-track .day-labels {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+}
+.transport-strip .scrubber {
+  height: 100%;
+}
+.transport-strip .scrubber input {
+  height: 100%;
+  border: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 3px;
+  background-position: 50% 50%;
+}
+@media (max-width: 760px) {
+  .transport-strip .replay-track {
+    height: 44px;
+  }
+}
+@media (max-width: 360px) {
+  .console-bar {
+    padding: 0 4px;
+    gap: 2px;
+  }
+  .console-bar .brand {
+    flex: 0 0 auto;
+    gap: 2px;
+  }
+  .console-bar .brand img {
+    width: 20px;
+    height: 20px;
+  }
+  .console-bar .brand strong {
+    font-size: 14px;
+  }
+  .console-bar .bar-tools {
+    min-width: 0;
+    gap: 0;
+  }
+  .console-bar .workspaces button,
+  .console-bar .bar-tools :is(.search-launch, .help, .theme-control) {
+    width: 27px;
+    min-width: 27px;
+    max-width: 27px;
+    padding: 0;
+  }
+  .console-bar .sim-badge {
+    flex: 0 0 auto;
+    width: 64px;
+    padding: 3px;
+    gap: 3px;
+    white-space: normal;
+    line-height: 1.15;
+  }
+  .console-bar .sim-badge i {
+    flex: 0 0 4px;
+    width: 4px;
+    height: 4px;
+  }
+}
+@media (max-width: 760px) and (max-height: 740px) {
+  .subject-panel.open .subject-content {
+    max-height: calc(24svh - 46px);
+  }
+  body:has(.subject-panel.open) {
+    padding-bottom: calc(24svh + 5px);
+  }
+}
+@media (max-width: 760px) and (max-height: 620px) {
+  /* On very short screens the expanded sheet scrolls after playback. */
+  .subject-panel.open {
+    position: relative;
+    inset: auto;
+    box-shadow: none;
+  }
+  .subject-panel.open .subject-content {
+    max-height: 48svh;
+  }
+  body:has(.subject-panel.open) {
+    padding-bottom: 8px;
+  }
+}
