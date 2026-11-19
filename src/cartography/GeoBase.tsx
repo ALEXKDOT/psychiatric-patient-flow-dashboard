@@ -10,6 +10,7 @@ function style(theme: AtlasTheme): StyleSpecification {
   const water = dark ? '#202b30' : '#d7e3e5'
   return {
     version: 8,
+    transition: { duration: 0, delay: 0 },
     sources: {
       counties: { type: 'geojson', data: land, tolerance: 0.25 },
       water: { type: 'geojson', data: tidalWater, tolerance: 0.12 },
@@ -37,7 +38,7 @@ function style(theme: AtlasTheme): StyleSpecification {
         paint: {
           'hillshade-shadow-color': dark ? '#171d1b' : '#758175',
           'hillshade-highlight-color': dark ? '#777e70' : '#fafbf7',
-          'hillshade-exaggeration': 0.6,
+          'hillshade-exaggeration': ['interpolate', ['linear'], ['zoom'], 9, 0.5, 12.5, 0.2],
           'hillshade-illumination-direction': 315,
         },
       },

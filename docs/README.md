@@ -5,6 +5,9 @@
 | [Run and demonstrate](../README.md) | Installation, local startup, build, tests and a reproducible walkthrough |
 | [Build status](BUILD_STATUS.md) | Acceptance criteria, missing inputs, implementation choices and verification |
 | [Model and architecture](MODEL.md) | Simulation configuration, scheduling, projection, comparison and UI behavior |
+| [Published psychiatric capacity](CAMPUS_CAPACITY.md) | State sources, hospital-level matches, known zeros and unresolved campus allocations |
+| [Psychiatric bed audit](attribution/psychiatric-bed-audit.md) | All 23 campus allocations, original reporting rows and independent psychiatric bed certificates |
+| [Façade source brief](FACADE_INPUTS.md) | Target building IDs, source leads, acceptable files and publication rights for surveyed window linework |
 | [Facility data and assets](DATA.md) | Evidence boundaries, unknowns, identifiers, conflicts and notices |
 | [Cartography](../src/cartography/README.md) | Elevation tiles, roads, exterior geometry, height evidence, local renderers and shoreline licensing |
 | [Campus identity register](attribution/campuses/identity.md) | Named exterior evidence and publisher IDs for the 23 campus views |

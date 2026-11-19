@@ -18,7 +18,7 @@ export interface Campus {
   raw: FacilityRecord
 }
 
-// Scenario roles from section 6.1 of the dossier. Each campus has one synthetic pool.
+// Scenario roles from section 6.1 of the dossier. These are simulated sending roles.
 const receiveOnly = new Set([
   'nyc_nyp_allen',
   'nyc_zucker_hillside',

@@ -1,6 +1,41 @@
 # Build status
 
-## Campus geography and continuous replay
+## Psychiatric capacity audit and façade inputs · November 19, 2026
+
+Reconciled 20 distinct OMH hospital reporting rows to 23 physical campuses. Independently checked the 22 physical-campus DOH psychiatric certificates and the separate LIJ filing for Zucker Hillside. The supported adult subtotal is 1,879 across 21 campuses. The 230 child/adolescent beds cover all 23. The 49 adult beds remaining in the shared NYP Manhattan row after Weill Cornell are excluded from site totals because their allocation between Allen and Columbia is unresolved. Specialty services are included in reported psychiatric capacity. Live staffed and transfer-eligible vacancies are unknown.
+
+The network card identifies its simulated psychiatric denominator. The campus strip flags unknown live vacancies, and the campus record gives the dated adult and child counts alongside the actual vacancy status. The input check rejects other bed scopes and duplicate campuses. No change was needed to the verified age-specific counts or the simulated event history.
+
+The production build, TypeScript, ESLint, release asset audit and 27 automated tests passed. In Chrome, the campus strip and evidence checks passed on desktop and phone, and for all 23 sites in the 2D fallback. The browser suite also checked the regional reference, replay, scenario comparison, keyboard controls and 12 layout widths. Start the preview as described below, then run `node --import tsx tests/browser_capacity.mjs` and `node tests/browser_verify.mjs --url http://127.0.0.1:4277/`.
+
+[Psychiatric bed audit](attribution/psychiatric-bed-audit.md) · [Exterior acquisition brief](FACADE_INPUTS.md)
+
+## Regional map detail · November 19, 2026
+
+Reproduced the sparse Midtown network view in the supplied screenshot. Its native style had a single major-road layer over the terrain. Both renderers now load the same local street, open-space and hydrography tiles at the camera scale. The closest scale adds sourced NYC building outlines and the White Plains campus footprint coverage. Campus IDs have priority over local street and park labels. [Sources, geographic limits and regeneration](attribution/network-detail.md)
+
+Verified the production build, TypeScript, lint, all 26 tests and the release audit. The distribution includes 201 tile locations in two themes (29,830,938 bytes total). Browser checks decoded six visible tiles at the Midtown close-up, sampled the shipped cartography for painted detail, found Central Park by name, switched themes and returned to City and Region in native and forced SVG modes with external requests blocked. Campus selection, Back, replay, comparison and the Bellevue-to-Queens walkthrough passed. The native five-second campus orbit retained its focus point. Browser checks also covered mobile interaction and 12 layout widths.
+
+[City overview](screenshots/network-city.png) · [Midtown detail](screenshots/network-streets-maplibre.png) · [Dark mode](screenshots/network-dark-maplibre.png) · [2D fallback](screenshots/network-streets-svg.png)
+
+## Campus operations and architectural detail · FLOW-2.0
+
+This revision builds on main commit `11e5109cd0da6385d32edeebbf25c1fe4a005c3a`. Opening a campus shows its operational summary directly below the orbit. The selected campus box, playback controls, locator, map attribution and network-wide metrics retain their roles. Selecting the name in the operations panel opens its source record. Light and dark themes use facade glazing and roof trim on the selected building and nearby mapped structures. The rendering prioritizes the campus, then nearby known-height geometry within 270 m. The 2D fallback retains the plan, selection and operational summary.
+
+| Acceptance | Observed result |
+| --- | --- |
+| Capacity and provenance | The 23 campus records cover 1,879 supported adult beds plus 230 CAP beds. Columbia and Allen have unresolved adult allocations and zero reported CAP beds. Published dates, source rows and reconciliation notes are in the campus records. [Capacity methodology](CAMPUS_CAPACITY.md) |
+| Simulation accounting | Known ages form independent receiving pools. Referrals, holds, admissions, discharge and turnaround use the episode's age group. Campus and network totals sum the same pools. ED boarders count distinct episodes until departure. At the featured minute, baseline seed 42 has three boarders, zero open referrals, two transfers, and 461 occupied beds out of 2,109 modeled beds. The Bellevue-to-Queens episode keeps its existing timestamps. |
+| Visual verification | Inspected the running Mount Sinai campus on desktop in light and dark themes and on a 390 × 844 phone viewport. The panel sits outside the map, with a checked non-overlap boundary. Desktop rotation advances and stops on command. The all-campus flat-renderer check exercised four seeks at each of 23 sites with external requests blocked. [Light](screenshots/operations-desktop-light.png) · [Dark](screenshots/operations-desktop-dark.png) · [Phone](screenshots/operations-phone-light.png) |
+| Regression checks | Production build, TypeScript, ESLint and all 26 unit/integration tests passed. Source and geography validators passed. The existing browser checks exercised native and fallback navigation, comparison export, playback, filters and layout at 12 widths. The featured journey passed in 3D and 2D. A five-second native orbit moved 6.69° with zero measured focus drift. The projected traveler and trail endpoint agreed within 0.001 CSS px in the native and flat checks. These measurements apply to the local test browser. |
+| Renderer recovery | Opened all 23 campuses in the native renderer, retaining six map sources, up to three parsed neighborhood packs and one visible canvas. Failed pack retry, missing elevation tiles and WebGL context loss recovered. |
+| External resources | All runtime data is bundled. No keys are required. Actual bed availability and ED boarders require authorized operational feeds. Exact facade reproduction requires rights-cleared building-specific geometry or imagery. |
+
+For a fresh checkout run `npm ci`, `npm run lint`, `npm test`, and `npm run build`. Start `npm run preview -- --host 127.0.0.1 --port 4277 --strictPort` and run `node --import tsx tests/browser_capacity.mjs` in a second terminal. Set `CHROMIUM_BIN` if using a system Chrome. The existing detailed walkthroughs and source checks are in the [project README](../README.md).
+
+## Prior release · Campus geography and continuous replay
+
+The following sections record verification of the earlier model and rendering release.
 
 The local redesign starts from `c11f213e8cb7284fcd6364c26ea62622f8a325f9`. The two supplied archives reconstruct one research packet. Its validator passed 470 file checksums and all 23 building identities. The original light and dark reference JPGs, three release screenshots and geometric study were used for visual review. The repo holds the resulting application, redistributable geographic inputs and captures of the running app. The original reference media and handoff stay outside the release.
 

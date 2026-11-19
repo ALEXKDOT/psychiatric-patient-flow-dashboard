@@ -127,50 +127,14 @@
   height: 14px;
   stroke-width: 1.5;
 }
-.campus-caption {
-  position: absolute;
-  left: 17px;
-  bottom: 45px;
-  display: grid;
-  border-left: 3px solid #d87643;
-  background: var(--campus-panel);
-  padding: 8px 12px 9px;
-  max-width: min(330px, calc(100% - 80px));
-  pointer-events: none;
-  box-shadow: 0 1px 5px #20272017;
-}
-.campus-caption small,
-.campus-caption span,
+
 .campus-scale {
   font:
     9px/1.4 'IBM Plex Mono',
     monospace;
   letter-spacing: 0.3px;
 }
-.campus-caption small {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--campus-muted);
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-.campus-caption i {
-  width: 5px;
-  height: 5px;
-  background: #d87643;
-}
-.campus-caption strong {
-  font-size: 16px;
-  line-height: 1.22;
-  font-weight: 550;
-  letter-spacing: -0.35px;
-  margin: 3px 0;
-}
-.campus-caption span {
-  font-size: 10px;
-  color: var(--campus-muted);
-}
+
 .campus-scale {
   position: absolute;
   left: 17px;
@@ -282,20 +246,7 @@
     width: 39px;
     height: 38px;
   }
-  .campus-caption {
-    bottom: 37px;
-    left: 9px;
-    padding: 6px 8px;
-  }
-  .campus-caption strong {
-    font-size: 13px;
-  }
-  .campus-caption small {
-    font-size: 8px;
-  }
-  .campus-caption span {
-    font-size: 8px;
-  }
+
   .campus-credit {
     font-size: 8px;
   }
@@ -309,12 +260,6 @@
   }
 }
 @media (min-width: 651px) {
-  .campus-caption {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 21px;
-    min-width: 210px;
-  }
 }
 @media (max-width: 650px) {
   .campus-tool-stack button {

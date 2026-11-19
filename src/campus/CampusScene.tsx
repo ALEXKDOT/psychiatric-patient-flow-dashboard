@@ -122,7 +122,7 @@ function Scene({
   return (
     <section
       className="campus-scene"
-      aria-label={'Campus focus: ' + target.target_label}
+      aria-label={'Campus focus: ' + campus.shortName}
       data-campus-id={campus.id}
       data-feature-id={target.feature_id}
       data-cached-packs={campusCacheSize()}
@@ -140,7 +140,7 @@ function Scene({
       ) : (
         <div className="campus-pending">
           <LocateFixed size={30} />
-          <strong>{target.target_label}</strong>
+          <strong>{campus.shortName}</strong>
           <span>
             {target.focus_lonlat[1].toFixed(5)}°N · {Math.abs(target.focus_lonlat[0]).toFixed(5)}°W
           </span>
@@ -150,7 +150,7 @@ function Scene({
               <button onClick={() => setAttempt((n) => n + 1)}>Retry campus map</button>
             </>
           ) : (
-            <p role="status">Loading mapped exterior…</p>
+            <p role="status">Loading campus map…</p>
           )}
         </div>
       )}
@@ -233,21 +233,6 @@ function Scene({
               </button>
             </div>
           </div>
-          <div className="campus-caption">
-            <small>
-              <i />
-              {flat ? '2D CAMPUS PLAN' : 'CAMPUS EXTERIOR'}
-            </small>
-            <strong>{target.target_label}</strong>
-            <span>
-              {target.bin ? 'BIN ' + target.bin : 'OBJECT ' + target.feature_id} ·{' '}
-              {height === null
-                ? 'Height unknown'
-                : height.toFixed(1) +
-                  ' m ' +
-                  (campus.id === 'nyc_bellevue' ? 'filed height' : 'mapped height')}
-            </span>
-          </div>
         </>
       )}
       <div className="campus-credit">
@@ -267,16 +252,15 @@ function Scene({
       </div>
       {sources && (
         <div className="campus-source-card">
-          <strong>{target.target_label}</strong>
+          <strong>{campus.shortName}</strong>
           <p>
-            {target.display_height_basis}. {target.note}
+            Building footprints and streets follow public GIS data. Window spacing and roof trim are
+            illustrative.
           </p>
           <p>
             {county
               ? 'Westchester County GIS · General information only.'
               : 'NYC Open Data · Building footprints and street centerlines.'}{' '}
-            The mapped exterior identifies a building or complex. Individual services have no
-            verified room location.
           </p>
           <a href={target.evidence_url} target="_blank" rel="noreferrer">
             Identity source <ExternalLink size={12} />

@@ -485,3 +485,13 @@
 .regional-map-cache[hidden] {
   display: none;
 }
+
+.geo-label-park {
+  font: italic 11px 'IBM Plex Sans Variable', sans-serif;
+  fill: #50634e;
+  paint-order: stroke;
+  stroke: #e3e9db;
+  stroke-width: 2.2px;
+  stroke-linejoin: round;
+}
+:root[data-theme='dark'] .geo-label-park { fill: #bcceae; stroke: #344639; }

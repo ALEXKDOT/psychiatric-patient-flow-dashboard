@@ -1,5 +1,8 @@
 # Browser verification
 
+For the campus operations revision, see the [current verification results](BUILD_STATUS.md#campus-operations-and-architectural-detail--flow-20). The additional all-campus check runs with `DEMO_URL=http://127.0.0.1:4173/ node --import tsx tests/browser_capacity.mjs` against a local production preview. The measurements and captures below document the preceding geography release.
+
+
 ## Reproduce the production checks
 
 Run these commands from the repository root using Node 22.12 or newer. The production preview serves the same relative asset paths used on GitHub Pages.

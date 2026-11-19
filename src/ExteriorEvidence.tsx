@@ -44,6 +44,13 @@ export function ExteriorEvidence({ campusId }: { campusId: string }) {
           </dd>
         </div>
         <div className="ev-fact">
+          <dt>Window and trim detail</dt>
+          <dd>
+            Illustrative pattern generated from wall length and height. No surveyed façade is on
+            file.
+          </dd>
+        </div>
+        <div className="ev-fact">
           <dt>Footprint record height</dt>
           <dd>{t.recorded_height_m == null ? 'Unknown' : t.recorded_height_m + ' m'}</dd>
         </div>

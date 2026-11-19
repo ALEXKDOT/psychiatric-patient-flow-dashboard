@@ -1,16 +1,16 @@
 {
-  "model": "FLOW-1.0",
+  "model": "FLOW-2.0",
   "seed": 42,
   "scenario": "baseline",
   "duration": 10080,
   "openingMinute": 9320,
   "openingTransferIds": [
     "EP-0190",
-    "EP-0192",
     "EP-0193"
   ],
   "episode": {
     "id": "EP-0190",
+    "ageGroup": "adult",
     "origin": "nyc_bellevue",
     "destination": "nyc_queens",
     "stream": "base",
@@ -34,23 +34,23 @@
       "destinationPool": {
         "reserved": 0,
         "occupied": 19,
-        "free": 5,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 1,
-        "openReferrals": 3,
+        "openReferrals": 0,
         "inTransit": 1,
-        "occupied": 464,
-        "reserved": 1,
-        "free": 87,
+        "occupied": 463,
+        "reserved": 2,
+        "free": 1644,
         "turnaround": 0,
-        "capacity": 552,
+        "capacity": 2109,
         "departures": 193,
-        "admissions": 192,
-        "medianWait": 126,
-        "p90Wait": 196.8
+        "admissions": 193,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -63,23 +63,23 @@
       "destinationPool": {
         "reserved": 0,
         "occupied": 19,
-        "free": 5,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 2,
-        "openReferrals": 3,
+        "openReferrals": 0,
         "inTransit": 1,
-        "occupied": 464,
-        "reserved": 1,
-        "free": 87,
+        "occupied": 463,
+        "reserved": 2,
+        "free": 1644,
         "turnaround": 0,
-        "capacity": 552,
+        "capacity": 2109,
         "departures": 193,
-        "admissions": 192,
-        "medianWait": 126,
-        "p90Wait": 196.8
+        "admissions": 193,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -91,24 +91,24 @@
       "ownOpenReferrals": 0,
       "destinationPool": {
         "reserved": 0,
-        "occupied": 19,
-        "free": 5,
-        "turnaround": 0,
-        "capacity": 24
+        "occupied": 18,
+        "free": 34,
+        "turnaround": 1,
+        "capacity": 53
       },
       "network": {
-        "queue": 4,
+        "queue": 3,
         "openReferrals": 3,
-        "inTransit": 0,
-        "occupied": 463,
+        "inTransit": 1,
+        "occupied": 461,
         "reserved": 1,
-        "free": 87,
-        "turnaround": 1,
-        "capacity": 552,
-        "departures": 193,
-        "admissions": 193,
-        "medianWait": 126,
-        "p90Wait": 196.8
+        "free": 1645,
+        "turnaround": 2,
+        "capacity": 2109,
+        "departures": 194,
+        "admissions": 194,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -120,24 +120,24 @@
       "ownOpenReferrals": 3,
       "destinationPool": {
         "reserved": 0,
-        "occupied": 19,
-        "free": 5,
-        "turnaround": 0,
-        "capacity": 24
+        "occupied": 18,
+        "free": 34,
+        "turnaround": 1,
+        "capacity": 53
       },
       "network": {
-        "queue": 4,
+        "queue": 3,
         "openReferrals": 6,
-        "inTransit": 0,
-        "occupied": 463,
+        "inTransit": 1,
+        "occupied": 461,
         "reserved": 1,
-        "free": 87,
-        "turnaround": 1,
-        "capacity": 552,
-        "departures": 193,
-        "admissions": 193,
-        "medianWait": 126,
-        "p90Wait": 196.8
+        "free": 1645,
+        "turnaround": 2,
+        "capacity": 2109,
+        "departures": 194,
+        "admissions": 194,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -149,24 +149,24 @@
       "ownOpenReferrals": 3,
       "destinationPool": {
         "reserved": 0,
-        "occupied": 19,
-        "free": 5,
+        "occupied": 18,
+        "free": 35,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
-        "openReferrals": 6,
+        "openReferrals": 9,
         "inTransit": 0,
-        "occupied": 463,
-        "reserved": 2,
-        "free": 87,
-        "turnaround": 0,
-        "capacity": 552,
+        "occupied": 461,
+        "reserved": 1,
+        "free": 1646,
+        "turnaround": 1,
+        "capacity": 2109,
         "departures": 194,
-        "admissions": 193,
-        "medianWait": 126,
-        "p90Wait": 196.70000000000002
+        "admissions": 194,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -177,25 +177,25 @@
       "recentArrival": false,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
-        "openReferrals": 0,
+        "openReferrals": 6,
         "inTransit": 0,
-        "occupied": 463,
-        "reserved": 4,
-        "free": 85,
-        "turnaround": 0,
-        "capacity": 552,
+        "occupied": 461,
+        "reserved": 2,
+        "free": 1645,
+        "turnaround": 1,
+        "capacity": 2109,
         "departures": 194,
-        "admissions": 193,
-        "medianWait": 126,
-        "p90Wait": 196.70000000000002
+        "admissions": 194,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -206,25 +206,25 @@
       "recentArrival": false,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
         "openReferrals": 6,
         "inTransit": 2,
-        "occupied": 462,
+        "occupied": 463,
         "reserved": 3,
-        "free": 86,
-        "turnaround": 1,
-        "capacity": 552,
+        "free": 1643,
+        "turnaround": 0,
+        "capacity": 2109,
         "departures": 197,
-        "admissions": 195,
-        "medianWait": 126,
-        "p90Wait": 196.4
+        "admissions": 196,
+        "medianWait": 127,
+        "p90Wait": 195
       }
     },
     {
@@ -240,25 +240,25 @@
       "recentArrival": false,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 2,
         "openReferrals": 6,
         "inTransit": 3,
-        "occupied": 462,
+        "occupied": 463,
         "reserved": 3,
-        "free": 86,
-        "turnaround": 1,
-        "capacity": 552,
+        "free": 1643,
+        "turnaround": 0,
+        "capacity": 2109,
         "departures": 198,
-        "admissions": 195,
-        "medianWait": 126,
-        "p90Wait": 197.60000000000002
+        "admissions": 196,
+        "medianWait": 127,
+        "p90Wait": 195.90000000000003
       }
     },
     {
@@ -274,25 +274,25 @@
       "recentArrival": false,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
         "openReferrals": 0,
-        "inTransit": 3,
+        "inTransit": 2,
         "occupied": 461,
         "reserved": 5,
-        "free": 85,
-        "turnaround": 1,
-        "capacity": 552,
+        "free": 1641,
+        "turnaround": 2,
+        "capacity": 2109,
         "departures": 199,
-        "admissions": 195,
-        "medianWait": 126,
-        "p90Wait": 197.40000000000003
+        "admissions": 196,
+        "medianWait": 127,
+        "p90Wait": 195.60000000000005
       }
     },
     {
@@ -308,25 +308,25 @@
       "recentArrival": false,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
         "openReferrals": 3,
         "inTransit": 1,
-        "occupied": 462,
-        "reserved": 4,
-        "free": 86,
-        "turnaround": 0,
-        "capacity": 552,
+        "occupied": 463,
+        "reserved": 3,
+        "free": 1642,
+        "turnaround": 1,
+        "capacity": 2109,
         "departures": 199,
-        "admissions": 196,
-        "medianWait": 126,
-        "p90Wait": 197.40000000000003
+        "admissions": 198,
+        "medianWait": 127,
+        "p90Wait": 195.60000000000005
       }
     },
     {
@@ -337,25 +337,25 @@
       "recentArrival": true,
       "ownOpenReferrals": 0,
       "destinationPool": {
-        "reserved": 2,
-        "occupied": 19,
-        "free": 3,
+        "reserved": 1,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
         "queue": 3,
         "openReferrals": 3,
         "inTransit": 0,
-        "occupied": 462,
-        "reserved": 4,
-        "free": 86,
-        "turnaround": 0,
-        "capacity": 552,
+        "occupied": 463,
+        "reserved": 3,
+        "free": 1642,
+        "turnaround": 1,
+        "capacity": 2109,
         "departures": 199,
-        "admissions": 196,
-        "medianWait": 126,
-        "p90Wait": 197.40000000000003
+        "admissions": 198,
+        "medianWait": 127,
+        "p90Wait": 195.60000000000005
       }
     },
     {
@@ -367,24 +367,24 @@
       "ownOpenReferrals": 0,
       "destinationPool": {
         "reserved": 1,
-        "occupied": 20,
-        "free": 3,
+        "occupied": 18,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
-        "queue": 2,
+        "queue": 3,
         "openReferrals": 0,
-        "inTransit": 1,
-        "occupied": 463,
+        "inTransit": 0,
+        "occupied": 464,
         "reserved": 3,
-        "free": 85,
-        "turnaround": 1,
-        "capacity": 552,
-        "departures": 200,
-        "admissions": 198,
-        "medianWait": 126,
-        "p90Wait": 197.2
+        "free": 1642,
+        "turnaround": 0,
+        "capacity": 2109,
+        "departures": 199,
+        "admissions": 199,
+        "medianWait": 127,
+        "p90Wait": 195.60000000000005
       }
     },
     {
@@ -396,24 +396,24 @@
       "ownOpenReferrals": 0,
       "destinationPool": {
         "reserved": 0,
-        "occupied": 21,
-        "free": 3,
+        "occupied": 19,
+        "free": 34,
         "turnaround": 0,
-        "capacity": 24
+        "capacity": 53
       },
       "network": {
-        "queue": 2,
+        "queue": 3,
         "openReferrals": 0,
-        "inTransit": 1,
-        "occupied": 464,
+        "inTransit": 0,
+        "occupied": 465,
         "reserved": 2,
-        "free": 85,
-        "turnaround": 1,
-        "capacity": 552,
-        "departures": 200,
-        "admissions": 199,
-        "medianWait": 126,
-        "p90Wait": 197.2
+        "free": 1642,
+        "turnaround": 0,
+        "capacity": 2109,
+        "departures": 199,
+        "admissions": 200,
+        "medianWait": 127,
+        "p90Wait": 195.60000000000005
       }
     }
   ]

@@ -3,14 +3,33 @@ import westchesterNotes from '../docs/attribution/campuses/westchester.md?url'
 import shorelineGeometry from './cartography/tidal-water.json?url'
 import shorelineLicense from './cartography/licenses/GSHHG-COPYING.LESSER.txt?url'
 import incorporatedTerms from './cartography/licenses/GSHHG-COPYING.txt?url'
+import { campusCapacity, publishedBedSubtotal } from './capacity'
 
 export function About() {
+  const adult = publishedBedSubtotal('adult_beds')
+  const cap = publishedBedSubtotal('cap_beds')
+  const sites = Object.keys(campusCapacity).length
   return (
     <>
       <h2>Flow Atlas</h2>
       <p>
-        Explore 23 publicly documented psychiatric campuses and a synthetic adult inpatient
-        placement pathway in New York City and Westchester.
+        Explore 23 publicly documented psychiatric campuses and a synthetic adult and
+        child/adolescent inpatient placement pathway in New York City and Westchester.
+      </p>
+      <h3>Published psychiatric bed capacity</h3>
+      <p>
+        On July 1, 2026, the mapped campuses with known allocations accounted for{' '}
+        <strong>{adult.beds.toLocaleString('en-US')} adult inpatient psychiatric beds</strong> (
+        {adult.campuses} of {sites} campuses) and {cap.beds} child/adolescent beds ({cap.campuses}{' '}
+        of {sites} campuses). The region includes White Plains. Allen and Columbia share a hospital
+        report with an unresolved adult split.
+      </p>
+      <p>
+        Psychiatric capacity includes specialty units. The number staffed, vacant and accepting
+        general ED transfers today is unknown. Each campus record identifies its reporting row.{' '}
+        <a href={campusCapacity.nyc_bellevue.source_url} target="_blank" rel="noreferrer">
+          NYS OMH Table 5
+        </a>
       </p>
       <h3>Reading the observatory</h3>
       <p>
@@ -18,22 +37,25 @@ export function About() {
         2026. Each campus record includes its sources. Real psychiatric availability is unknown.
       </p>
       <p>
-        Queue, capacity and movements come from an undated seven-day simulation for ages 18–64. Each
-        request belongs to one episode, and a simulated transfer begins at ED departure. Connections
-        show endpoints only.
+        Available beds, ED boarders and movements come from a seven-day simulation. CAP means child
+        and adolescent psychiatry. The campus record lists published capacities and their sources.
+        Each request belongs to one episode, and a simulated transfer begins at ED departure.
+        Connections show endpoints only.
       </p>
       <details className="method">
         <summary>Model assumptions and data sources</summary>
         <p>
-          Seed 42 begins with 120 simulated days of warm-up. Each of 23 campuses has one pool of 24
-          synthetic slots. Dispositions arrive at a fixed average rate of 0.90 × 552 / 16.5, about
-          30 per day, spread equally across 18 modeled origins.
+          Seed 42 begins with 120 simulated days of warm-up. Adult and CAP beds are modeled
+          separately using published psychiatric counts. The replay treats beds within each age
+          group as interchangeable. Actual specialty restrictions and staffing are unknown. About 30
+          synthetic episodes arrive per day across 18 modeled ED origins. Approximately 15% use CAP
+          beds. The model counts simulated patients only and has no live census or staffing feed.
         </p>
         <p>
           NYC DOHMH reported a median inpatient stay of 11 days and a mean of 16.5 days for NYC
           residents aged 18+ hospitalized in NYC acute-care hospitals in 2023. The demo assumes a
-          lognormal stay with those values. Its age range, campus sample and distribution are
-          modeling choices.{' '}
+          lognormal stay with those values. Applying this stay distribution to both simulated age
+          groups is a modeling choice.{' '}
           <a
             href="https://www.nyc.gov/assets/doh/downloads/pdf/epi/databrief154-mental-health-hospitalization-2026.pdf"
             target="_blank"
@@ -61,6 +83,22 @@ export function About() {
           {' · '}
           <a href={incorporatedTerms} target="_blank" rel="noreferrer">
             Incorporated GPL terms
+          </a>
+        </p>
+        <p>
+          The main map uses local TIGER/Line streets, park boundaries and inland water. The closest
+          scale adds NYC Open Data building footprints and the mapped White Plains campus. Smaller
+          buildings are omitted at this scale.{' '}
+          <a
+            href="https://www.census.gov/geographies/mapping-files/time-series/geo/tiger-line-file.html"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Census TIGER/Line
+          </a>
+          {' · '}
+          <a href="https://data.cityofnewyork.us/d/5zhs-2jue" target="_blank" rel="noreferrer">
+            NYC building footprints
           </a>
         </p>
         <p>

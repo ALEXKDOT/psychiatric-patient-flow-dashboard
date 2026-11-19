@@ -215,6 +215,7 @@ export function TransferInspector({
         <>
           <div className="trip-status">
             <strong data-testid="trip-stage">{phaseLabel[ep.phase]}</strong>
+            <small>{ep.ageGroup === 'adult' ? 'Adult placement' : 'Child/adolescent placement'}</small>
             {at != null && (
               <small>
                 {observation} · {recordedTime(at)}
@@ -275,7 +276,7 @@ export function TransferInspector({
             )}
             {pool && (
               <div>
-                <dt>Destination pool</dt>
+                <dt>Simulated psychiatric beds · all ages</dt>
                 <dd>
                   <span data-testid="trip-pool-reserved">{pool.reserved}</span> reserved ·{' '}
                   <span data-testid="trip-pool-occupied">{pool.occupied}</span>/

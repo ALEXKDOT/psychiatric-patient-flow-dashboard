@@ -149,7 +149,7 @@ test('a single high-speed clock update can cross departure, arrival and admissio
     false
   )
   clock.seek(9133)
-  assert.equal(run.at(clock.getSnapshot().minute).transfers.length, 0)
+  assert.ok(!run.at(clock.getSnapshot().minute).transfers.some(t => t.id === 'EP-0190'))
 })
 
 test('preferring reduced motion pauses an existing replay and explicit play paints only whole-minute steps', () => {

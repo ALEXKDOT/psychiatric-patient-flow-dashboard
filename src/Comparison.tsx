@@ -17,12 +17,12 @@ const scenarios: Record<Intervention, { label: string; description: string }> = 
   'capacity-add': {
     label: 'Capacity +8',
     description:
-      'Bellevue receives eight additional simulated pathway slots. Each campus starts with 24 slots in the baseline allocation.',
+      'Bellevue receives eight additional simulated adult beds above its published baseline.',
   },
   'capacity-loss': {
     label: 'Capacity −8',
     description:
-      'Bellevue retires eight simulated pathway slots. Free slots close first, and remaining closures wait for turnaround.',
+      'Bellevue retires eight simulated adult beds. Free slots close first, and remaining closures wait for turnaround.',
   },
 }
 

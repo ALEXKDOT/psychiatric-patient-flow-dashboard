@@ -1,6 +1,7 @@
 import { strict as assert } from 'node:assert'
 import { readFile } from 'node:fs/promises'
 import { test } from 'node:test'
+import { campusFacades } from '../src/campus/facades'
 import {
   CAMPUS_CACHE_LIMIT,
   campusCacheSize,
@@ -71,6 +72,14 @@ test('all 23 registry records resolve within their own neighborhood with a three
     streets += pack.streets.features.length
     const selected = pack.buildings.features.filter((f) => f.properties.is_target)
     assert.equal(selected.length, 1)
+    const glazing = campusFacades(pack)
+    const targetPanes = glazing.features.filter(f => f.properties.selected && f.properties.kind === 'glass')
+    assert.ok(targetPanes.length > 0, id + ' has target glazing')
+    for (const pane of targetPanes) {
+      assert.ok(pane.properties.top > pane.properties.bottom)
+      assert.ok(pane.properties.top < selected[0].properties.display_height_m!)
+      assert.ok(pane.geometry.coordinates.length)
+    }
     assert.equal(String(selected[0].properties.objectid), String(pack.target.feature_id))
     for (const f of pack.buildings.features) {
       if (f.properties.height_m == null) {

@@ -2,9 +2,10 @@ import type { StyleSpecification, ExpressionSpecification } from 'maplibre-gl'
 import type { CampusPack } from '../cartography/campusPacks'
 import { terrainSource } from '../cartography/terrain'
 import { shoreline } from '../cartography/base'
+import type { Facades } from './facades'
 import { roofRim } from './geometry'
 
-export function campusStyle(pack: CampusPack, dark: boolean): StyleSpecification {
+export function campusStyle(pack: CampusPack, dark: boolean, facades: Facades): StyleSpecification {
   const h = pack.target.display_height_m ?? 0
   const known: ExpressionSpecification = ['>', ['coalesce', ['get', 'display_height_m'], 0], 0]
   const color: ExpressionSpecification = [
@@ -27,6 +28,7 @@ export function campusStyle(pack: CampusPack, dark: boolean): StyleSpecification
       water: { type: 'geojson', data: shoreline },
       streets: { type: 'geojson', data: pack.streets, tolerance: 0.2, maxzoom: 18 },
       buildings: { type: 'geojson', data: pack.buildings, tolerance: 0.14, maxzoom: 18 },
+      facades: { type: 'geojson', data: facades, tolerance: 0, maxzoom: 19 },
       rim: { type: 'geojson', data: roofRim(pack), maxzoom: 18, tolerance: 0.01 },
     },
     layers: [
@@ -101,6 +103,24 @@ export function campusStyle(pack: CampusPack, dark: boolean): StyleSpecification
           'fill-extrusion-height': ['get', 'display_height_m'],
           'fill-extrusion-base': 0,
           'fill-extrusion-vertical-gradient': true,
+        },
+      },
+      {
+        id: 'facade-linework',
+        type: 'fill-extrusion',
+        source: 'facades',
+        paint: {
+          'fill-extrusion-base': ['get', 'bottom'],
+          'fill-extrusion-height': ['get', 'top'],
+          'fill-extrusion-color': [
+            'case',
+            ['==', ['get', 'kind'], 'cornice'],
+            dark ? '#a1aaa2' : '#a1a89b',
+            ['get', 'selected'],
+            dark ? '#725c4e' : '#94765e',
+            dark ? '#536965' : '#a4b6b1',
+          ],
+          'fill-extrusion-vertical-gradient': false,
         },
       },
       {

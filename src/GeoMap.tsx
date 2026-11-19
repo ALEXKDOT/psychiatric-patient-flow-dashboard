@@ -14,6 +14,8 @@ import roadLabels from './cartography/roadLabels.json'
 import { Check, Crosshair, Layers2, Minus, Plus } from 'lucide-react'
 import GeoBase from './cartography/GeoBase'
 import Graticule from './cartography/Graticule'
+import { NetworkDetail } from './cartography/NetworkDetail'
+import networkLabels from './cartography/network-labels.json'
 import {
   cityCamera,
   regionCamera,
@@ -409,6 +411,22 @@ export const GeoMap = memo(
       )
     }
     const allowed = useMemo(() => (visibleIds ? new Set(visibleIds) : null), [visibleIds])
+    // Avoid projecting every street name on each replay tick.
+    const localNames = useMemo(() => {
+      if (suspended || scale < 1300) return []
+      const names = new Set<string>()
+      return networkLabels.filter((l) => {
+        if (l.kind === 'street' && scale < 5000) return false
+        if (
+          Math.abs(l.lon - lon) * scale > cx ||
+          Math.abs(mercatorLat(l.lat) - centerY) * scale > cy ||
+          names.has(l.text)
+        )
+          return false
+        names.add(l.text)
+        return true
+      })
+    }, [suspended, lon, centerY, scale, cx, cy])
     const nativeLayer = (
       <GeoBase
         active={nativeActive}
@@ -538,44 +556,53 @@ export const GeoMap = memo(
       )
     const collides = (b: Box) =>
       occupied.some((o) => b.x < o.x + o.w && b.x + b.w > o.x && b.y < o.y + o.h && b.y + b.h > o.y)
-    // Road labels use sampled center vertices of named Census primary roads in the bundled layer.
-    const mapLabels =
-      layer.labels &&
-      [...labels, ...roadLabels.map((l) => ({ ...l, kind: 'road' }))].flatMap((l) => {
-        const p = project(l.lon, l.lat)
-        if (
-          !inView(p) ||
-          (l.kind === 'road' && scale < 1350) ||
-          (l.kind === 'place' && (camera.zoom < 0.85 || scale < 860))
-        )
-          return []
-        const face = l.kind === 'borough' ? (compact ? 10 : 13) : l.kind === 'water' ? 12 : 10
-        const length = l.text.length * (face * 0.56 + (l.kind === 'borough' ? 2 : 0.4))
-        const angle = ((l.angle || 0) * Math.PI) / 180
-        const w = Math.abs(Math.cos(angle)) * length + Math.abs(Math.sin(angle)) * face
-        const h = Math.abs(Math.sin(angle)) * length + Math.abs(Math.cos(angle)) * face
-        const box = { x: p[0] - w / 2 - 2, y: p[1] - h / 2 - 3, w: w + 4, h: h + 6 }
-        if (
-          box.x < 14 ||
-          box.x + box.w > size.width - 14 ||
-          box.y < 10 ||
-          box.y + box.h > size.height - 10 ||
-          collides(box)
-        )
-          return []
-        occupied.push(box)
-        return [
-          <text
-            key={l.text}
-            className={'geo-label-' + (l.kind === 'road' ? 'place geo-road-name' : l.kind)}
-            textAnchor="middle"
-            dominantBaseline="central"
-            transform={`translate(${p.join(' ')}) rotate(${l.angle ?? 0})`}
-          >
-            {l.text}
-          </text>,
-        ]
-      })
+    function placeLabel(l: {
+      text: string
+      lon: number
+      lat: number
+      angle?: number
+      kind: string
+    }) {
+      const p = project(l.lon, l.lat)
+      if (
+        !inView(p) ||
+        (l.kind === 'road' && scale < 1350) ||
+        (l.kind === 'place' && (camera.zoom < 0.85 || scale < 860))
+      )
+        return []
+      const face = l.kind === 'borough' ? (compact ? 10 : 13) : l.kind === 'water' ? 12 : 10
+      const length = l.text.length * (face * 0.56 + (l.kind === 'borough' ? 2 : 0.4))
+      const angle = ((l.angle || 0) * Math.PI) / 180
+      const w = Math.abs(Math.cos(angle)) * length + Math.abs(Math.sin(angle)) * face
+      const h = Math.abs(Math.sin(angle)) * length + Math.abs(Math.cos(angle)) * face
+      const box = { x: p[0] - w / 2 - 2, y: p[1] - h / 2 - 3, w: w + 4, h: h + 6 }
+      if (
+        box.x < 14 ||
+        box.x + box.w > size.width - 14 ||
+        box.y < 10 ||
+        box.y + box.h > size.height - 10 ||
+        collides(box)
+      )
+        return []
+      occupied.push(box)
+      return [
+        <text
+          key={l.kind + ':' + l.text}
+          className={
+            'geo-label-' +
+            (l.kind === 'road' || l.kind === 'street' ? 'place geo-road-name' : l.kind)
+          }
+          textAnchor="middle"
+          dominantBaseline="central"
+          transform={`translate(${p.join(' ')}) rotate(${l.angle ?? 0})`}
+        >
+          {l.text}
+        </text>,
+      ]
+    }
+    const orientationLabels = layer.labels
+      ? [...labels, ...roadLabels.map((l) => ({ ...l, kind: 'road' }))].flatMap(placeLabel)
+      : []
     const campusCodes =
       layer.facilities &&
       layer.labels &&
@@ -607,6 +634,8 @@ export const GeoMap = memo(
         ]
       })
 
+    // Give campus identifiers first choice of space before adding neighborhood names.
+    const mapLabels = layer.labels && [...orientationLabels, ...localNames.flatMap(placeLabel)]
     return (
       <div
         ref={host}
@@ -721,6 +750,13 @@ export const GeoMap = memo(
                   </g>
                 </g>
               )}
+              <NetworkDetail
+                longitude={camera.lon}
+                mercatorY={centerY}
+                scale={scale}
+                width={size.width}
+                height={size.height}
+              />
               <Graticule
                 width={size.width}
                 height={size.height}
@@ -1004,7 +1040,7 @@ export const GeoMap = memo(
           {scaleKm} km
         </div>
         <small className="geo-credit">
-          {gl ? 'MapLibre' : '2D map'} · Census · GSHHG · Mapzen{' '}
+          {gl ? 'MapLibre' : '2D map'} · Census · NYC OTI · GSHHG · Mapzen{' '}
           {onSources && (
             <button type="button" aria-label="Map sources" onClick={onSources}>
               Sources

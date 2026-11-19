@@ -1,6 +1,10 @@
 # Flow Atlas
 
-Flow Atlas is a psychiatric patient-flow observatory for 22 New York City campuses and one in White Plains. Explore documented campus exteriors, follow synthetic transfers and compare seven simulated days of adult inpatient placement. Facility identities, roads and elevations have public sources. Every queue, referral, reservation and journey belongs to a deterministic simulation.
+Flow Atlas is a psychiatric patient-flow observatory for 22 New York City campuses and one in White Plains. Explore documented campus exteriors, follow synthetic transfers and compare seven simulated days of adult and child/adolescent inpatient placement. Facility identities, roads and elevations have public sources. Every queue, referral, reservation and journey belongs to a deterministic simulation.
+
+The campus operations panel shows simulated adult and child/adolescent psychiatric vacancies, ED boarders, outgoing referrals and transfers. Live vacancies are unknown. The July 1, 2026 state reference supports 1,879 adult psychiatric beds across 21 mapped campuses and 230 child/adolescent psychiatric beds across all 23. The reference includes specialty psychiatric units. [Campus-by-campus audit](docs/attribution/psychiatric-bed-audit.md)
+
+The current window patterns are illustrative. The acquisition brief identifies the exterior drawing sheets, alternative imagery, registration measurements and redistribution rights needed for each of the 23 buildings. [Façade source brief](docs/FACADE_INPUTS.md)
 
 ## Run locally
 
@@ -15,7 +19,7 @@ Open the local address printed by Vite. If the managed cloud machine has a read-
 
 ## Reproduce the featured transfer
 
-1. Start **Baseline**, seed 42. The ordinary opening is **Day 7, 11:20** (minute 9320), with three intercampus trips. Standard motion starts at 360× and reduced motion starts paused. **Pause motion** stops continuous presentation and playback.
+1. Start **Baseline**, seed 42. The ordinary opening is **Day 7, 11:20** (minute 9320), with two intercampus trips. Standard motion starts at 360× and reduced motion starts paused. **Pause motion** stops continuous presentation and playback.
 2. Activate **Bellevue Hospital** on the map or in **Campuses**. Inspect Building H, pan or rotate the local view, switch the theme, and open the campus source record. **Back to network** restores the network camera. On a phone, expand the subject sheet for inspector actions.
 3. Choose **Watch featured transfer**. This starts baseline episode **EP-0190** at Day 7, 08:25 (minute 9145). At 360×, one real second advances six simulated minutes. The guide presents approximately 40 seconds of case history.
 
@@ -48,6 +52,8 @@ npm run preview -- --host 127.0.0.1 --port 4173 --strictPort
 In another terminal, run the browser checks against the production preview:
 
 ```sh
+DEMO_URL=http://127.0.0.1:4173/ node tests/browser_network_detail.mjs
+DEMO_URL=http://127.0.0.1:4173/ node --import tsx tests/browser_capacity.mjs
 npm run test:browser -- --url http://127.0.0.1:4173 --operations
 node tests/browser_journey.mjs --url http://127.0.0.1:4173
 node tests/browser_journey.mjs --url http://127.0.0.1:4173 --flat

@@ -60,11 +60,12 @@ export function NetworkMetrics({ frame }: { frame: Frame }) {
       samples: samples.map((t) => ({ minute: t.minute, value: t.inTransit })),
     },
     {
-      label: 'Occupancy',
+      label: 'Psych occupancy',
       value: occupancy,
       suffix: '%',
-      unit: `${metrics.occupied} / ${metrics.capacity} slots`,
-      detail: 'Occupied hypothetical pathway slots divided by currently active pathway capacity.',
+      unit: `${metrics.occupied} / ${metrics.capacity} sim beds`,
+      detail:
+        'Network-wide replay occupancy for adult and child/adolescent inpatient psychiatry. Only known campus allocations enter the denominator. Live census and transfer eligibility are unknown.',
     },
   ]
   return (

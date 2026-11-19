@@ -98,7 +98,7 @@ async function sampleNetwork(page, expected) {
       cells.filter({ has: page.getByText(label, { exact: true }) }).locator('strong'),
     ).toHaveText(String(value))
   }
-  await expect(metrics).toContainText(expected.occupied + ' / ' + expected.capacity + ' slots')
+  await expect(metrics).toContainText(expected.occupied + ' / ' + expected.capacity + ' sim beds')
 }
 
 async function fixtureWalk(page) {
@@ -339,7 +339,7 @@ async function movementAndScenarioEdges(page) {
   await panel.getByRole('button', { name: 'Stop following', exact: true }).click()
   await expect(panel.getByRole('button', { name: 'Follow transfer', exact: true })).toBeVisible()
   await back(page).click()
-  await cursor.fill('9133')
+  await cursor.fill('9118')
   await expect(page.getByText('No transfers in transit', { exact: true })).toBeVisible()
   await expect(page.locator('[data-token]')).toHaveCount(0)
   await cursor.fill('10080')

@@ -2,7 +2,7 @@ import { strict as assert } from 'node:assert'
 import { test } from 'node:test'
 import { buildRun, DURATION } from '../src/sim'
 
-const campuses = Array.from({ length: 23 }, (_, i) => ({ id: 'campus-' + i, origin: i < 18 }))
+const campuses = Array.from({ length: 23 }, (_, i) => ({ id: 'campus-' + i, origin: i < 18, adult: 24, cap: 0 }))
 const run = () => buildRun(campuses, 'baseline', 42, campuses[0].id)
 
 test('the same seed reproduces the state and event history through forward and backward seeks', () => {

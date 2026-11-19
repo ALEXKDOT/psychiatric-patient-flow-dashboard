@@ -5,6 +5,7 @@ import type { Map as GLMap } from 'maplibre-gl'
 import type { CampusPack } from '../cartography/campusPacks'
 import { registerTerrainProtocol } from '../cartography/terrain'
 import { campusStyle } from './style'
+import { campusFacades, type Facades } from './facades'
 import { neighborhoodWindow } from './window'
 import { useCampusTravelers } from './activeTransfers'
 import type { MotionSegment } from '../sim'
@@ -55,6 +56,7 @@ export function CampusGL(
   const software = useRef(false),
     nativeRatio = useRef(1)
   const windowRef = useRef<ReturnType<typeof neighborhoodWindow> | null>(null)
+  const glazing = useRef<Facades | null>(null)
   const styleTheme = useRef(props.dark)
   const { pack, controls } = props
   useCampusTravelers(mapRef, ready, pack, props.transfers, props.onInspectTransfer)
@@ -120,14 +122,17 @@ export function CampusGL(
             [lon + 900 / mx, lat + 900 / my],
           ],
           pixelRatio: devicePixelRatio,
-          canvasContextAttributes: { antialias: false },
+          canvasContextAttributes: { antialias: true },
           fadeDuration: 0,
           trackResize: false,
         })
         mapRef.current = map
         const windowed = neighborhoodWindow(pack, map)
         windowRef.current = windowed
-        map.setStyle(campusStyle(windowed.pack(), current.current.dark), { diff: false })
+        glazing.current = campusFacades(pack)
+        map.setStyle(campusStyle(windowed.pack(), current.current.dark, glazing.current), {
+          diff: false,
+        })
         styleTheme.current = current.current.dark
         panel.dataset.scopedBuildings = String(windowed.pack().buildings.features.length)
         panel.dataset.packedBuildings = String(pack.buildings.features.length)
@@ -290,9 +295,11 @@ export function CampusGL(
   }, [pack, controls])
   useEffect(() => {
     const m = mapRef.current
-    if (ready && m && styleTheme.current !== props.dark) {
+    if (ready && m && glazing.current && styleTheme.current !== props.dark) {
       styleTheme.current = props.dark
-      m.setStyle(campusStyle(windowRef.current?.pack() ?? pack, props.dark), { diff: true })
+      m.setStyle(campusStyle(windowRef.current?.pack() ?? pack, props.dark, glazing.current), {
+        diff: true,
+      })
     }
   }, [pack, ready, props.dark])
   useEffect(() => {
@@ -337,7 +344,7 @@ export function CampusGL(
     }
   }, [pack, ready, props.orbit])
   return (
-    <div className="campus-gl" ref={outer} data-native-theme="">
+    <div className="campus-gl" ref={outer} data-native-theme={props.dark ? 'dark' : 'light'}>
       <div className="campus-gl-canvas" ref={host} />
       <svg
         className="campus-label-overlay"

@@ -20,6 +20,8 @@ const staticFiles = new Set([
   'geography/terrain/flat.png',
   'geography/major-roads.geojson',
   'geography/roads-source.json',
+  ...(await readJson('src/cartography/network-tiles.json')).flatMap(id =>
+    ['light','dark'].map(theme => 'geography/network/' + id + '-' + theme + '.webp')),
   'geography/regional-light.webp',
   'geography/regional-dark.webp',
   ...tileIndex.tiles.map((tile) => 'geography/terrain/' + tile + '.png'),
@@ -88,7 +90,8 @@ for await (const name of files(out)) {
   }
 
   let category = 'other'
-  if (name.startsWith('campuses/')) category = 'campus geometry'
+  if (name.startsWith('geography/network/')) category = 'regional detail tiles'
+  else if (name.startsWith('campuses/')) category = 'campus geometry'
   else if (name.startsWith('geography/terrain/') && name.endsWith('.png')) category = 'terrain PNG'
   else if (name.endsWith('.js') || name.endsWith('.css')) category = 'JavaScript + CSS'
   else if (name.endsWith('.geojson') || name.endsWith('.json'))

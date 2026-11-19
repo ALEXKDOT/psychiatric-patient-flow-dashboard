@@ -1,5 +1,8 @@
 # Local cartography
 
+The regional street atlas adds scale-dependent local streets, parks, reservoirs and building footprints above the terrain in both renderers. [Source coverage and regeneration](../../docs/attribution/network-detail.md)
+
+
 Flow Atlas uses a regional overview and 23 local campus packs. The overview marker uses the publicly documented program coordinates. Each campus view uses its own verified exterior feature ID and a separate point inside the footprint. A transfer uses the program endpoints and simulated timing. The schematic connection supplies no observed ambulance path or destination agreement.
 
 ## Regional overview

@@ -1,3 +1,4 @@
+import { campusCapacity } from './capacity'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowUpRight, BookOpen, Check, ChevronRight, MapPin, Search, X } from 'lucide-react'
 import {
@@ -129,6 +130,7 @@ function ServiceDetails({ s }: { s: Service }) {
 }
 
 export function EvidenceRecord({ campus }: { campus: Campus }) {
+  const capacity = campusCapacity[campus.id]
   const r = campus.raw
   const sources = Array.from(
     new Set(
@@ -169,8 +171,45 @@ export function EvidenceRecord({ campus }: { campus: Campus }) {
         <Fact label="Published sponsor" ids="DATA-001">
           {r.sponsor_name_as_published} ({r.sponsor_code_as_published})
         </Fact>
-        <Fact label="Real bed availability">Unknown</Fact>
       </dl>
+      <section aria-label="Published inpatient psychiatric capacity">
+        <h3>Inpatient psychiatric beds</h3>
+        <p className="ev-note">
+          OMH capacity as of <time dateTime={capacity.as_of}>{capacity.as_of}</time>. Includes
+          specialty psychiatric units where reported.
+        </p>
+        <dl className="ev-summary">
+          <Fact label="Adult psychiatric beds">
+            {capacity.adult_beds ?? 'Campus allocation unverified'}
+          </Fact>
+          <Fact label="Child/adolescent psychiatric beds">
+            {capacity.cap_beds ?? 'Campus allocation unverified'}
+          </Fact>
+          <Fact label="Live psychiatric vacancies">Unknown</Fact>
+          <Fact label="Beds accepting general ED placements now">Unknown</Fact>
+        </dl>
+        {capacity.certified_site_total != null && (
+          <p className="ev-note">
+            The separate DOH permanent certificate lists {capacity.certified_site_total} psychiatric
+            beds across all ages. Certificate checked {capacity.certified_site_total_queried_on}.
+          </p>
+        )}
+        <p className="ev-note">
+          OMH reporting row · {capacity.source_row}. {capacity.method}. {capacity.note}
+        </p>
+        <p>
+          {capacity.source_urls.map((url, i) => (
+            <span key={url}>
+              {i > 0 && ' · '}
+              <a href={url} target="_blank" rel="noreferrer">
+                {i === 0
+                  ? 'OMH Table 5'
+                  : new URL(url).hostname.replace(/^www\./, '') + ' [' + i + ']'}
+              </a>
+            </span>
+          ))}
+        </p>
+      </section>
       <p className="ev-note">{r.notes}</p>
       <ExteriorEvidence campusId={campus.id} />
       <section>

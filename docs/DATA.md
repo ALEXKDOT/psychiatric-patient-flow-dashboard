@@ -1,6 +1,6 @@
 # Facility evidence and assets
 
-The demonstration uses the user-supplied November 18, 2026 research snapshot. The 23 campus markers cover 22 New York City campuses and one White Plains campus. This curated network models the adult inpatient pathway. It contains 35 Office of Mental Health (OMH) program entries, including 12 CPEP entries, and 46 distinct provider service profiles. A program or profile does not create another hospital, person, bed pool, or transfer. Each public record links to its original sources in the application.
+The demonstration uses the user-supplied November 18, 2026 research snapshot. The 23 campus markers cover 22 New York City campuses and one White Plains campus. This curated network models adult and child/adolescent inpatient placement. It contains 35 Office of Mental Health (OMH) program entries, including 12 CPEP entries, and 46 distinct provider service profiles. A program or profile does not create another hospital, person, bed pool, or transfer. Each public record links to its original sources in the application.
 
 | Displayed information | Provenance and interpretation |
 | --- | --- |
@@ -10,10 +10,10 @@ The demonstration uses the user-supplied November 18, 2026 research snapshot. Th
 | Borough / county | Derived containment cross-check using NYC Department of City Planning polygons and Census counties. Westchester is displayed as an area, with the underlying NYC borough field retained as not applicable. |
 | DOH identities | 22 manual campus matches. Zucker Hillside's DOH correspondence is unknown. OMH and DOH have separate identifier namespaces. |
 | Sponsor | Published sponsor name and code. Filtering on a sponsor refers to its exact published code. |
-| Demand, pools, referral, transfer and operational displays | Synthetic. One hypothetical pool per campus. All counts and waits come from simulation events under a seed and scenario. Ages 18–64 and the 18 sending origins define the toy pathway. |
+| Demand, pools, referral, transfer and operational displays | Dated adult and CAP baseline pools use [capacity evidence](CAMPUS_CAPACITY.md). All operational counts and waits derive from the seeded episode ledger. ED boarders are unique episodes after inpatient disposition until physical departure from one of 18 modeled origins. |
 | Exterior geometry | The campus registry identifies one exterior or connected complex and its focus point. It records publisher feature ID, source height, displayed height, evidence and uncertainty. The source establishes an exterior appearance. It does not locate a psychiatric unit, ward or bed inside that geometry. |
 | Schematic movement | The endpoints are public campus points. The connection, elapsed travel time and movement are modeled. |
-| Unknowns | The source strings `UNKNOWN` and `NOT_APPLICABLE` are distinct. Numeric identifiers remain strings. Published psychiatric capacity and live acceptance are unknown in this snapshot. |
+| Unknowns | The source strings `UNKNOWN` and `NOT_APPLICABLE` are distinct. Numeric identifiers remain strings. Unverified campus-level adult capacity is null. Documented zero is retained. Live vacancies, staffing and acceptance remain unknown. |
 
 The **source vintage**, **publisher update**, and **research access** dates describe different events. The record view lists them separately. All original fields remain in the CSVs. The app uses a checked-in JSON conversion, so installation and use do not fetch upstream records. To reproduce or verify that conversion with Python 3, run:
 
@@ -26,7 +26,7 @@ The validator checks table cardinalities and unique keys, source references, coo
 
 ## Conflicting evidence
 
-Bellevue's published adult unit counts differ, Lincoln has conflicting bed counts, and Richmond University's pediatric counts differ by source. None enters the slot ledger. Westchester's 2 North service is marked announced, opening unconfirmed. Northwell's FY2027 staffing-plan profiles carry their planning-document status. Metropolitan's outpatient child/adolescent profile remains distinct from its adult inpatient description. For the full conflict log and evidence boundaries, see [dossier sections 5–7](research/RESEARCH_DOSSIER.md).
+Bellevue's published adult unit counts differ, Lincoln has conflicting bed counts, and Richmond University's pediatric counts differ by source. The model uses the separate dated and reconciled capacity table for its baseline. Westchester's 2 North service is marked announced, opening unconfirmed. Northwell's FY2027 staffing-plan profiles carry their planning-document status. Metropolitan's outpatient child/adolescent profile remains distinct from its adult inpatient description. For the full conflict log and evidence boundaries, see [dossier sections 5–7](research/RESEARCH_DOSSIER.md).
 
 ## Attribution and notices
 

@@ -1,5 +1,5 @@
 // Deterministic synthetic pathway model. All times are minutes relative to the evaluation window.
-export const MODEL_VERSION = 'FLOW-1.0'
+export const MODEL_VERSION = 'FLOW-2.0'
 export const DEFAULT_SEED = 42
 export const DURATION = 7 * 1440
 const WARMUP = 120 * 1440
@@ -14,9 +14,11 @@ export type Phase =
   | 'handoff'
   | 'inpatient'
   | 'exited'
-export type CampusInput = { id: string; origin: boolean }
+export type AgeGroup = 'adult' | 'cap'
+export type CampusInput = { id: string; origin: boolean; adult: number | null; cap: number | null }
 type Stream = 'warmup' | 'base' | 'extra'
 export interface Episode {
+  ageGroup: AgeGroup
   id: string
   origin: string
   destination: string | null
@@ -39,8 +41,7 @@ export interface Referral {
   resolved: number | null
   status: 'pending' | 'accepted' | 'unavailable' | 'cancelled'
 }
-export interface Pool {
-  id: string
+export interface BedInventory {
   free: number
   occupied: number
   turnaround: number
@@ -48,7 +49,37 @@ export interface Pool {
   capacity: number
   target: number
   pendingClosure: number
+}
+type CampusInventory = { id: string } & Record<AgeGroup, BedInventory | null>
+export interface Pool extends CampusInventory, BedInventory {
   queue: number
+}
+
+function inventory(capacity: number | null): BedInventory | null {
+  return capacity === null
+    ? null
+    : {
+        free: capacity,
+        occupied: 0,
+        reserved: 0,
+        turnaround: 0,
+        capacity,
+        target: capacity,
+        pendingClosure: 0,
+      }
+}
+
+function snapshot(c: CampusInventory): Pool {
+  const total = inventory(0)!
+  for (const key of Object.keys(total) as (keyof BedInventory)[])
+    total[key] = (c.adult?.[key] ?? 0) + (c.cap?.[key] ?? 0)
+  return {
+    ...total,
+    id: c.id,
+    adult: c.adult && { ...c.adult },
+    cap: c.cap && { ...c.cap },
+    queue: 0,
+  }
 }
 export interface SimEvent {
   time: number
@@ -136,14 +167,7 @@ function random(key: string) {
 }
 
 type ActionKind =
-  | 'release'
-  | 'discharge'
-  | 'admit'
-  | 'arrive'
-  | 'depart'
-  | 'dispose'
-  | 'search'
-  | 'review'
+  'release' | 'discharge' | 'admit' | 'arrive' | 'depart' | 'dispose' | 'search' | 'review'
 const priority: Record<ActionKind, number> = {
   release: 0,
   discharge: 1,
@@ -188,7 +212,7 @@ interface Person extends Episode {
 }
 interface World {
   people: Record<string, Person>
-  pools: Record<string, Pool>
+  pools: Record<string, CampusInventory>
   pending: Action[]
 }
 type PoolStamp = { time: number; pool: Pool }
@@ -202,7 +226,7 @@ function arriveStream(
   stream: Stream,
   start: number,
   end: number,
-  perDay: number
+  perDay: number,
 ) {
   let clock = start
   for (let i = 1; ; i++) {
@@ -223,10 +247,15 @@ function execute(
   seed: number,
   campuses: CampusInput[],
   horizon: number,
-  history?: History
+  history?: History,
 ) {
   const origins = campuses.filter((c) => c.origin)
-  const ids = campuses.map((c) => c.id)
+  const receivers = Object.fromEntries(
+    (['adult', 'cap'] as const).map((group) => [
+      group,
+      campuses.filter((c) => (c[group] ?? 0) > 0).map((c) => c.id),
+    ]),
+  ) as Record<AgeGroup, string[]>
   while (s.pending.length && s.pending[s.pending.length - 1].time <= horizon) {
     const a = s.pending.pop()!
     const { time, id } = a
@@ -237,13 +266,17 @@ function execute(
       schedule(s, { time: time + lag, kind, id, ...options })
     const emit = (type: string, campusId: string, label: string, otherId?: string) =>
       history?.events.push({ time, type, episodeId: id, campusId, label, otherId })
-    const record = (p: Pool) => history?.pools[p.id].push({ time, pool: { ...p } })
+    const record = (p: CampusInventory) => history?.pools[p.id].push({ time, pool: snapshot(p) })
     if (a.kind === 'dispose') {
       if (s.people[id]) continue
       const origin = origins[Math.floor(draw('origin') * origins.length)].id
       s.people[id] = {
         id,
         origin,
+        ageGroup:
+          receivers.cap.length && (!receivers.adult.length || draw('cohort') < 0.15)
+            ? 'cap'
+            : 'adult',
         destination: null,
         phase: 'readiness',
         stream: a.stream!,
@@ -269,8 +302,9 @@ function execute(
       ep.ready ??= time
       ep.round++
       ep.phase = 'search'
+      const ids = receivers[ep.ageGroup]
       const choices = ids.filter((i) => i !== ep.origin)
-      const targets = [ep.origin]
+      const targets = ids.includes(ep.origin) ? [ep.origin] : []
       while (targets.length < Math.min(3, ids.length)) {
         const pick = Math.floor(draw('choice|' + ep.round + '|' + targets.length) * choices.length)
         targets.push(choices.splice(pick, 1)[0])
@@ -278,7 +312,7 @@ function execute(
       emit(
         'search',
         ep.origin,
-        ep.round === 1 ? 'Placement search opened' : 'Placement search renewed'
+        ep.round === 1 ? 'Placement search opened' : 'Placement search renewed',
       )
       for (const to of targets) {
         ep.refs.push({
@@ -299,11 +333,12 @@ function execute(
       if (ep.commit !== null || a.round !== ep.round) continue
       const request = ep.refs.find((r) => r.to === a.to && r.status === 'pending')
       if (!request) continue
-      const p = s.pools[request.to]
+      const campus = s.pools[request.to]
+      const p = campus[ep.ageGroup]!
       request.resolved = time
       if (!p.free) {
         request.status = 'unavailable'
-        emit('unavailable', p.id, 'No modeled slot available', ep.origin)
+        emit('unavailable', campus.id, 'No modeled slot available', ep.origin)
         if (ep.refs.every((r) => r.status !== 'pending')) later('search', 120, { round: ep.round })
         continue
       }
@@ -315,29 +350,30 @@ function execute(
           r.resolved = time
           emit('cancel', r.to, 'Referral closed · placed elsewhere', ep.origin)
         }
-      ep.destination = p.id
+      ep.destination = campus.id
       ep.commit = time
       ep.phase = 'preparation'
       p.free--
       p.reserved++
-      record(p)
-      emit('reserve', p.id, 'Slot reserved', ep.origin)
-      later('depart', ep.origin === p.id ? 0 : duration('mobilize', 30, 120))
+      record(campus)
+      emit('reserve', campus.id, 'Slot reserved', ep.origin)
+      later('depart', ep.origin === campus.id ? 0 : duration('mobilize', 30, 120))
       continue
     }
     if (!ep.destination) continue
-    const p = s.pools[ep.destination]
+    const campus = s.pools[ep.destination]
+    const p = campus[ep.ageGroup]!
     switch (a.kind) {
       case 'depart':
         if (ep.phase !== 'preparation') break
         ep.departure = time
-        if (p.id === ep.origin) {
+        if (campus.id === ep.origin) {
           ep.phase = 'internal'
-          emit('internal', p.id, 'Internal movement started')
+          emit('internal', campus.id, 'Internal movement started')
           later('admit', duration('internal', 5, 20))
         } else {
           ep.phase = 'transit'
-          emit('depart', ep.origin, 'Transfer departed', p.id)
+          emit('depart', ep.origin, 'Transfer departed', campus.id)
           later('arrive', duration('travel', 30, 90))
         }
         break
@@ -345,7 +381,7 @@ function execute(
         if (ep.phase !== 'transit') break
         ep.arrival = time
         ep.phase = 'handoff'
-        emit('arrive', p.id, 'Transfer arrived', ep.origin)
+        emit('arrive', campus.id, 'Transfer arrived', ep.origin)
         later('admit', duration('handoff', 10, 30))
         break
       case 'admit': {
@@ -355,8 +391,8 @@ function execute(
         ep.phase = 'inpatient'
         p.reserved--
         p.occupied++
-        record(p)
-        emit('admit', p.id, 'Unit admission')
+        record(campus)
+        emit('admit', campus.id, 'Unit admission')
         const z = Math.sqrt(-2 * Math.log(draw('los-a'))) * Math.cos(2 * Math.PI * draw('los-b'))
         later('discharge', Math.max(1, Math.round(1440 * 11 * Math.exp(0.9005166 * z))))
         break
@@ -367,8 +403,8 @@ function execute(
         ep.phase = 'exited'
         p.occupied--
         p.turnaround++
-        record(p)
-        emit('discharge', p.id, 'Discharge · turnaround started')
+        record(campus)
+        emit('discharge', campus.id, 'Discharge · turnaround started')
         later('release', duration('turnaround', 30, 90))
         break
       case 'release':
@@ -378,12 +414,12 @@ function execute(
         if (p.pendingClosure > 0) {
           p.capacity--
           p.pendingClosure--
-          emit('retire', p.id, 'Slot retired after turnaround')
+          emit('retire', campus.id, 'Slot retired after turnaround')
         } else {
           p.free++
-          emit('release', p.id, 'Slot ready')
+          emit('release', campus.id, 'Slot ready')
         }
-        record(p)
+        record(campus)
         if (!history) delete s.people[id]
         break
     }
@@ -395,20 +431,7 @@ function startState(campuses: CampusInput[], seed: number, rate: number) {
   let warm = warmCache.get(key)
   if (!warm) {
     const pools = Object.fromEntries(
-      campuses.map((c) => [
-        c.id,
-        {
-          id: c.id,
-          free: 24,
-          occupied: 0,
-          reserved: 0,
-          turnaround: 0,
-          capacity: 24,
-          target: 24,
-          pendingClosure: 0,
-          queue: 0,
-        },
-      ])
+      campuses.map((c) => [c.id, { id: c.id, adult: inventory(c.adult), cap: inventory(c.cap) }]),
     )
     warm = { people: {}, pools, pending: [] }
     arriveStream(warm, seed, 'warmup', -WARMUP, 0, rate)
@@ -434,6 +457,7 @@ function viewEpisode(e: Episode, t: number): Episode {
   const known = (v: number | null) => (occurred(v, t) ? v : null)
   return {
     id: e.id,
+    ageGroup: e.ageGroup,
     origin: e.origin,
     destination: occurred(e.commit, t) ? e.destination : null,
     stream: e.stream,
@@ -471,33 +495,41 @@ export function buildRun(
   campuses: CampusInput[],
   scenario: Scenario = 'baseline',
   seed = DEFAULT_SEED,
-  focusId = campuses[0]?.id
+  focusId = campuses[0]?.id,
 ): Run {
   if (
     !Number.isFinite(seed) ||
+    !campuses.some((c) => (c.adult ?? 0) + (c.cap ?? 0) > 0) ||
+    campuses.some((c) =>
+      [c.adult, c.cap].some((v) => v !== null && (!Number.isInteger(v) || v < 0)),
+    ) ||
     !campuses.some((c) => c.origin) ||
     !campuses.some((c) => c.id === focusId) ||
     new Set(campuses.map((c) => c.id)).size !== campuses.length
   )
     throw new Error('Invalid synthetic network configuration')
-  const rate = (0.9 * campuses.length * 24) / 16.5
+  // Retain the demonstration arrival intensity independently of licensed inventory.
+  const rate = (30.10909090909091 * campuses.length) / 23
   const world = startState(campuses, seed, rate)
-  const focus = world.pools[focusId]
-  if (scenario === 'capacity-add') {
+  const focus = world.pools[focusId].adult
+  if (scenario.startsWith('capacity-') && !focus?.capacity)
+    throw new Error('Adult capacity intervention requires a verified positive baseline')
+  if (focus && scenario === 'capacity-add') {
     focus.capacity += 8
     focus.free += 8
     focus.target += 8
-  } else if (scenario === 'capacity-loss') {
-    const retire = Math.min(8, focus.free)
+  } else if (focus && scenario === 'capacity-loss') {
+    const requested = Math.min(8, focus.target)
+    const retire = Math.min(requested, focus.free)
     focus.capacity -= retire
     focus.free -= retire
-    focus.target -= 8
-    focus.pendingClosure = 8 - retire
+    focus.target -= requested
+    focus.pendingClosure = requested - retire
   }
   const history: History = {
     events: [],
     pools: Object.fromEntries(
-      Object.values(world.pools).map((p) => [p.id, [{ time: 0, pool: { ...p } }]])
+      Object.values(world.pools).map((p) => [p.id, [{ time: 0, pool: snapshot(p) }]]),
     ),
   }
   if (scenario.startsWith('capacity-'))
@@ -508,8 +540,8 @@ export function buildRun(
       campusId: focusId,
       label:
         scenario === 'capacity-add'
-          ? 'Eight pathway slots added'
-          : 'Eight pathway closures requested',
+          ? 'Eight adult beds added to the simulation'
+          : 'Adult bed closures requested in simulation',
     })
   arriveStream(world, seed, 'base', 0, DURATION, rate)
   if (scenario === 'surge') arriveStream(world, seed, 'extra', 0, DURATION, rate * 0.3)
@@ -517,7 +549,7 @@ export function buildRun(
   // No future events enter a projection or cohort calculation.
   execute(world, seed, campuses, DURATION + 90, history)
   const people = Object.values(world.people).sort(
-    (a, b) => a.disposition - b.disposition || a.id.localeCompare(b.id)
+    (a, b) => a.disposition - b.disposition || a.id.localeCompare(b.id),
   )
   const refs = people
     .flatMap((e) => e.refs)
@@ -560,7 +592,12 @@ export function buildRun(
       p90Wait: null,
     }
     for (const [key, stamps] of Object.entries(history.pools)) {
-      const p = { ...stamps[through(stamps, t) - 1].pool }
+      const stored = stamps[through(stamps, t) - 1].pool
+      const p = {
+        ...stored,
+        adult: stored.adult && { ...stored.adult },
+        cap: stored.cap && { ...stored.cap },
+      }
       pools[key] = p
       for (const k of ['occupied', 'reserved', 'free', 'turnaround', 'capacity'] as const)
         metrics[k] += p[k]
@@ -636,7 +673,7 @@ export function buildRun(
   function compare(minute = DURATION, cohort: 'base' | 'all' = 'base'): Comparison {
     const t = bound(minute)
     const entrants = people.filter(
-      (e) => e.disposition >= 0 && e.disposition <= t && (cohort === 'all' || e.stream === 'base')
+      (e) => e.disposition >= 0 && e.disposition <= t && (cohort === 'all' || e.stream === 'base'),
     )
     const waits: number[] = [],
       placement: number[] = []
@@ -665,13 +702,13 @@ export function buildRun(
       e.arrival !== null &&
       e.destination !== e.origin &&
       e.departure >= 360 &&
-      e.arrival < DURATION
+      e.arrival < DURATION,
   )
   const score = (e: Person) => {
     const t = Math.floor((e.departure! + e.arrival!) / 2)
     const q = people.filter((p) => p.disposition <= t && !occurred(p.departure, t)).length
     const inFlight = people.filter(
-      (p) => p.destination !== p.origin && occurred(p.departure, t) && !occurred(p.arrival, t)
+      (p) => p.destination !== p.origin && occurred(p.departure, t) && !occurred(p.arrival, t),
     ).length
     return (
       (e.origin === focusId || e.destination === focusId ? 100 : 0) +
@@ -688,6 +725,12 @@ export function buildRun(
       openingMinute = Math.floor((e.departure! + e.arrival!) / 2)
     }
   }
+  // Keep the published walkthrough anchored to a real journey when this run contains it.
+  const featured = trips.find(
+    (e) => e.id === 'EP-0190' && e.origin === 'nyc_bellevue' && e.destination === 'nyc_queens',
+  )
+  if (seed === DEFAULT_SEED && scenario === 'baseline' && featured)
+    openingMinute = Math.floor((featured.departure! + featured.arrival!) / 2)
   // The canonical export contract stays stable. Presentation adds only the
   // interpolation window of a journey whose departure has already occurred.
   function at(minute: number): Frame {

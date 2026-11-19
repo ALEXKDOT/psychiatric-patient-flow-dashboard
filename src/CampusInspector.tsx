@@ -27,24 +27,45 @@ function SlotAllocation({ pool }: { pool: Pool }) {
   return (
     <section className="dossier-allocation" aria-label="Simulated pathway capacity">
       <div className="dossier-section-title">
-        <h3>Pathway capacity</h3>
+        <h3>Psychiatric beds</h3>
         <span>Simulated</span>
       </div>
       <div className="dossier-denominator">
         <strong>
-          {pool.occupied}
-          <span> / {pool.capacity}</span>
+          {pool.capacity === 0 && (pool.adult === null || pool.cap === null) ? (
+            '—'
+          ) : (
+            <>
+              {pool.occupied}
+              <span> / {pool.capacity}</span>
+            </>
+          )}
         </strong>
-        <span>slots occupied</span>
+        <span>
+          {pool.adult === null || pool.cap === null
+            ? 'occupied · partial campus data'
+            : 'occupied in replay'}
+        </span>
       </div>
       <div className="dossier-raster" aria-hidden="true">
-        {slotStates.flatMap(([state]) =>
-          Array.from({ length: pool[state] }, (_, index) => (
-            <i key={state + index} className={'dossier-slot is-' + state} />
-          )),
+        {slotStates.map(
+          ([state]) =>
+            pool[state] > 0 && (
+              <i
+                key={state}
+                className={'dossier-slot is-' + state}
+                style={{ flexGrow: pool[state] }}
+              />
+            ),
         )}
       </div>
       <dl className="dossier-legend">
+        {(['adult', 'cap'] as const).map((group) => (
+          <div key={group}>
+            <dt>{group === 'adult' ? 'Adult psych free' : 'CAP free'}</dt>
+            <dd>{pool[group]?.free ?? 'Unknown'}</dd>
+          </div>
+        ))}
         {slotStates.map(([state, label]) => (
           <div key={state}>
             <dt>
@@ -55,6 +76,7 @@ function SlotAllocation({ pool }: { pool: Pool }) {
           </div>
         ))}
       </dl>
+      <p className="dossier-location">Live psychiatric vacancies unknown.</p>
       {pool.pendingClosure > 0 && (
         <p className="dossier-closure">
           {pool.pendingClosure} {pool.pendingClosure === 1 ? 'closure' : 'closures'} pending ·
@@ -100,7 +122,7 @@ export function CampusInspector({
             <div className="dossier-activity">
               <dl>
                 <div>
-                  <dt>Waiting in ED</dt>
+                  <dt>{campus.isOrigin ? 'ED boarders' : 'ED boarders · receive-only'}</dt>
                   <dd>{two(pool.queue)}</dd>
                 </div>
                 <div>

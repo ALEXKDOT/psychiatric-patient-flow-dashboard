@@ -20,6 +20,7 @@ import {
   Minimize2,
 } from 'lucide-react'
 import { GeoMap, type NetworkView } from './GeoMap'
+import { CampusOperations } from './CampusOperations'
 import { CampusScene } from './campus/CampusScene'
 import { ThemeControl } from './ThemeControl'
 import { TransferInspector } from './TransferInspector'
@@ -347,6 +348,9 @@ export function Dashboard({
     return () => window.removeEventListener('keydown', shortcut)
   }, [directory])
   const transfers = frame.transfers
+  const outgoing = frame.referrals.filter(
+    (r) => r.status === 'pending' && r.from === effectiveSelection,
+  ).length
   const related = transfers.filter(
     (t) => t.from === effectiveSelection || t.to === effectiveSelection,
   )
@@ -568,6 +572,15 @@ export function Dashboard({
               )}
             </div>
           </div>
+          {focusedId && (
+            <CampusOperations
+              onRecord={record ? () => setPanel('data') : undefined}
+              campus={campus}
+              pool={pool}
+              referrals={outgoing}
+              transfers={related.length}
+            />
+          )}
           <div className="transport-strip">
             {playback}
             <button
@@ -626,11 +639,7 @@ export function Dashboard({
                     campus={campus}
                     focus={focus}
                     pool={pool}
-                    openReferrals={
-                      frame.referrals.filter(
-                        (r) => r.status === 'pending' && r.from === effectiveSelection,
-                      ).length
-                    }
+                    openReferrals={outgoing}
                     relatedCount={related.length}
                     selectionVisible={selectionVisible}
                     onRecord={record ? () => setPanel('data') : undefined}

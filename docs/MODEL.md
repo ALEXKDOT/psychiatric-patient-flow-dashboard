@@ -1,10 +1,10 @@
 # Simulation and application architecture
 
-**Public facility information · Simulated operations.** The simulation represents an illustrative adult general acute inpatient pathway after an inpatient disposition. Ages 18–64, the choice of sending campuses, the admission pool, search rules and all operational measures are modeling choices. The public evidence preserves each service's own age wording and uncertainties.
+**Public facility information · Simulated operations.** The simulation represents an illustrative adult and child/adolescent psychiatric placement pathway after an inpatient disposition. The cohort mix, sending campuses, search rules and operational measures are modeling choices. Capacity baselines are dated public figures. The public evidence preserves each service's own age wording and uncertainties.
 
 ## One event history
 
-The source-table importer validates the supplied CSVs and creates a versioned local snapshot. `src/data.ts` relates campuses, OMH program rows, provider profiles and source records by stable keys. It passes only campus IDs and modeled sending roles to the simulator. The map draws a single point per campus.
+The source-table importer validates the supplied CSVs and creates a versioned local snapshot. `src/data.ts` relates campuses, OMH program rows, provider profiles and source records by stable keys. The run configuration joins campus IDs and modeled sending roles to the dated adult and child/adolescent capacity observations. The map draws a single point per campus.
 
 `src/sim.ts` builds each run with a discrete-event scheduler and deterministic variates keyed by seed, episode and process. Referral reviews additionally use the attempt and destination. Integer-minute events share a stable priority order: slot release, discharge, admission, arrival, departure, disposition, search, review, then episode and destination IDs for ties. A newly scheduled same-minute consequence follows its cause. The main clock is scenario-relative.
 
@@ -16,9 +16,9 @@ Start with empty pools, run 120 days, and clone the resulting state, including o
 
 | Process | Synthetic rule |
 | --- | --- |
-| Network | 23 receiving pools × 24 slots. Equal demand allocation among 18 selected origins. Five campuses are receive-only within this model. |
-| Demand | Homogeneous Poisson arrivals. The baseline rate is 0.90 × 552 / 16.5 = 30.1 per day, fixed across capacity interventions. |
-| Readiness | Uniform 0–90 minutes after disposition. Up to three parallel requests, to the home pool and up to two seeded alternatives. |
+| Network | Twenty-three campuses have independently tracked adult and CAP pools when their counts are known. The baseline totals 1,879 adult and 230 CAP beds. Two unresolved adult pools cannot receive placements. Demand is allocated equally among 18 selected origins. Five campuses are receive-only within this model. |
+| Demand | Homogeneous Poisson arrivals. Baseline demand remains about 30.1 simulated episodes per day. A separate seeded draw assigns CAP with probability 0.15. Capacity interventions preserve the arrival stream and age group. |
+| Readiness | Uniform 0–90 minutes after disposition. Up to three parallel requests, to a positive, age-matched home pool when present, then distinct age-matched alternatives up to three total. |
 | Review | Uniform 15–90 minutes per request. If the whole round is unsuccessful, wait 120 minutes before retrying. |
 | Commitment | The first eligible response with a free slot reserves it in one transaction. Other pending requests close as placed elsewhere. A stale review cannot reserve another slot. |
 | External transfer | Remain in the ED for 30–120 minutes after commitment, travel for 30–90 minutes, and hand off at the receiver for 10–30 minutes. Journey duration is independent of the schematic line length. |
@@ -26,13 +26,15 @@ Start with empty pools, run 120 days, and clone the resulting state, including o
 | Stay | Lognormal days with log-location ln(11) and log-scale 0.9005166. These assumptions reproduce an aggregate median of 11 and mean of 16.5 days. Stays can continue beyond replay. |
 | Turnaround | Discharge releases occupancy into a 30–90 minute turnaround. Availability resumes at completion unless the resource is due to close. |
 
-The historical anchor is NYC DOHMH's 2023 summary of NYC residents aged 18+ hospitalized in NYC acute-care hospitals. The simulated distribution, tail and independence are assumptions. See [source details](DATA.md). The warm-up approximates a populated network at time zero. It has no empirical steady-state validation.
+The historical anchor is NYC DOHMH's 2023 summary of NYC residents aged 18+ hospitalized in NYC acute-care hospitals. The simulated distribution, its application to CAP, the tail and independence are assumptions. See [source details](DATA.md). The warm-up approximates a populated network at time zero. It has no empirical steady-state validation.
 
 ## Accounting and comparisons
 
+The denominator is dated inpatient psychiatric capacity, including psychiatric specialty units. Age is the only bed-matching constraint in this demonstration. The amount staffed, vacant and accepting general ED transfers is unknown at each site. Medical/surgical, ICU, detox and ED observation beds do not contribute to the source total. [Campus-by-campus audit](attribution/psychiatric-bed-audit.md)
+
 A person occupies one physical state. The ED queue includes readiness, search and preparation. Requests have their own lifetimes. A commitment moves a slot from free to reserved, and the reservation survives travel and receiving handoff. Admission converts that reservation into occupancy. At each campus, free + reserved + occupied + turnaround equals active capacity. A reduction retires free slots immediately, then retires released slots after turnaround. The gap between active capacity and the target is visible as pending closures.
 
-Day 1 interventions are **baseline**, **+30% demand**, **+8 Bellevue slots**, and **−8 Bellevue slots**. Increased demand is an independent stream, preserving the base entrants, times and per-process variates. Both capacity changes preserve demand. Selecting a campus changes the inspector; switching scenarios keeps the replay minute and pauses the clock. Reset returns to minute zero in the active scenario. A separate control returns to that scenario's sample transfer.
+Day 1 interventions are **baseline**, **+30% demand**, **+8 Bellevue adult beds**, and **−8 Bellevue adult beds**. Increased demand is an independent stream, preserving the base entrants, times and per-process variates. Both capacity changes preserve demand. Selecting a campus changes the inspector; switching scenarios keeps the replay minute and pauses the clock. Reset returns to minute zero in the active scenario. A separate control returns to that scenario's sample transfer.
 
 **Post-disposition ED wait** measures disposition to physical ED departure. **Placement wait** measures readiness to commitment. Response intervals require a receiving response. Resolution also includes cancellations. Durations and ongoing counts have separate columns. A queue snapshot includes carry-in episodes; the comparison cohorts contain only evaluation-window arrivals. Admission and ED-departure throughput count evaluation-window events and can include carry-in episodes.
 
